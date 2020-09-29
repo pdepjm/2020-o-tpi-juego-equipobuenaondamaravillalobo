@@ -1,25 +1,25 @@
+import estaticos.*
+import nivel.*
 import wollok.game.*
 
-object pepita {
-
-    method position() {
-        return game.center()
-    }
-
-    method image() {
-        return "pepita.png"
-    }
-
-}
 
 
 object roger{
     var property position = game.at(3,1)
 
     method image() = "roger.png"
+    
+    method irA(nuevaPosicion){
+    	position = nuevaPosicion 
+    }
+    method caer(altura){
+		position = game.at(position.x(),0.max.position.y()-altura)
+		
+		
+	}
 }
 
-object raquetaRoger{
+object raqueta{
     var property position = 
     method image() = "raqueta1.png"
 }
@@ -28,15 +28,16 @@ object raquetaRoger{
 object pelota{
     var property position = 0
     method image() = "pelota.png"
-
+    
+    
+	method caer(altura){
+		position = game.at(position.x(),0.max.position.y()-altura)
+		
+		
+	}
 }
 
-object red{
-    var position = game.at(6,0)
 
-    method image() = "red.png"
-    method position() = position 
-}
 
 /* 
  * 

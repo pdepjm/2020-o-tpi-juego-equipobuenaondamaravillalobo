@@ -1,8 +1,19 @@
+import juego.*
+import estaticos.*
+import nivel.*
 import wollok.game.*
-import pepita.*
 
-program game {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+program  tenistasCabezones{
+	game.title("Tenistas cabezones")
+	game.height(10)
+	game.width(10)
+	game.boardGround("cancha.png")
+
+	partido.iniciar()
+
+	game.showAttributes(roger)
+	game.showAttributes(pelota)
+	
+
 	game.start()
 }
