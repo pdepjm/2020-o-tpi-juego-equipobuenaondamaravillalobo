@@ -8,12 +8,14 @@ import wollok.game.*
 
 
 
+// Podemos achicar los cuadraditos?
 
 object red{
-    var position = game.at(6,0)
+    var position = game.at(15,0)
 
-    method image() = "red.png"
+    method image() = "muro.png"
     method position() = position 
+    
 }
 
 
