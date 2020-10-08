@@ -4,9 +4,10 @@ import nivel.*
 import wollok.game.*
 
 program  tenistasCabezones{
+	game.cellSize(10)
 	game.title("Tenistas cabezones")
-	game.height(15)
-	game.width(30)
+	game.height(80)
+	game.width(150)
 	game.boardGround("cancha.png")
 
 	partido.iniciar()

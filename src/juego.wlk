@@ -7,7 +7,8 @@ import wollok.game.*
 object jugador{
 
     var property position = game.at(3,1)
-
+//	var puedeSaltar= true
+	
     method image() = "roger2.png"
     
     method caer(altura){
@@ -39,9 +40,12 @@ object jugador{
 
 
 object raqueta{
-	
-    var property position = jugador.position()
+    
+    	method position() = game.at(jugador.position().x()- 5,jugador.position().y())
+    	
     	method image() = "raquetaNadal2.png"
+    	
+    	method golpe(){}
 }
 
 
@@ -64,24 +68,25 @@ object raqueta{
     	method golpe(){	
     		
     		self.cambiarDireccion()
-        	game.onTick(400,"Golpea pelota", {self.trayectoria()})
+        	game.onTick(200,"Golpea pelota", {self.trayectoria()})
         	
    }
 
 // Esta es una posible trayectoria para la pelota. Luego del golpe la pelota asciende hasta la mitad de la cancha y ahi empieza a descender.
 // La raqueta deberia tener un method que sea impactarPelota() que llame al mensaje golpe() en la pelota, quizas con un tipo de trayectoria como parametro.
 
+// moverPelota.
     	method trayectoria(){
     		
     		if(self.pasoMitadDeCancha()){
-    			position = game.at(position.x()+(2 * direccion),position.y()+1)
+    			position = game.at(position.x()+(5 * direccion),position.y()+2)
 			}else{
-				position = game.at(position.x()+(2 * direccion),position.y()-1)
+				position = game.at(position.x()+(5 * direccion),position.y()-2)
 				// self.pique()
 			}
 	}
 		method pasoMitadDeCancha(){
-			return (position.x() > 15 && direccion == -1) || ( position.x() < 15 && direccion==1)
+			return (position.x() > 85 && direccion == -1) || ( position.x() < 65 && direccion==1)
 	}
 		/*method pique(){
 			if (position == game.at(0,position.y())){
