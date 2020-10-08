@@ -21,10 +21,6 @@ object roger{
 		
 	}
 
-		
-	
-
-	
 	method irA(nuevaPosicion){
 		
 		if(nuevaPosicion.x() < 0){ position = game.at(0,nuevaPosicion.y()) }
@@ -42,21 +38,20 @@ object roger{
 
 
 
-
-
-
-
 object raqueta{
 	
     var property position = roger.position()
     	method image() = "raquetaNadal2.png"
 }
 
+
+
+
 	
  object pelota{
 
-    var property position = game.at(5,5)
-    // 1 Derecha -1 izquierda
+    var property position = game.at(5,0)
+    // 1 Derecha, -1 izquierda
     var direccion = -1
 
     	method image() = "pelotaPenn.png"
@@ -69,29 +64,36 @@ object raqueta{
     	method golpe(){	
     		
     		self.cambiarDireccion()
-    		
-    	//	4.randomUpTo(8).times({self.trayectoria()})
-    		
         	game.onTick(400,"Golpea pelota", {self.trayectoria()})
         	
    }
-/* 
-   		 method movimientoSegunRafa(){
-        	game.onTick(400,"GolpePelotaDerecho", {self.golpeDerecha()})
-   }
-*/
+
+// Esta es una posible trayectoria para la pelota. Luego del golpe la pelota asciende hasta la mitad de la cancha y ahi empieza a descender.
+// La raqueta deberia tener un method que sea impactarPelota() que llame al mensaje golpe() en la pelota, quizas con un tipo de trayectoria como parametro.
+
     	method trayectoria(){
     		
-    		position = game.at(30.min(position.x()+(2 * direccion)),0.max(position.y()+1))
-			
-		}
-		
-}
-/* 
-  		method golpeDerecha(){
-      		if(position.x()<15){ 
-        	position = game.at(0.max(position.x()-2),0.max(position.y()-1))
-        	}else{
-            position = game.at(0.max(position.x())-2,0.max(position.y()+1))
-            }
-  }*/
+    		if(self.pasoMitadDeCancha()){
+    			position = game.at(position.x()+(2 * direccion),position.y()+1)
+			}else{
+				position = game.at(position.x()+(2 * direccion),position.y()-1)
+				self.pique()
+			}
+	}
+		method pasoMitadDeCancha(){
+			return (position.x() > 15 && direccion == -1) || ( position.x() < 15 && direccion==1)
+	}
+		/*method pique(){
+			if (position == game.at(0,position.y())){
+				position = game.at(position.x()+(2 * direccion),position.y()+1)
+			}
+		}*/
+}	
+		/*Bueno ..... eeee no esta siendo la mejor forma de hacerlo asi.
+		 * Para mi hay que optar por asignarle una energia a la pelota y que el movimiento se a partir de esa energia
+		 * Entonces que por ejemplo method pique() lo que haga es sacarle energia a la pelota y que entonces baje mas rapido y/o avance mas lento 
+		 * 
+		 */
+
+  
+  
