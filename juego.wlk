@@ -114,8 +114,5 @@ object raqueta{
 object raquetaRafa{
     var property position = game.at(rafa.position().x()) + 1 ,rafa.position().y()
     method image() = "raqueta2.png"
-
 }
-
 */
-
