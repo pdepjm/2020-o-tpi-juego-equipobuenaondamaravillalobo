@@ -4,7 +4,7 @@ import wollok.game.*
 
 
 
-object roger{
+object jugador{
 
     var property position = game.at(3,1)
 
@@ -40,7 +40,7 @@ object roger{
 
 object raqueta{
 	
-    var property position = roger.position()
+    var property position = jugador.position()
     	method image() = "raquetaNadal2.png"
 }
 

@@ -7,14 +7,14 @@ import wollok.game.*
 object partido{
 	
 		method iniciar() {
-		game.addVisualCharacter(roger)
+		game.addVisualCharacter(jugador)
 		game.addVisual(pelota)		
 		game.addVisual(red)
 		game.addVisual(raqueta)
 		config.configurarTeclas()
 		config.configurarColisiones()
 		game.onTick(500,"GravedadPelota", {pelota.caer(0.5)})
-		game.onTick(100,"GravedadRoger", {roger.caer(0.5)})
+		game.onTick(100,"GravedadRoger", {jugador.caer(0.5)})
 		
 	}
 	
@@ -32,13 +32,13 @@ object config{
 
 	method configurarTeclas(){
 
-        keyboard.left().onPressDo({roger.irA(roger.position().left(1))})
-        keyboard.right().onPressDo({ roger.irA(roger.position().right(1))})
-        keyboard.up().onPressDo({roger.saltar()})
+        keyboard.left().onPressDo({jugador.irA(jugador.position().left(1))})
+        keyboard.right().onPressDo({ jugador.irA(jugador.position().right(1))})
+        keyboard.up().onPressDo({jugador.saltar()})
 }
 
 	method configurarColisiones(){
-	        game.onCollideDo(roger,{unaPelota =>
+	        game.onCollideDo(jugador,{unaPelota =>
 	            unaPelota.golpe()
 })
 

@@ -11,7 +11,7 @@ program  tenistasCabezones{
 
 	partido.iniciar()
 
-	game.showAttributes(roger)
+	game.showAttributes(jugador)
 	game.showAttributes(pelota)
 	
 
