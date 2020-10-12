@@ -13,8 +13,8 @@ object partido{
 		game.addVisual(raqueta)
 		config.configurarTeclas()
 		config.configurarColisiones()
-		game.onTick(500,"GravedadPelota", {pelota.caer(0.5)})
-		game.onTick(100,"GravedadRoger", {jugador.caer(0.5)})
+		game.onTick(500,"GravedadPelota", {pelota.gravedad()})
+		game.onTick(100,"GravedadRoger", {jugador.gravedad()})
 		
 	}
 	
@@ -40,6 +40,7 @@ object config{
 	method configurarColisiones(){
 	        game.onCollideDo(jugador,{unaPelota =>
 	            unaPelota.golpe()
+	     
 })
 
 }}
