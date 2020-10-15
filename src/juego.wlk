@@ -33,14 +33,46 @@ object jugador{
 }
 
 
+object jugador2{
 
+    var property position = game.at(147,1)
+//	var puedeSaltar= true
+	
+    method image() = "RogerSinFondoYsinCabeza.png"
+    
+	method gravedad(){
+		position = abajo.nuevaPosicion(self,1)
+	}
+	method saltar(){
+		position = arriba.nuevaPosicion(self, 5)
+		
+	}
+
+	method irA(nuevaPosicion){
+		position = game.at(70.max(150.min(nuevaPosicion.x())),nuevaPosicion.y())
+		
+		//if(nuevaPosicion.x() < 0){ position = game.at(0,nuevaPosicion.y()) }
+		//
+		//else{
+		//	position = game.at(70.min(nuevaPosicion.x()),nuevaPosicion.y())	
+		//}
+		
+	}
+	
+}
+
+object cabezaRoger{
+	method position()= game.at(jugador2.position().x(),jugador2.position().y()+5)
+	
+	method image()= "cabezaRoger.png"
+}
 
 
 object raqueta{
     // Al poner metodo posicion, hace que se ajuste cada vez que cambia la posicion de jugadorX
     	method position() = game.at(jugador.position().x()+3,jugador.position().y())
     	
-    	method image() = "raquetaNadal2.png"
+    	method image()=  "raquetaNadal2.png"
     	
     	method golpe(){}
 }
@@ -70,6 +102,12 @@ object raqueta{
         	game.onTick(100,"Golpea pelota", {self.moverPelota()})
         	
         	}
+        	method golpeDerechaIzquierda(){	
+    		
+    		//self.cambiarDireccion()
+        	game.onTick(100,"Golpear pelota derecha a izquierda", {self.moverPelotaDerIzq()})
+        	
+        	}
   
 		method moverseALosLados(){
 			position = direccionLateral.nuevaPosicion( self, energia/20 )
@@ -85,7 +123,7 @@ object raqueta{
 		    
 		method movimientoParabolaSuprema(x,y){
 				position = game.at(position.x()+x,position.y()+y)
-				game.stop()
+				//game.stop()
 			}
 			
 		method movimientoParabola(x,y){
@@ -109,6 +147,23 @@ object raqueta{
 				 		 
 				 }
 			 
+		method piquesLadoIzquierdo(){ 
+				 
+				 game.schedule(100,{self.movimientoParabola(-2,4)}) 
+				 game.schedule(400,{self.movimientoParabola(-2,4)}) 
+				 game.schedule(700,{self.movimientoParabola(-2,2)})
+				 game.schedule(1000,{self.movimientoParabola(-2,-2)}) 
+				 game.schedule(1300,{self.movimientoParabola(-2,-4)}) 
+				 game.schedule(1600,{self.movimientoParabola(-2,-4)})
+				 game.schedule(1900,{self.movimientoParabola(-1,2)}) 
+				 game.schedule(2200,{self.movimientoParabola(-1,2)}) 
+				 game.schedule(2500,{self.movimientoParabola(-1,1)}) 
+				 game.schedule(2800,{self.movimientoParabola(-1,-1)})
+				 game.schedule(3100,{self.movimientoParabola(-1,-2)})
+				 game.schedule(3400,{self.movimientoParabolaSuprema(-1,-2)})		
+				 		 
+				 }
+			 
 			
 			/* 
 			method segundoPique(){ 
@@ -125,10 +180,18 @@ object raqueta{
 			
 	     method tocarPiso(){ 
 			 	if(position.y()==0){ 
+			 		if(position.x()>75){ 
 			 	game.removeTickEvent("Golpea pelota") 
-			 	self.piquesLadoDerecho()			 	
+			 	    direccionLateral = izquierda
+			 	    self.piquesLadoDerecho()
+			 	    			 	
+			 		}else{
+			 	game.removeTickEvent("Golpear pelota derecha a izquierda") 
+			 		direccionLateral = derecha
+			 		self.piquesLadoIzquierdo()
 			 		}
-			 	}
+			 	 }
+			 }
 			  
 			 
 			
@@ -142,8 +205,10 @@ game.removeTickEvent("Golpea pelota")
 		
 // MOVIMIENTO DE PELOTA 
 
+  method noPasoMitadDeCancha()= (position.x() > 80 && direccionLateral == izquierda) || ( position.x() < 70 && direccionLateral == derecha)
+	
 
-         method moverPelota(){
+         method moverPelotaDerIzq(){
     		
     		if(self.noPasoMitadDeCancha()){
     			
@@ -159,10 +224,22 @@ game.removeTickEvent("Golpea pelota")
 			}
 	}
 	
-	
-	     method noPasoMitadDeCancha(){
-			return (position.x() > 80 && direccionLateral == izquierda) || ( position.x() < 70 && direccionLateral == derecha)
+	   method moverPelota(){
+    		
+    		if(self.noPasoMitadDeCancha()){
+    			
+    			self.moverseALosLados()
+    			self.moverseVerticalmente(arriba)
+    			
+			}else{
+				
+    			self.moverseALosLados()
+    			self.moverseVerticalmente(abajo)
+    			self.tocarPiso()
+    			
+			}
 	}
+	   
 	
 	
 	
@@ -192,11 +269,11 @@ game.removeTickEvent("Golpea pelota")
 
 object izquierda{
 	
-	method moverObjeto(objetoMovil,distancia)= game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())
+	method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())
 		
 }
 	
-object derecha {
+object derecha{
 		method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() + distancia, objetoMovil.position().y())
 }
 
