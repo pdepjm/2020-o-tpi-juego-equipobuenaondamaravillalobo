@@ -42,9 +42,9 @@ object config{
 
 	method configurarColisiones(){
 	        game.onCollideDo(jugador,{unaPelota =>
-	            unaPelota.golpe()})
+	            unaPelota.golpe(jugador)})
             game.onCollideDo(jugador2,{unaPelota =>
-	            unaPelota.golpeDerechaIzquierda()})
+	            unaPelota.golpe(jugador2)})
 }
 
 
