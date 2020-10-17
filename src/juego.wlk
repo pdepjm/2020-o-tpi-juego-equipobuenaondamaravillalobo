@@ -2,15 +2,27 @@ import estaticos.*
 import nivel.*
 import wollok.game.*
 
+const jugador = new Jugador(
+	position = game.at(3,1),
+	direccionHaciaDondeGolpea = derecha,
+	image= "roger2.png")
+	
+const jugador2 = new Jugador(
+	
+	position = game.at(147,1),
+	direccionHaciaDondeGolpea = izquierda,
+	image= "RogerSinFondoYsinCabeza.png")
+	
 
 
-object jugador{
-	var direccionHaciaDondeGolpea = derecha 
-    var property position = game.at(3,1)
+class Jugador{
+	var direccionHaciaDondeGolpea
+	var property position
+	var image 
 	
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
-    method image() = "roger2.png"
-    
+	method image() = image
+	
 	method gravedad(){
 		position = abajo.nuevaPosicion(self,1)
 	}
@@ -19,34 +31,15 @@ object jugador{
 		position = arriba.nuevaPosicion(self, 5)
 		
 	}
-
+	
 	method irA(nuevaPosicion){
-		position = game.at(0.max(70.min(nuevaPosicion.x())),nuevaPosicion.y())
+		position = game.at(0.max(75.min(nuevaPosicion.x())),nuevaPosicion.y())
 	}
+	
 	
 }
 
 
-object jugador2{
-	var direccionHaciaDondeGolpea = izquierda 
-    var property position = game.at(147,1)
-//	var puedeSaltar= true
-	
-    method image() = "RogerSinFondoYsinCabeza.png"
-    method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
-	method gravedad(){
-		position = abajo.nuevaPosicion(self,1)
-	}
-	method saltar(){
-		position = arriba.nuevaPosicion(self, 5)
-		
-	}
-
-	method irA(nuevaPosicion){
-		position = game.at(70.max(150.min(nuevaPosicion.x())),nuevaPosicion.y())
-	}
-	
-}
 
 object cabezaRoger{
 	method position()= game.at(jugador2.position().x(),jugador2.position().y()+5)
@@ -64,9 +57,6 @@ object raqueta{
     	method golpe(){}
 }
 
-
-
- 
 	
  object pelota{
 	var jugadorQueGolpea = jugador
@@ -113,28 +103,28 @@ object raqueta{
 */		
 		
 		method pique(){
-			self.cambiarEnergia(100)
+			self.cambiarEnergia(50)
 
-			 game.schedule(100,{self.moverse(arriba)}) 
+			     game.schedule(100,{self.moverse(arriba)}) 
 				 game.schedule(400,{self.moverse(arriba)}) 
 				 game.schedule(700,{self.moverse(arriba)})
 				 game.schedule(1000,{self.moverse(arriba)}) 
 				 game.schedule(1300,{self.moverse(arriba)}) 
 				 game.schedule(1600,{self.moverse(arriba)})
+				 
 				 game.schedule(1900,{self.moverse(abajo)}) 
 				 game.schedule(2200,{self.moverse(abajo)}) 
 				 game.schedule(2500,{self.moverse(abajo)}) 
 				 game.schedule(2800,{self.moverse(abajo)})
 				 game.schedule(3100,{self.moverse(abajo)})
 				 game.schedule(3400,{self.moverse(abajo)})		
-				 
-	
-				 		 
-			
+				 			
 		} 
 		
 		
- 	/* 	method pique(){ 
+ 	/* 	
+ 	 ESTE ES EL METODO DE PIQUE QUE AHCE QUE TODOS LOS PIQUES SEAN IGUALES, SIN VARIAR POR LA ENERGIA.
+ 	 * method pique(){ 
 				 
 				 game.schedule(100,{self.movimientoParabola(2,4)}) 
 				 game.schedule(400,{self.movimientoParabola(2,4)}) 
@@ -156,8 +146,7 @@ object raqueta{
 	     method tocarPiso(){ 
 			 	if(position.y()==0){ 
 			  		game.removeTickEvent("Golpea pelota") 
-					self.pique()
-					
+					self.pique()	
 			 		}
 			 	 }
 
@@ -191,7 +180,6 @@ object raqueta{
 // OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 
 
 object izquierda{
-	
 		method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())		
 }
 	
