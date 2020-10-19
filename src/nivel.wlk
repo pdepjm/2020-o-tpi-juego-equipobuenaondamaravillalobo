@@ -33,12 +33,13 @@ object config{
         keyboard.a().onPressDo({rafa.irA(rafa.position().left(1))})
 }*/
 
-	method configurarTeclas(){
+method configurarTeclas(){
 
-        keyboard.a().onPressDo({jugador.irA(jugador.position().left(1))})
-        keyboard.d().onPressDo({ jugador.irA(jugador.position().right(1))})
+        keyboard.a().onPressDo({jugador.irA(jugador.position().left(1), izquierda)})
+        keyboard.d().onPressDo({jugador.irA(jugador.position().right(1), derecha)})
         keyboard.w().onPressDo({jugador.saltar()})
-}
+        
+        }
 
 	method configurarColisiones(){
 	        game.onCollideDo(jugador,{unaPelota =>

@@ -5,13 +5,16 @@ import wollok.game.*
 const jugador = new Jugador(
 	position = game.at(3,1),
 	direccionHaciaDondeGolpea = derecha,
-	image= "roger2.png")
+	image= "roger2.png",
+	orientacion = derecha)
 	
 const jugador2 = new Jugador(
 	
 	position = game.at(147,1),
 	direccionHaciaDondeGolpea = izquierda,
-	image= "RogerSinFondoYsinCabeza.png")
+	image= "RogerSinFondoYsinCabeza.png",
+	orientacion = izquierda)
+	
 	
 
 
@@ -19,8 +22,10 @@ class Jugador{
 	var direccionHaciaDondeGolpea
 	var property position
 	var image 
+	var orientacion
 	
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
+	method orientacionDelJugador() = orientacion
 	method image() = image
 	
 	method gravedad(){
@@ -32,11 +37,20 @@ class Jugador{
 		
 	}
 	
-	method irA(nuevaPosicion){
-		position = game.at(0.max(75.min(nuevaPosicion.x())),nuevaPosicion.y())
-	}
+	method irA(nuevaPosicion, unaOrientacion){
+		
+		orientacion = unaOrientacion
+		
+		if(nuevaPosicion.x() < 0){
+			position = game.at(0,nuevaPosicion.y())
+		}
+		
+		else{
+			position = game.at(70.min(nuevaPosicion.x()),nuevaPosicion.y())
+			}
 	
-	
+}
+
 }
 
 
@@ -49,8 +63,8 @@ object cabezaRoger{
 
 
 object raqueta{
-
-    	method position() = game.at(jugador.position().x()+3,jugador.position().y())
+    	
+    	method position() = jugador.orientacionDelJugador().posicionRaqueta()
     	
     	method image()=  "raquetaNadal2.png"
     	
@@ -181,10 +195,14 @@ object raqueta{
 
 object izquierda{
 		method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())		
+		
+		method posicionRaqueta() = game.at(jugador.position().x() - 5,jugador.position().y())
 }
 	
 object derecha{
 		method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() + distancia, objetoMovil.position().y())
+		
+		method posicionRaqueta() = game.at(jugador.position().x() + 5,jugador.position().y())
 }
 
 object abajo{
@@ -194,18 +212,6 @@ object abajo{
 object arriba{
 		method nuevaPosicion(objetoMovil,altura)= game.at(objetoMovil.position().x() , 80.min(objetoMovil.position().y()+altura))
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
