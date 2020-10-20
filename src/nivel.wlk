@@ -15,10 +15,11 @@ object partido{
 		game.addVisual(raquetaJugador)
 		game.addVisual(raquetaJugador2)
 		config.configurarTeclas()
-		config.configurarColisiones()
+		//config.configurarColisiones()
 		game.onTick(500,"GravedadPelota", {pelota.gravedad()})
 		game.onTick(100,"GravedadJugador1", {jugador.gravedad()})
         game.onTick(100,"GravedadJugador2", {jugador2.gravedad()})
+        //game.onTick(100,"Chequeo de colision", {config.configurarColisiones()})
 		
 	}
 	
@@ -39,18 +40,29 @@ method configurarTeclas(){
         keyboard.a().onPressDo({jugador.irA(jugador.position().left(1), izquierda)})
         keyboard.d().onPressDo({jugador.irA(jugador.position().right(1), derecha)})
         keyboard.w().onPressDo({jugador.saltar()})
-        
+        keyboard.c().onPressDo({pelota.golpe(jugador)})       
+        keyboard.x().onPressDo({pelota.golpe(jugador2)})       
         }
 
-	method configurarColisiones(){
-	        game.onCollideDo(jugador,{unaPelota =>
-	            unaPelota.golpe(jugador)})
+	/*method configurarColisiones(){
+
+            game.onCollideDo(jugador,{unaPelota =>
+                unaPelota.golpe(jugador)})
             game.onCollideDo(jugador2,{unaPelota =>
-	            unaPelota.golpe(jugador2)})
-}
+                unaPelota.golpe(jugador2)})
 
 
+            game.onCollideDo(raquetaJugador,{unaPelota =>
+                unaPelota.golpe(jugador)})
+            game.onCollideDo(raquetaJugador2,{unaPelota =>
+                unaPelota.golpe(jugador2)})
 }
+		*/
+		
+	}
+
+
+
 
 
 

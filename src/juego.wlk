@@ -71,12 +71,12 @@ object raquetaJugador2{
     	
     	method image()=  "raquetaNadal2.png"
     	
-    	method golpe(nuevoGolpeador){	
+    /* 	method golpe(nuevoGolpeador){	
     		
-    		pelota.cambiarJugadorQueGolpea(nuevoGolpeador)
+    		pelota.jugadorQueGolpea(nuevoGolpeador)
         	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
         	
-}
+}*/
 }
 
 object raquetaJugador{
@@ -87,16 +87,17 @@ object raquetaJugador{
     	
     	method image()=  "raquetaBabolat - copia.png"
     	
-    	method golpe(nuevoGolpeador){	
+  /*   	method golpe(nuevoGolpeador){	
     		
-    		pelota.cambiarJugadorQueGolpea(nuevoGolpeador)
+    		pelota.jugadorQueGolpea(nuevoGolpeador)
         	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
         	
-}
+}*/
 }
 	
  object pelota{
-	var jugadorQueGolpea = jugador
+ 	
+	var property jugadorQueGolpea = jugador
     var property position = game.at(23,10)
     var energia = 100
 
@@ -113,17 +114,13 @@ object raquetaJugador{
 		}
 
 		
-		
-		
 		method direccionLateral() = jugadorQueGolpea.direccionHaciaDondeGolpea()
 		
-		method cambiarJugadorQueGolpea(nuevoGolpeador){ jugadorQueGolpea = nuevoGolpeador }
-		
     	method golpe(nuevoGolpeador){	
-    		
-    		self.cambiarJugadorQueGolpea(nuevoGolpeador)
+    		if( rastreadorDeContacto.estanEnZonaDeContacto(self,jugadorQueGolpea)){
+    		self.jugadorQueGolpea(nuevoGolpeador)
         	game.onTick(100,"Golpea pelota", {self.moverPelota()})
-        	
+        	}
 }
 
 
@@ -140,7 +137,7 @@ object raquetaJugador{
 */		
 		
 		method pique(){
-			self.cambiarEnergia(75)
+			self.cambiarEnergia(60)
 
 			     game.schedule(100,{self.moverse(arriba)}) 
 				 game.schedule(400,{self.moverse(arriba)}) 
@@ -239,22 +236,20 @@ object rastreadorDeContacto{
 	
 	method rangoDeContactoEnX(primerObjeto,segundoObjeto){
 		
-		return primerObjeto.position().x() - segundoObjeto.position().x() <=5
+		return (primerObjeto.position().x() - segundoObjeto.position().x()).abs() <= 10
 		
 		
 	}
 	method rangoDeContactoEnY(primerObjeto,segundoObjeto){
 		
-		return primerObjeto.position().y() - segundoObjeto.position().y() <= 5
+		return (primerObjeto.position().y() - segundoObjeto.position().y()).abs() <= 10
 		
 	}
 	
 	method estanEnZonaDeContacto(primerObjeto,segundoObjeto){
 		
-		return self.rangoDeContactoEnX(primerObjeto,segundoObjeto) and self.rangoDeContactoEnY(primerObjeto,segundoObjeto)
-		
+		return self.rangoDeContactoEnX(primerObjeto,segundoObjeto) and self.rangoDeContactoEnY(primerObjeto,segundoObjeto)	
 	}
-	
 }
 
 
