@@ -80,7 +80,7 @@ object raqueta{
 	
 	    method image() = "pelotaPenn.png"
 		method gravedad(){ position = abajo.nuevaPosicion(self,1) }
-		method cambiarEnergia(nuevaEnergia){energia = nuevaEnergia }
+		method cambiarEnergia(nuevaEnergia){ energia = nuevaEnergia }
 		
 	
 	
@@ -217,7 +217,27 @@ object arriba{
 
 
 
-
+object rastreadorDeContacto{
+	
+	method rangoDeContactoEnX(primerObjeto,segundoObjeto){
+		
+		return primerObjeto.position().x() - segundoObjeto.position().x() <=5
+		
+		
+	}
+	method rangoDeContactoEnY(primerObjeto,segundoObjeto){
+		
+		return primerObjeto.position().y() - segundoObjeto.position().y() <= 5
+		
+	}
+	
+	method estanEnZonaDeContacto(primerObjeto,segundoObjeto){
+		
+		return self.rangoDeContactoEnX(primerObjeto,segundoObjeto) and self.rangoDeContactoEnY(primerObjeto,segundoObjeto)
+		
+	}
+	
+}
 
 
 
