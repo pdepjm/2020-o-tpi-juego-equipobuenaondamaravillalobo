@@ -13,6 +13,7 @@ class Jugador{
 	var property position
 	var image 
 	var property orientacion
+	var puedeSaltar=true
 	
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
@@ -22,9 +23,17 @@ class Jugador{
 	}
 	
 	method saltar(){
-		position = arriba.nuevaPosicion(self, 5)
-		
+		if(self.puedeSaltar()){
+		position = arriba.nuevaPosicion(self,2)
+		8.times({i => game.schedule(20,{position = arriba.nuevaPosicion(self,1)})})
+		}
 	}
+
+	method puedeSaltar()= puedeSaltar
+	
+	method habilitarSalto(){if(self.position().y()==0) puedeSaltar = true}
+
+	method deshabilitarSalto(){puedeSaltar = false}
 	
 	method irA(nuevaPosicion, unaOrientacion){
 		

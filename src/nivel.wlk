@@ -26,9 +26,11 @@ object partido{
 //REPETICION DE EVENTOS 
 		                                             
 		game.onTick(500,"GravedadPelota", {pelota.gravedad()})
-		game.onTick(100,"GravedadJugador1", {jugador.gravedad()})
-        game.onTick(100,"GravedadJugador2", {jugador2.gravedad()})
-   
+		game.onTick(50,"GravedadJugador1", {jugador.gravedad()})
+        game.onTick(50,"GravedadJugador2", {jugador2.gravedad()})
+		game.onTick(50,"Habilitar Salto para jugador1",{jugador.habilitarSalto()})
+		game.onTick(50,"Habilitar Salto para jugador2",{jugador2.habilitarSalto()})
+		   
 		
 	}
 	
@@ -45,13 +47,17 @@ object config{
 
         keyboard.a().onPressDo({jugador.irA(jugador.position().left(1), izquierda)})
         keyboard.d().onPressDo({jugador.irA(jugador.position().right(1), derecha)})
-        keyboard.w().onPressDo({jugador.saltar()})
+        keyboard.w().onPressDo({jugador.saltar()
+        	jugador.deshabilitarSalto()
+        })
         keyboard.space().onPressDo({pelota.golpe(jugador)})
  
   
         keyboard.left().onPressDo({jugador2.irA(jugador2.position().left(1), izquierda)})
         keyboard.right().onPressDo({jugador2.irA(jugador2.position().right(1), derecha)})
-        keyboard.up().onPressDo({jugador2.saltar()})      
+        keyboard.up().onPressDo({jugador2.saltar()
+        	jugador2.deshabilitarSalto()
+        })      
         keyboard.m().onPressDo({pelota.golpe(jugador2)})       
         }
 
