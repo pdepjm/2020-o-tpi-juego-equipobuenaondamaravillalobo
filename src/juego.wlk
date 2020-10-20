@@ -2,21 +2,11 @@ import estaticos.*
 import nivel.*
 import wollok.game.*
 
-const jugador = new Jugador(
-	position = game.at(3,1),
-	direccionHaciaDondeGolpea = derecha,
-	image= "roger2.png",
-	orientacion = derecha)
-	
-const jugador2 = new Jugador(
-	
-	position = game.at(147,1),
-	direccionHaciaDondeGolpea = izquierda,
-	image= "RogerSinFondoYsinCabeza.png",
-	orientacion = izquierda)
-	
-	
 
+	
+	
+	
+                             // CLASE DE JUGADORES
 
 class Jugador{
 	var direccionHaciaDondeGolpea
@@ -40,65 +30,102 @@ class Jugador{
 		
 		orientacion = unaOrientacion
 		
-		position = game.at(0 .max ( 75 .min (nuevaPosicion.x ())), nuevaPosicion.y ())
-		/*  
-		if(nuevaPosicion.x() < 0){
-			position = game.at(0,nuevaPosicion.y())
-		}
+		position = game.at(0.max(150.min(nuevaPosicion.x())),nuevaPosicion.y())
 		
-		else{
-			position = game.at(70.min(nuevaPosicion.x()),nuevaPosicion.y())
-			}
-	*/
-}
+    }
+    
+       	 
+    method golpe(nuevoGolpeador){	
+    		pelota.cambiarEnergia(50)
+    		pelota.jugadorQueGolpea(nuevoGolpeador)
+        	game.onTick(130,"Golpea pelota", {pelota.moverPelota()})
+        	
+    }
 
 }
 
+/*         IDEAAAAAAAAAAAA               
+                                         
+ class JugadorEstrella inherits Jugador{ 
+ super()                                 
+ override method golpe(){                
+ */
 
+                           // CLASE DE RAQUETAS
+
+class Raqueta{
+	
+	var image
+	const duenio
+// PONER LA POSICION DE ESTA MANERA ME PERMITE QUE AL MOVER EL JUGADOR SE MUEVA
+// SIMULTANEAMENTE LA RAQUETA.
+   method position(){ 
+   if(duenio.position().x()<75){  
+   	return game.at(duenio.position().x()+2,duenio.position().y()+2)
+   	}else{
+   		return game.at(duenio.position().x()-2,duenio.position().y()+2)
+   	}
+    }
+  
+    	
+   method image()=  image
+    	 
+   method golpe(nuevoGolpeador){	
+    		pelota.cambiarEnergia(50)
+    		pelota.jugadorQueGolpea(nuevoGolpeador)
+        	game.onTick(80,"Golpea pelota", {pelota.moverPelota()})
+        	
+   }
+}
+
+
+
+// DECLARACION DE JUGADORES DISPONIBLES CON SUS RESPECTIVAS RAQUETAS
+const jugador = new Jugador(
+	position = game.at(3,1),
+	direccionHaciaDondeGolpea = derecha,
+	image= "roger2.png",
+	orientacion = derecha)
+	
+const jugador2 = new Jugador(
+	
+	position = game.at(147,1),
+	direccionHaciaDondeGolpea = izquierda,
+	image= "RogerSinFondoYsinCabeza.png",
+	orientacion = izquierda)
+	
+const raquetaJugador = new Raqueta(	
+    	image = "raquetaBabolat - copia.png"
+    	,duenio = jugador    	
+)
+
+const raquetaJugador2 = new Raqueta(
+    	image =  "raquetaNadal2.png" 
+    	,duenio = jugador2	
+)
+	
+
+
+
+
+
+
+                              // CABEZAS DE JUGADORES
 
 object cabezaRoger{
-	method position()= game.at(jugador2.position().x(),jugador2.position().y()+5)
+	method position()= game.at(jugador2.position().x(),jugador2.position().y()+9)
 	
 	method image()= "cabezaRoger.png"
 }
 
 
-object raquetaJugador2{
-    	
-    	method position()= game.at(jugador2.position().x()-2,jugador2.position().y()+2)
-    	
-    //	method position() = jugador.orientacionDelJugador().posicionRaqueta()
-    	
-    	method image()=  "raquetaNadal2.png"
-    	
-    /* 	method golpe(nuevoGolpeador){	
-    		
-    		pelota.jugadorQueGolpea(nuevoGolpeador)
-        	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
-        	
-}*/
-}
 
-object raquetaJugador{
-    	
-    	method position()= game.at(jugador.position().x()+2,jugador.position().y()+2)
-    	
-    //	method position() = jugador.orientacionDelJugador().posicionRaqueta()
-    	
-    	method image()=  "raquetaBabolat - copia.png"
-    	
-  /*   	method golpe(nuevoGolpeador){	
-    		
-    		pelota.jugadorQueGolpea(nuevoGolpeador)
-        	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
-        	
-}*/
-}
+                           // DECLARACION DE LA PELOTA 
 	
  object pelota{
  	
 	var property jugadorQueGolpea = jugador
-    var property position = game.at(23,10)
+    var property position = game.at(45,10)
     var energia = 100
 
 	
@@ -113,77 +140,15 @@ object raquetaJugador{
 			position = self.direccionLateral().nuevaPosicion( self, energia/20 )
 		}
 
-		
+	
+	
+// DIRECCION DEL JUGADOR QUE GOLPEA ES LA DIRECCION LATERAL
+
 		method direccionLateral() = jugadorQueGolpea.direccionHaciaDondeGolpea()
 		
-    	method golpe(nuevoGolpeador){	
-    		if( rastreadorDeContacto.estanEnZonaDeContacto(self,jugadorQueGolpea)){
-    		self.jugadorQueGolpea(nuevoGolpeador)
-        	game.onTick(100,"Golpea pelota", {self.moverPelota()})
-        	}
-}
-
-
-
-/*
- 		method movimientoParabolaSuprema(x,y){
-				position = game.at(position.x()+x,position.y()+y)
-				//game.stop()
-			}
-			
-		method movimientoParabola(x,y){
-				position = game.at(position.x()+x,position.y()+y)
-			}
-*/		
 		
-		method pique(){
-			self.cambiarEnergia(60)
-
-			     game.schedule(100,{self.moverse(arriba)}) 
-				 game.schedule(400,{self.moverse(arriba)}) 
-				 game.schedule(700,{self.moverse(arriba)})
-				 game.schedule(1000,{self.moverse(arriba)}) 
-				 game.schedule(1300,{self.moverse(arriba)}) 
-				 game.schedule(1600,{self.moverse(arriba)})
-				 
-				 game.schedule(1900,{self.moverse(abajo)}) 
-				 game.schedule(2200,{self.moverse(abajo)}) 
-				 game.schedule(2500,{self.moverse(abajo)}) 
-				 game.schedule(2800,{self.moverse(abajo)})
-				 game.schedule(3100,{self.moverse(abajo)})
-				 game.schedule(3400,{self.moverse(abajo)})		
-				 			
-		} 
+//MOVIMIENTO DE PELOTA SEGUN SI PASO MITAD DE CANCHA
 		
-/* 	method pique(){ 
-				 
-				 game.schedule(100,{self.movimientoParabola(2,4)}) 
-				 game.schedule(400,{self.movimientoParabola(2,4)}) 
-				 game.schedule(700,{self.movimientoParabola(2,2)})
-				 game.schedule(1000,{self.movimientoParabola(2,-2)}) 
-				 game.schedule(1300,{self.movimientoParabola(2,-4)}) 
-				 game.schedule(1600,{self.movimientoParabola(2,-4)})
-				 game.schedule(1900,{self.movimientoParabola(1,2)}) 
-				 game.schedule(2200,{self.movimientoParabola(1,2)}) 
-				 game.schedule(2500,{self.movimientoParabola(1,1)}) 
-				 game.schedule(2800,{self.movimientoParabola(1,-1)})
-				 game.schedule(3100,{self.movimientoParabola(1,-2)})
-				 game.schedule(3400,{self.movimientoParabolaSuprema(1,-2)})		
-				 		 
-				 */
-			
-	     method tocarPiso(){ 
-			 	if(position.y()==0){ 
-			  		game.removeTickEvent("Golpea pelota") 
-					self.pique()	
-			 		}
-			 	 }
-
-		
-// MOVIMIENTO DE PELOTA 
-
-		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 70 and self.direccionLateral() == derecha
-	
 		method moverPelota(){
     		
     		if(self.noPasoMitadDeCancha()){
@@ -196,17 +161,67 @@ object raquetaJugador{
     			self.tocarPiso()
     			
 			}
-	}
+	      }
 	   
-}
+		
+    	method golpe(nuevoGolpeador){	
+    		self.jugadorQueGolpea(nuevoGolpeador)
+    		if(rastreadorDeContacto.estanEnZonaDeContacto(self,jugadorQueGolpea)){
+    		self.cambiarEnergia(150)
+        	game.onTick(100,"Golpea pelota", {self.moverPelota()})
+        	}
+        }
+
+
+		
+			
+	     method tocarPiso(){ 
+			 	if(position.y()==0){ 
+			  		game.removeTickEvent("Golpea pelota") 
+					piqueDePelota.accionar()	
+			 		}
+			 	 }
+
+		
+
+
+		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 70 and self.direccionLateral() == derecha
+	
+		
+       }
+
+
+
+                          // DECLARACION DE PIQUE DE LA PELOTA
+
+object piqueDePelota{
+	
+	
+	method accionar(){ 
+		  
+			pelota.cambiarEnergia(60)
+
+			     game.schedule(100,{pelota.moverse(arriba)}) 
+				 game.schedule(400,{pelota.moverse(arriba)}) 
+				 game.schedule(700,{pelota.moverse(arriba)})
+				 game.schedule(1000,{pelota.moverse(arriba)}) 
+				 game.schedule(1300,{pelota.moverse(arriba)}) 
+				 game.schedule(1600,{pelota.moverse(arriba)})
+				 
+				 game.schedule(1900,{pelota.moverse(abajo)}) 
+				 game.schedule(2200,{pelota.moverse(abajo)}) 
+				 game.schedule(2500,{pelota.moverse(abajo)}) 
+				 game.schedule(2800,{pelota.moverse(abajo)})
+				 game.schedule(3100,{pelota.moverse(abajo)})
+				 game.schedule(3400,{pelota.moverse(abajo)})		
+				 			
+		} 
+}	
 
 
 
 
-
-
-
-// OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 
+                            // OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 
 
 object izquierda{
 		method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())		
@@ -225,12 +240,16 @@ object abajo{
 }
 
 object arriba{
-		method nuevaPosicion(objetoMovil,altura)= game.at(objetoMovil.position().x() , 80.min(objetoMovil.position().y()+altura))
+		method nuevaPosicion(objetoMovil,altura)= game.at(objetoMovil.position().x() , 25.min(objetoMovil.position().y()+altura))
 }
 
 
 
 
+
+
+
+           // DECLARACION DE OBJETOS PARA RELACIONAR DISTANCIA DE PELOTA CON RAQUETA
 
 object rastreadorDeContacto{
 	

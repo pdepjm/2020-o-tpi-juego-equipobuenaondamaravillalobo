@@ -7,19 +7,28 @@ import wollok.game.*
 object partido{
 	
 		method iniciar() {
-		game.addVisualCharacter(jugador2)
+			
+// OBJETOS MOSTRADOS POR PANTALLA
+                                                 
+		game.addVisual(jugador2)
 		game.addVisual(jugador)
 		game.addVisual(pelota)		
 		game.addVisual(red)
 		game.addVisual(cabezaRoger)
 		game.addVisual(raquetaJugador)
 		game.addVisual(raquetaJugador2)
+		
+// MAIN DE TECLAS Y COLISIONES
+                                                         
 		config.configurarTeclas()
-		//config.configurarColisiones()
+		config.configurarColisiones()
+		
+//REPETICION DE EVENTOS 
+		                                             
 		game.onTick(500,"GravedadPelota", {pelota.gravedad()})
 		game.onTick(100,"GravedadJugador1", {jugador.gravedad()})
         game.onTick(100,"GravedadJugador2", {jugador2.gravedad()})
-        //game.onTick(100,"Chequeo de colision", {config.configurarColisiones()})
+   
 		
 	}
 	
@@ -27,40 +36,46 @@ object partido{
 
 
 
-object config{
-/* 
-	method configurarTeclasRafa(){
-        keyboard.w().onPressDo({rafa.saltar()})
-        keyboard.d().onPressDo({rafa.irA(rafa.position().right(1))})
-        keyboard.a().onPressDo({rafa.irA(rafa.position().left(1))})
-}*/
 
-method configurarTeclas(){
+                         // CONFIGURACION DE TECLAS Y COLISIONES
+
+object config{
+
+    method configurarTeclas(){
 
         keyboard.a().onPressDo({jugador.irA(jugador.position().left(1), izquierda)})
         keyboard.d().onPressDo({jugador.irA(jugador.position().right(1), derecha)})
         keyboard.w().onPressDo({jugador.saltar()})
-        keyboard.c().onPressDo({pelota.golpe(jugador)})       
-        keyboard.x().onPressDo({pelota.golpe(jugador2)})       
+        keyboard.space().onPressDo({pelota.golpe(jugador)})
+ 
+  
+        keyboard.left().onPressDo({jugador2.irA(jugador2.position().left(1), izquierda)})
+        keyboard.right().onPressDo({jugador2.irA(jugador2.position().right(1), derecha)})
+        keyboard.up().onPressDo({jugador2.saltar()})      
+        keyboard.m().onPressDo({pelota.golpe(jugador2)})       
         }
 
-	/*method configurarColisiones(){
+	method configurarColisiones(){
 
             game.onCollideDo(jugador,{unaPelota =>
-                unaPelota.golpe(jugador)})
+                jugador.golpe(jugador)})
             game.onCollideDo(jugador2,{unaPelota =>
-                unaPelota.golpe(jugador2)})
+                jugador2.golpe(jugador2)})
 
 
             game.onCollideDo(raquetaJugador,{unaPelota =>
-                unaPelota.golpe(jugador)})
+                raquetaJugador.golpe(jugador)})
             game.onCollideDo(raquetaJugador2,{unaPelota =>
-                unaPelota.golpe(jugador2)})
-}
-		*/
+                raquetaJugador2.golpe(jugador2)})
+   }
+		
 		
 	}
+                          // POLIMORFISMO: EL MENSAJE GOLPE VARÍA CON DISTINTAS TRAYECTORIAS Y VELOCIDADES
 
+                                        // CUANDO SE GOLPEA AL APRETAR, PELOTA REALIZA EL GOLPE.
+                                        // CUANDO COLISIONA CON LA RAQUETA, LA RAQUETA REALIZA EL GOLPE.
+                                        // CUANDO COLISIONA CON EL JUGADOR, EL JUGADOR HACE EL GOLPE.
 
 
 
