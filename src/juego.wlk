@@ -22,10 +22,9 @@ class Jugador{
 	var direccionHaciaDondeGolpea
 	var property position
 	var image 
-	var orientacion
+	var property orientacion
 	
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
-	method orientacionDelJugador() = orientacion
 	method image() = image
 	
 	method gravedad(){
@@ -41,6 +40,8 @@ class Jugador{
 		
 		orientacion = unaOrientacion
 		
+		position = game.at(0 .max ( 75 .min (nuevaPosicion.x ())), nuevaPosicion.y ())
+		/*  
 		if(nuevaPosicion.x() < 0){
 			position = game.at(0,nuevaPosicion.y())
 		}
@@ -48,7 +49,7 @@ class Jugador{
 		else{
 			position = game.at(70.min(nuevaPosicion.x()),nuevaPosicion.y())
 			}
-	
+	*/
 }
 
 }
@@ -62,15 +63,37 @@ object cabezaRoger{
 }
 
 
-object raqueta{
+object raquetaJugador2{
     	
-    	method position() = jugador.orientacionDelJugador().posicionRaqueta()
+    	method position()= game.at(jugador2.position().x()-2,jugador2.position().y()+2)
+    	
+    //	method position() = jugador.orientacionDelJugador().posicionRaqueta()
     	
     	method image()=  "raquetaNadal2.png"
     	
-    	method golpe(){}
+    	method golpe(nuevoGolpeador){	
+    		
+    		pelota.cambiarJugadorQueGolpea(nuevoGolpeador)
+        	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
+        	
+}
 }
 
+object raquetaJugador{
+    	
+    	method position()= game.at(jugador.position().x()+2,jugador.position().y()+2)
+    	
+    //	method position() = jugador.orientacionDelJugador().posicionRaqueta()
+    	
+    	method image()=  "raquetaBabolat - copia.png"
+    	
+    	method golpe(nuevoGolpeador){	
+    		
+    		pelota.cambiarJugadorQueGolpea(nuevoGolpeador)
+        	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
+        	
+}
+}
 	
  object pelota{
 	var jugadorQueGolpea = jugador
@@ -117,7 +140,7 @@ object raqueta{
 */		
 		
 		method pique(){
-			self.cambiarEnergia(50)
+			self.cambiarEnergia(75)
 
 			     game.schedule(100,{self.moverse(arriba)}) 
 				 game.schedule(400,{self.moverse(arriba)}) 
@@ -135,10 +158,7 @@ object raqueta{
 				 			
 		} 
 		
-		
- 	/* 	
- 	 ESTE ES EL METODO DE PIQUE QUE AHCE QUE TODOS LOS PIQUES SEAN IGUALES, SIN VARIAR POR LA ENERGIA.
- 	 * method pique(){ 
+/* 	method pique(){ 
 				 
 				 game.schedule(100,{self.movimientoParabola(2,4)}) 
 				 game.schedule(400,{self.movimientoParabola(2,4)}) 
@@ -153,9 +173,7 @@ object raqueta{
 				 game.schedule(3100,{self.movimientoParabola(1,-2)})
 				 game.schedule(3400,{self.movimientoParabolaSuprema(1,-2)})		
 				 		 
-				 }
-	
-			*/
+				 */
 			
 	     method tocarPiso(){ 
 			 	if(position.y()==0){ 
@@ -167,7 +185,7 @@ object raqueta{
 		
 // MOVIMIENTO DE PELOTA 
 
-		method noPasoMitadDeCancha() = (position.x() > 80 && self.direccionLateral() == izquierda) || ( position.x() < 70 && self.direccionLateral() == derecha)
+		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 70 and self.direccionLateral() == derecha
 	
 		method moverPelota(){
     		
