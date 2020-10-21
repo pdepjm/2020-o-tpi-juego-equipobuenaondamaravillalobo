@@ -39,7 +39,7 @@ class Jugador{
 		
 		orientacion = unaOrientacion
 		
-		position = game.at(0.max(150.min(nuevaPosicion.x())),nuevaPosicion.y())
+		position = game.at(0.max(141.min(nuevaPosicion.x())),nuevaPosicion.y())
 		
     }
     
@@ -98,7 +98,7 @@ const jugador = new Jugador(
 	
 const jugador2 = new Jugador(
 	
-	position = game.at(147,1),
+	position = game.at(139,1),
 	direccionHaciaDondeGolpea = izquierda,
 	image= "RogerSinFondoYsinCabeza.png",
 	orientacion = izquierda)
@@ -141,8 +141,7 @@ object cabezaRoger{
 	    method image() = "pelotaPenn.png"
 		method gravedad(){ position = abajo.nuevaPosicion(self,1) }
 		method cambiarEnergia(nuevaEnergia){ energia = nuevaEnergia }
-		
-	
+		method energia()= energia
 	
 		method moverse(direccionVertical){
 			position = direccionVertical.nuevaPosicion( self, energia/50 )
@@ -264,13 +263,13 @@ object rastreadorDeContacto{
 	
 	method rangoDeContactoEnX(primerObjeto,segundoObjeto){
 		
-		return (primerObjeto.position().x() - segundoObjeto.position().x()).abs() <= 10
+		return (primerObjeto.position().x() - segundoObjeto.position().x()).abs() <= 5
 		
 		
 	}
 	method rangoDeContactoEnY(primerObjeto,segundoObjeto){
 		
-		return (primerObjeto.position().y() - segundoObjeto.position().y()).abs() <= 10
+		return (primerObjeto.position().y() - segundoObjeto.position().y()).abs() <= 5
 		
 	}
 	

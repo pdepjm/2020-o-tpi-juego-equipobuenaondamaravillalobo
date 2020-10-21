@@ -18,3 +18,5 @@ program  tenistasCabezones{
 
 	game.start()
 }
+
+// SI APRETAS LA TECLA

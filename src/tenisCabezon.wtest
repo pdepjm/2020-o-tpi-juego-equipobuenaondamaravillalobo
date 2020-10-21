@@ -1,0 +1,79 @@
+import estaticos.*
+import nivel.*
+import juego.*
+import wollok.game.*
+
+
+
+describe "Pelota"{
+	
+	const jugador = new Jugador(
+	position = game.at(3,1),
+	direccionHaciaDondeGolpea = derecha,
+	image= "roger2.png",
+	orientacion = derecha)
+	
+	test "Al golpear pelota, la energia se settea insta"{
+		pelota.position(game.at(4,2))
+		pelota.golpe(jugador)
+		assert.equals(150,pelota.energia())
+	}
+	
+	test "Al picar la energia se settea"{
+		pelota.position(game.at(4,2))
+		pelota.golpe(jugador)
+		if(pelota.position().y()==0){
+			assert.equals(60,pelota.energia())
+		}
+	}
+}
+describe "Jugadores"{ 
+	
+	const jugador3 = new Jugador(
+	position = game.at(3,1),
+	direccionHaciaDondeGolpea = derecha,
+	image= "roger2.png",
+	orientacion = derecha)
+	
+	test "Los jugadores pueden saltar nashe" {
+		jugador3.saltar()
+		assert.equals(3,jugador3.position().y())
+	}
+	
+	test "Los jugadores pueden correr" { 
+		jugador3.position(jugador3.position().left(1))
+		assert.equals(2,jugador3.position().x())
+	}
+}
+/*  
+test "Al golpear la energia se settea insta" {
+    
+    assert.equals(140, pepita.energia())
+}
+
+test "" {
+    pepita.vola(1)
+    assert.equals(91, pepita.energia())
+}
+
+test "" {
+    pepita.vola(100)
+    assert.that(pepita.estaCansada())
+}
+
+test "" {
+    pepita.irA(game.at(1, 0))
+    assert.equals(91, pepita.energia())
+}
+
+test "" {
+    const nuevaPosicion = game.at(1, 1)
+    pepita.irA(nuevaPosicion)
+    assert.equals(nuevaPosicion, pepita.position())
+}
+
+test "" {
+    pepita.irA(nido.position())
+    assert.equals("pepita-grande.png", pepita.image())
+}
+* */
