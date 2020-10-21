@@ -3,7 +3,7 @@ import nivel.*
 import wollok.game.*
 
 
-	
+	// game.removeTickEvent ( " enemigo en movimiento " )
 	
 	
                              // CLASE DE JUGADORES
@@ -13,7 +13,7 @@ class Jugador{
 	var property position
 	var image 
 	var property orientacion
-	var puedeSaltar=true
+	var puedeSaltar= true
 	
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
@@ -22,6 +22,7 @@ class Jugador{
 		position = abajo.nuevaPosicion(self,1)
 	}
 	
+	
 	method saltar(){
 		if(self.puedeSaltar()){
 		position = arriba.nuevaPosicion(self,2)
@@ -29,21 +30,12 @@ class Jugador{
 		}
 	}
 
-	method puedeSaltar()= puedeSaltar
+	method puedeSaltar() = puedeSaltar
 	
 	method habilitarSalto(){if(self.position().y()==0) puedeSaltar = true}
 
 	method deshabilitarSalto(){puedeSaltar = false}
-	
-	method irA(nuevaPosicion, unaOrientacion){
-		
-		orientacion = unaOrientacion
-		
-		position = game.at(0.max(141.min(nuevaPosicion.x())),nuevaPosicion.y())
-		
-    }
-    
-       	 
+    	 
     method golpe(nuevoGolpeador){	
     		pelota.cambiarEnergia(50)
     		pelota.jugadorQueGolpea(nuevoGolpeador)
@@ -53,7 +45,46 @@ class Jugador{
 
 }
 
-/*         IDEAAAAAAAAAAAA               
+
+object moverJugador{
+	
+	var property jugadorEnMovimiento = false
+	
+	method moverJugadorHacia(direccion,jugador){
+		
+		if(self.jugadorEnMovimiento()){
+			game.removeTickEvent("Jugador corriendo")
+			game.onTick(100,"Jugador corriendo",{jugador.position(direccion.nuevaPosicion(jugador,1))})
+ 
+		}else{
+			game.onTick(100,"Jugador corriendo",{jugador.position(direccion.nuevaPosicion(jugador,1))})
+			jugadorEnMovimiento = true 
+	
+	
+	}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*              
                                          
  class JugadorEstrella inherits Jugador{ 
  super()                                 
@@ -232,23 +263,23 @@ object piqueDePelota{
                             // OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 
 
 object izquierda{
-		method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())		
+		method nuevaPosicion(objetoMovil,distancia) = game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())		
 		
 		method posicionRaqueta() = game.at(jugador.position().x() - 5,jugador.position().y())
 }
 	
 object derecha{
-		method nuevaPosicion(objetoMovil,distancia)= game.at(objetoMovil.position().x() + distancia, objetoMovil.position().y())
+		method nuevaPosicion(objetoMovil,distancia) = game.at(objetoMovil.position().x() + distancia, objetoMovil.position().y())
 		
 		method posicionRaqueta() = game.at(jugador.position().x() + 5,jugador.position().y())
 }
 
 object abajo{
-	    method nuevaPosicion(objetoMovil,altura)= game.at(objetoMovil.position().x(), 0.max(objetoMovil.position().y()-altura))
+	    method nuevaPosicion(objetoMovil,altura) = game.at(objetoMovil.position().x(), 0.max(objetoMovil.position().y()-altura))
 }
 
 object arriba{
-		method nuevaPosicion(objetoMovil,altura)= game.at(objetoMovil.position().x() , 25.min(objetoMovil.position().y()+altura))
+		method nuevaPosicion(objetoMovil,altura) = game.at(objetoMovil.position().x() , 25.min(objetoMovil.position().y()+altura))
 }
 
 

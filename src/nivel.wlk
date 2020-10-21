@@ -45,19 +45,22 @@ object config{
 
     method configurarTeclas(){
 
-        keyboard.a().onPressDo({jugador.irA(jugador.position().left(1), izquierda)})
-        keyboard.d().onPressDo({jugador.irA(jugador.position().right(1), derecha)})
+        keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador) })
+        keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador) })
+        keyboard.s().onPressDo({game.removeTickEvent("Jugador corriendo")
+        	moverJugador.jugadorEnMovimiento(false)
+        })
         keyboard.w().onPressDo({jugador.saltar()
         	jugador.deshabilitarSalto()
         })
         keyboard.space().onPressDo({pelota.golpe(jugador)})
  
   
-        keyboard.left().onPressDo({jugador2.irA(jugador2.position().left(1), izquierda)})
-        keyboard.right().onPressDo({jugador2.irA(jugador2.position().right(1), derecha)})
+        keyboard.left().onPressDo({jugador2.position(izquierda.nuevaPosicion(jugador2,1))})
+        keyboard.right().onPressDo({jugador2.position(derecha.nuevaPosicion(jugador2,1))})
         keyboard.up().onPressDo({jugador2.saltar()
         	jugador2.deshabilitarSalto()
-        })      
+        })
         keyboard.m().onPressDo({pelota.golpe(jugador2)})       
         }
 
