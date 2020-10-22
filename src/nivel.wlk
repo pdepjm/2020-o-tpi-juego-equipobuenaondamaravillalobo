@@ -21,7 +21,7 @@ object partido{
 // MAIN DE TECLAS Y COLISIONES
                                                          
 		config.configurarTeclas()
-		config.configurarColisiones()
+		// config.configurarColisiones()
 		
 //REPETICION DE EVENTOS 
 		                                             
@@ -35,7 +35,7 @@ object partido{
 	}
 	
 }
-
+//game.cleanUp()
 
 
 
@@ -45,10 +45,10 @@ object config{
 
     method configurarTeclas(){
 
-        keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador) })
-        keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador) })
+        keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda) })
+        keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha) })
         keyboard.s().onPressDo({game.removeTickEvent("Jugador corriendo")
-        	moverJugador.jugadorEnMovimiento(false)
+        	moverJugador.jugadorEstaEnMovimiento(false)
         })
         keyboard.w().onPressDo({jugador.saltar()
         	jugador.deshabilitarSalto()
@@ -56,15 +56,18 @@ object config{
         keyboard.space().onPressDo({pelota.golpe(jugador)})
  
   
-        keyboard.left().onPressDo({jugador2.position(izquierda.nuevaPosicion(jugador2,1))})
-        keyboard.right().onPressDo({jugador2.position(derecha.nuevaPosicion(jugador2,1))})
+        keyboard.left().onPressDo({moverJugador2.moverJugadorHacia(izquierda) })
+        keyboard.right().onPressDo({moverJugador2.moverJugadorHacia(derecha) })
         keyboard.up().onPressDo({jugador2.saltar()
         	jugador2.deshabilitarSalto()
+        })
+		keyboard.down().onPressDo({game.removeTickEvent("Jugador2 corriendo")
+        	moverJugador2.jugadorEstaEnMovimiento(false)
         })
         keyboard.m().onPressDo({pelota.golpe(jugador2)})       
         }
 
-	method configurarColisiones(){
+/* 	method configurarColisiones(){
 
             game.onCollideDo(jugador,{unaPelota =>
                 jugador.golpe(jugador)})
@@ -78,7 +81,7 @@ object config{
                 raquetaJugador2.golpe(jugador2)})
    }
 		
-		
+		*/
 	}
                           // POLIMORFISMO: EL MENSAJE GOLPE VARÍA CON DISTINTAS TRAYECTORIAS Y VELOCIDADES
 

@@ -35,49 +35,47 @@ class Jugador{
 	method habilitarSalto(){if(self.position().y()==0) puedeSaltar = true}
 
 	method deshabilitarSalto(){puedeSaltar = false}
-    	 
-    method golpe(nuevoGolpeador){	
-    		pelota.cambiarEnergia(50)
-    		pelota.jugadorQueGolpea(nuevoGolpeador)
-        	game.onTick(130,"Golpea pelota", {pelota.moverPelota()})
-        	
-    }
+     	 
+//    method golpe(){}
 
 }
 
 
 object moverJugador{
 	
-	var property jugadorEnMovimiento = false
+	var property jugadorEstaEnMovimiento = false
 	
-	method moverJugadorHacia(direccion,jugador){
+	method moverJugadorHacia(direccion){
 		
-		if(self.jugadorEnMovimiento()){
+		if(self.jugadorEstaEnMovimiento()){
 			game.removeTickEvent("Jugador corriendo")
 			game.onTick(100,"Jugador corriendo",{jugador.position(direccion.nuevaPosicion(jugador,1))})
  
 		}else{
 			game.onTick(100,"Jugador corriendo",{jugador.position(direccion.nuevaPosicion(jugador,1))})
-			jugadorEnMovimiento = true 
-	
+			jugadorEstaEnMovimiento = true 
 	
 	}
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+object moverJugador2{
+	
+	var property jugadorEstaEnMovimiento = false
+	
+	method moverJugadorHacia(direccion){
+		
+		if(self.jugadorEstaEnMovimiento()){
+			game.removeTickEvent("Jugador2 corriendo")
+			game.onTick(100,"Jugador2 corriendo",{jugador2.position(direccion.nuevaPosicion(jugador2,1))})
+ 
+		}else{
+			game.onTick(100,"Jugador2 corriendo",{jugador2.position(direccion.nuevaPosicion(jugador2,1))})
+			jugadorEstaEnMovimiento = true 
+	
+	}
+	}
+}
 
 
 
@@ -110,13 +108,10 @@ class Raqueta{
     	
    method image()=  image
     	 
-   method golpe(nuevoGolpeador){	
-    		pelota.cambiarEnergia(50)
-    		pelota.jugadorQueGolpea(nuevoGolpeador)
-        	game.onTick(80,"Golpea pelota", {pelota.moverPelota()})
+//   method golpe(){}
         	
    }
-}
+
 
 
 
@@ -167,6 +162,7 @@ object cabezaRoger{
 	var property jugadorQueGolpea = jugador
     var property position = game.at(45,10)
     var energia = 100
+    var tipoDeGolpe = golpeBasico
 
 	
 	    method image() = "pelotaPenn.png"
@@ -179,40 +175,30 @@ object cabezaRoger{
 			position = self.direccionLateral().nuevaPosicion( self, energia/20 )
 		}
 
-	
-	
 // DIRECCION DEL JUGADOR QUE GOLPEA ES LA DIRECCION LATERAL
 
 		method direccionLateral() = jugadorQueGolpea.direccionHaciaDondeGolpea()
-		
-		
+			
 //MOVIMIENTO DE PELOTA SEGUN SI PASO MITAD DE CANCHA
 		
 		method moverPelota(){
-    		
     		if(self.noPasoMitadDeCancha()){
-  
-    			self.moverse(arriba)
-    			
+    			self.moverse(arriba) 	
+    					
 			}else{
-				
     			self.moverse(abajo)
-    			self.tocarPiso()
-    			
+    			self.tocarPiso()		
 			}
 	      }
-	   
-		
+	   	
     	method golpe(nuevoGolpeador){	
+    		
     		self.jugadorQueGolpea(nuevoGolpeador)
     		if(rastreadorDeContacto.estanEnZonaDeContacto(self,jugadorQueGolpea)){
-    		self.cambiarEnergia(150)
-        	game.onTick(100,"Golpea pelota", {self.moverPelota()})
+    			tipoDeGolpe.golpearPelota()
+
         	}
-        }
-
-
-		
+        }	
 			
 	     method tocarPiso(){ 
 			 	if(position.y()==0){ 
@@ -221,13 +207,32 @@ object cabezaRoger{
 			 		}
 			 	 }
 
-		
-
-
 		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 70 and self.direccionLateral() == derecha
 	
 		
        }
+
+
+object golpeBasico{
+	
+	method golpearPelota(){
+    		pelota.cambiarEnergia(150)
+        	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
+        	}
+        }	
+
+
+object golpeDebil{
+	
+	method golpearPelota(){}
+}
+
+object golpeAlto{
+	
+	method golpearPelota(){}
+}
+
+
 
 
 

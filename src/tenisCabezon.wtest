@@ -37,23 +37,26 @@ describe "Jugadores"{
 	orientacion = derecha)
 	
 	test "Los jugadores pueden saltar" {
-		jugador3.saltar()
-		assert.equals(3,jugador3.position().y())
-	}
-/* 	
-	test "Los jugadores no pueden saltar muchasveces seguidas" {
-		
-		
-		assert.notThat(jugador3.puedeSaltar())
-	}
-*/	
-	
+        jugador3.saltar()
+        assert.that(jugador3.position().y() > 0)
+    }
+
+    test "Los jugadores no pueden saltar muchasveces seguidas" {
+        // Se parte de la base de que el jugador esta un poco elevado del piso
+        // Como si ya hubiera presionado la tecla de salto
+        jugador3.saltar()
+        jugador3.deshabilitarSalto()
+        assert.notThat(jugador3.puedeSaltar())
+        
+        }
 	test "Los jugadores pueden correr" { 
 		jugador3.position(jugador3.position().left(1))
 		assert.equals(2,jugador3.position().x())
 	}
 	
 }
+// Testear: Como se mueve la pelota, hacia arriba o abajo
+
 /*  
 test "Al golpear la energia se settea insta" {
     
@@ -85,4 +88,4 @@ test "" {
     pepita.irA(nido.position())
     assert.equals("pepita-grande.png", pepita.image())
 }
-* */
+*/
