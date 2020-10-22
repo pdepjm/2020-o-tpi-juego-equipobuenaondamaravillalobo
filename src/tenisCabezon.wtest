@@ -31,7 +31,7 @@ describe "Pelota"{
 describe "Jugadores"{ 
 	
 	const jugador3 = new Jugador(
-	position = game.at(3,1),
+	position = game.at(3,0),
 	direccionHaciaDondeGolpea = derecha,
 	image= "roger2.png",
 	orientacion = derecha)
@@ -49,6 +49,9 @@ describe "Jugadores"{
         assert.notThat(jugador3.puedeSaltar())
         
         }
+
+
+
 	test "Los jugadores pueden correr" { 
 		jugador3.position(jugador3.position().left(1))
 		assert.equals(2,jugador3.position().x())
@@ -57,8 +60,11 @@ describe "Jugadores"{
 }
 // Testear: Como se mueve la pelota, hacia arriba o abajo
 
+
+
+
 /*  
-test "Al golpear la energia se settea insta" {
+test "Al golpear la energia se settea" {
     
     assert.equals(140, pepita.energia())
 }
