@@ -160,20 +160,20 @@ object cabezaRoger{
  object pelota{
  	
 	var property jugadorQueGolpea = jugador
-    var property position = game.at(45,10)
-    var energia = 100
+    var property position = game.at(10,10)
+    var fuerzaDeSubida = 100
+    var velocidad = 100
     var tipoDeGolpe = golpeBasico
+    
 
 	
 	    method image() = "pelotaPenn.png"
 		method gravedad(){ position = abajo.nuevaPosicion(self,1) }
-		method cambiarEnergia(nuevaEnergia){ energia = nuevaEnergia }
-		method energia()= energia
-	
-		method moverse(direccionVertical){
-			position = direccionVertical.nuevaPosicion( self, energia/50 )
-			position = self.direccionLateral().nuevaPosicion( self, energia/20 )
-		}
+		method cambiarVelocidad(nuevaVelocidad){ velocidad = nuevaVelocidad }
+		method velocidad()= velocidad
+		method cambiarFuerzaDeSubida(nuevaFuerza){ fuerzaDeSubida = nuevaFuerza}
+		method fuerzaDeSubida()= fuerzaDeSubida
+
 
 // DIRECCION DEL JUGADOR QUE GOLPEA ES LA DIRECCION LATERAL
 
@@ -181,29 +181,33 @@ object cabezaRoger{
 			
 //MOVIMIENTO DE PELOTA SEGUN SI PASO MITAD DE CANCHA
 		
-		method moverPelota(){
+		method moverse(){
     		if(self.noPasoMitadDeCancha()){
-    			self.moverse(arriba) 	
+    			tipoDeGolpe.moverPelota(arriba) 	
     					
 			}else{
-    			self.moverse(abajo)
+    			tipoDeGolpe.moverPelota(abajo)
     			self.tocarPiso()		
 			}
 	      }
 	   	
     	method golpe(nuevoGolpeador){	
     		
+    		piqueDePelota.detenerPique()
+    		piqueDePelota.reiniciarContadorDePiques()
     		self.jugadorQueGolpea(nuevoGolpeador)
     		if(rastreadorDeContacto.estanEnZonaDeContacto(self,jugadorQueGolpea)){
     			tipoDeGolpe.golpearPelota()
 
         	}
         }	
-			
+		
 	     method tocarPiso(){ 
 			 	if(position.y()==0){ 
-			  		game.removeTickEvent("Golpea pelota") 
-					piqueDePelota.accionar()	
+			  		game.removeTickEvent("Golpea pelota")
+			  		
+					piqueDePelota.accionar()
+					piqueDePelota.sumarUnPique()
 			 		}
 			 	 }
 
@@ -213,14 +217,23 @@ object cabezaRoger{
        }
 
 
+object controladorDePelota{
+	
+	method moverPelota(direccionVertical){
+			pelota.position(direccionVertical.nuevaPosicion( pelota , pelota.fuerzaDeSubida()/50)) 
+			pelota.position(pelota.direccionLateral().nuevaPosicion( pelota , pelota.velocidad()/20)) 
+		}
+}
+
+
 object golpeBasico{
 	
 	method golpearPelota(){
-    		pelota.cambiarEnergia(150)
-        	game.onTick(100,"Golpea pelota", {pelota.moverPelota()})
+    		pelota.cambiarFuerzaDeSubida(150)
+        	game.onTick(100,"Golpea pelota", {pelota.moverse()})
         	}
-        }	
-
+	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
+}
 
 object golpeDebil{
 	
@@ -239,30 +252,69 @@ object golpeAlto{
                           // DECLARACION DE PIQUE DE LA PELOTA
 
 object piqueDePelota{
+	var potenciaDePique = 60
+	var contadorDePiques = 0
+
+	method reiniciarContadorDePiques(){contadorDePiques = 0}
+	method sumarUnPique(){contadorDePiques += 1}
+	method perderPotenciaDePique(){potenciaDePique -= 10}
+	method reiniciarPotenciaDePique(){potenciaDePique = 60}
+
+	
+	method dirigirPique(){
+		if(potenciaDePique > 0){
+			controladorDePelota.moverPelota(arriba)
+			self.perderPotenciaDePique()
+		}else{
+			controladorDePelota.moverPelota(abajo)
+			
+		}
+	}
+
+	method accionar(){ 	
+			self.reiniciarPotenciaDePique()	  
+			pelota.cambiarFuerzaDeSubida(50)
+			game.onTick(100,"Pelota picando",{self.dirigirPique()})
+}	
+	method detenerPique(){
+		if(contadorDePiques >= 1){
+			game.removeTickEvent("Pelota picando")
+		}
+}
+}
+
+
+
+
+ 
+
+
+/* 
+object piqueDePelota{
 	
 	
 	method accionar(){ 
 		  
-			pelota.cambiarEnergia(60)
+			pelota.cambiarFuerzaDeSubida(60)
 
-			     game.schedule(100,{pelota.moverse(arriba)}) 
-				 game.schedule(400,{pelota.moverse(arriba)}) 
-				 game.schedule(700,{pelota.moverse(arriba)})
-				 game.schedule(1000,{pelota.moverse(arriba)}) 
-				 game.schedule(1300,{pelota.moverse(arriba)}) 
-				 game.schedule(1600,{pelota.moverse(arriba)})
+			     game.schedule(100,{controladorDePelota.moverPelota(arriba)}) 
+				 game.schedule(400,{controladorDePelota.moverPelota(arriba)})
+				 game.schedule(700,{controladorDePelota.moverPelota(arriba)})
+				 game.schedule(1000,{controladorDePelota.moverPelota(arriba)})
+				 game.schedule(1300,{controladorDePelota.moverPelota(arriba)})
+				 game.schedule(1600,{controladorDePelota.moverPelota(arriba)})
 				 
-				 game.schedule(1900,{pelota.moverse(abajo)}) 
-				 game.schedule(2200,{pelota.moverse(abajo)}) 
-				 game.schedule(2500,{pelota.moverse(abajo)}) 
-				 game.schedule(2800,{pelota.moverse(abajo)})
-				 game.schedule(3100,{pelota.moverse(abajo)})
-				 game.schedule(3400,{pelota.moverse(abajo)})		
+				 game.schedule(1900,{controladorDePelota.moverPelota(abajo)})
+				 game.schedule(2200,{controladorDePelota.moverPelota(abajo)})
+				 game.schedule(2500,{controladorDePelota.moverPelota(abajo)})
+				 game.schedule(2800,{controladorDePelota.moverPelota(abajo)})
+				 game.schedule(3100,{controladorDePelota.moverPelota(abajo)})
+				 game.schedule(3400,{controladorDePelota.moverPelota(abajo)})
 				 			
 		} 
 }	
 
-
+*/
 
 
                             // OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 

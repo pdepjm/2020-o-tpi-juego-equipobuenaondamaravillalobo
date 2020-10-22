@@ -28,8 +28,8 @@ object partido{
 		game.onTick(500,"GravedadPelota", {pelota.gravedad()})
 		game.onTick(50,"GravedadJugador1", {jugador.gravedad()})
         game.onTick(50,"GravedadJugador2", {jugador2.gravedad()})
-		game.onTick(50,"Habilitar Salto para jugador1",{jugador.habilitarSalto()})
-		game.onTick(50,"Habilitar Salto para jugador2",{jugador2.habilitarSalto()})
+		game.onTick(50,"Habilitar salto para jugador1",{jugador.habilitarSalto()})
+		game.onTick(50,"Habilitar salto para jugador2",{jugador2.habilitarSalto()})
 		   
 		
 	}
