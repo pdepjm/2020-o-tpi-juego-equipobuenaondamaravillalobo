@@ -163,7 +163,7 @@ object cabezaRoger{
     var property position = game.at(10,10)
     var fuerzaDeSubida = 100
     var velocidad = 100
-    var tipoDeGolpe = golpeBasico
+    var tipoDeGolpe = golpeAlto
     
 
 	
@@ -235,15 +235,24 @@ object golpeBasico{
 	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
 }
 
-object golpeDebil{
+object golpeRemate{
 	
 	method golpearPelota(){}
 }
 
+
+
 object golpeAlto{
 	
-	method golpearPelota(){}
-}
+	method golpearPelota(){
+		    pelota.cambiarFuerzaDeSubida(500)
+		    pelota.cambiarVelocidad(40)
+        	game.onTick(100,"Golpea pelota", {pelota.moverse()})
+        	}  	
+
+	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
+    }
+
 
 
 
@@ -336,7 +345,7 @@ object abajo{
 }
 
 object arriba{
-		method nuevaPosicion(objetoMovil,altura) = game.at(objetoMovil.position().x() , 25.min(objetoMovil.position().y()+altura))
+		method nuevaPosicion(objetoMovil,altura) = game.at(objetoMovil.position().x() , objetoMovil.position().y()+altura)
 }
 
 
