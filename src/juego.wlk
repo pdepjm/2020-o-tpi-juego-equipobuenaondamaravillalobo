@@ -160,10 +160,10 @@ object cabezaRoger{
  object pelota{
  	
 	var property jugadorQueGolpea = jugador
-    var property position = game.at(10,10)
+    var property position = game.at(10,50)
     var fuerzaDeSubida = 100
     var velocidad = 100
-    var tipoDeGolpe = golpeAlto
+    var tipoDeGolpe = golpeRemate
     
 
 	
@@ -180,7 +180,7 @@ object cabezaRoger{
 		method direccionLateral() = jugadorQueGolpea.direccionHaciaDondeGolpea()
 			
 //MOVIMIENTO DE PELOTA SEGUN SI PASO MITAD DE CANCHA
-		
+/* 	
 		method moverse(){
     		if(self.noPasoMitadDeCancha()){
     			tipoDeGolpe.moverPelota(arriba) 	
@@ -190,6 +190,13 @@ object cabezaRoger{
     			self.tocarPiso()		
 			}
 	      }
+*/
+
+		method moverse(){
+			    tipoDeGolpe.moverPelota(abajo)
+    			self.tocarPiso()
+			
+		}
 	   	
     	method golpe(nuevoGolpeador){	
     		
@@ -237,10 +244,13 @@ object golpeBasico{
 
 object golpeRemate{
 	
-	method golpearPelota(){}
-}
-
-
+	method golpearPelota(){
+			pelota.cambiarVelocidad(200)
+        	game.onTick(70,"Golpea pelota", {pelota.moverse()})
+        	}
+        	
+	method moverPelota(direccionVertical){controladorDePelota.moverPelota(abajo)}
+    }
 
 object golpeAlto{
 	
