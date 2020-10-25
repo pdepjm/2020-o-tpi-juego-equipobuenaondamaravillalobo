@@ -67,21 +67,6 @@ object config{
         keyboard.m().onPressDo({pelota.golpe(jugador2)})       
         }
 
-/* 	method configurarColisiones(){
-
-            game.onCollideDo(jugador,{unaPelota =>
-                jugador.golpe(jugador)})
-            game.onCollideDo(jugador2,{unaPelota =>
-                jugador2.golpe(jugador2)})
-
-
-            game.onCollideDo(raquetaJugador,{unaPelota =>
-                raquetaJugador.golpe(jugador)})
-            game.onCollideDo(raquetaJugador2,{unaPelota =>
-                raquetaJugador2.golpe(jugador2)})
-   }
-		
-		*/
 	}
                           // POLIMORFISMO: EL MENSAJE GOLPE VARÍA CON DISTINTAS TRAYECTORIAS Y VELOCIDADES
 

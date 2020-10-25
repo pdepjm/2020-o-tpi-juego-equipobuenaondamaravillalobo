@@ -143,10 +143,10 @@ object cabezaRoger{
  object pelota{
  	
 	var property jugadorQueGolpea = jugador
-    var property position = game.at(50,50)
+    var property position = game.at(10,25)
     var fuerzaDeSubida = 100
     var velocidad = 100
-    var tipoDeGolpe = golpeRemate
+    var tipoDeGolpe = golpeAlto
     
 
 	
@@ -156,14 +156,14 @@ object cabezaRoger{
 		method velocidad()= velocidad
 		method cambiarFuerzaDeSubida(nuevaFuerza){ fuerzaDeSubida = nuevaFuerza}
 		method fuerzaDeSubida()= fuerzaDeSubida
-
+		method perderFuerzaDeSubida(fuerzaPerdida){fuerzaDeSubida -= fuerzaPerdida}
 
 // DIRECCION DEL JUGADOR QUE GOLPEA ES LA DIRECCION LATERAL
 
 		method direccionLateral() = jugadorQueGolpea.direccionHaciaDondeGolpea()
 			
-//MOVIMIENTO DE PELOTA SEGUN SI PASO MITAD DE CANCHA
-/* 	
+//MOVIMIENTO DE PELOTA
+ /* 
 		method moverse(){
     		if(self.noPasoMitadDeCancha()){
     			tipoDeGolpe.moverPelota(arriba) 	
@@ -172,15 +172,25 @@ object cabezaRoger{
     			tipoDeGolpe.moverPelota(abajo)
     			self.tocarPiso()		
 			}
-	      }
-*/
+	      }*/
+/* 
 
 		method moverse(){
 			    tipoDeGolpe.moverPelota(abajo)
     			self.tocarPiso()
 			
 		}
-	   	
+	 */  	
+	 method moverse(){
+    		if(fuerzaDeSubida > 0){
+    			pelota.perderFuerzaDeSubida(30)
+    			tipoDeGolpe.moverPelota(arriba) 	
+    					
+			}else{
+    			tipoDeGolpe.bajarPelota()
+    			self.tocarPiso()		
+			}
+	 }
     	method golpe(nuevoGolpeador){	
     		
     		piqueDePelota.detenerPique()
@@ -240,10 +250,14 @@ object golpeAlto{
 	method golpearPelota(){
 		    pelota.cambiarFuerzaDeSubida(500)
 		    pelota.cambiarVelocidad(40)
-        	game.onTick(100,"Golpea pelota", {pelota.moverse()})
-        	}  	
+        	game.onTick(80,"Golpea pelota", {pelota.moverse()})
+        	}
 
 	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
+	method bajarPelota(){
+			pelota.position(abajo.nuevaPosicion( pelota ,3))
+			pelota.position(pelota.direccionLateral().nuevaPosicion( pelota , pelota.velocidad()/20)) 
+		}
     }
 
 
@@ -285,38 +299,6 @@ object piqueDePelota{
 }
 }
 
-
-
-
- 
-
-
-/* 
-object piqueDePelota{
-	
-	
-	method accionar(){ 
-		  
-			pelota.cambiarFuerzaDeSubida(60)
-
-			     game.schedule(100,{controladorDePelota.moverPelota(arriba)}) 
-				 game.schedule(400,{controladorDePelota.moverPelota(arriba)})
-				 game.schedule(700,{controladorDePelota.moverPelota(arriba)})
-				 game.schedule(1000,{controladorDePelota.moverPelota(arriba)})
-				 game.schedule(1300,{controladorDePelota.moverPelota(arriba)})
-				 game.schedule(1600,{controladorDePelota.moverPelota(arriba)})
-				 
-				 game.schedule(1900,{controladorDePelota.moverPelota(abajo)})
-				 game.schedule(2200,{controladorDePelota.moverPelota(abajo)})
-				 game.schedule(2500,{controladorDePelota.moverPelota(abajo)})
-				 game.schedule(2800,{controladorDePelota.moverPelota(abajo)})
-				 game.schedule(3100,{controladorDePelota.moverPelota(abajo)})
-				 game.schedule(3400,{controladorDePelota.moverPelota(abajo)})
-				 			
-		} 
-}	
-
-*/
 
 
                             // OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 
