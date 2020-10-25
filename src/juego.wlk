@@ -14,6 +14,12 @@ class Jugador{
 	var image 
 	var property orientacion
 	var puedeSaltar= true
+	var onTickDeMovimiento
+	var property estaEnMovimiento = false
+	
+	
+
+	method onTickDeMovimiento() = onTickDeMovimiento
 	
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
@@ -26,7 +32,7 @@ class Jugador{
 	method saltar(){
 		if(self.puedeSaltar()){
 		position = arriba.nuevaPosicion(self,2)
-		8.times({i => game.schedule(20,{position = arriba.nuevaPosicion(self,1)})})
+		15.times({i => game.schedule(20,{position = arriba.nuevaPosicion(self,1)})})
 		}
 	}
 
@@ -40,46 +46,21 @@ class Jugador{
 
 }
 
-
 object moverJugador{
 	
-	var property jugadorEstaEnMovimiento = false
-	
-	method moverJugadorHacia(direccion){
+	method moverJugadorHacia(direccion,jugador){
 		
-		if(self.jugadorEstaEnMovimiento()){
-			game.removeTickEvent("Jugador corriendo")
-			game.onTick(100,"Jugador corriendo",{jugador.position(direccion.nuevaPosicion(jugador,1))})
+		if(jugador.estaEnMovimiento()){
+			game.removeTickEvent(jugador.onTickDeMovimiento())
+			game.onTick(100, jugador.onTickDeMovimiento() ,{jugador.position(direccion.nuevaPosicion(jugador,1))})
  
 		}else{
-			game.onTick(100,"Jugador corriendo",{jugador.position(direccion.nuevaPosicion(jugador,1))})
-			jugadorEstaEnMovimiento = true 
+			game.onTick(100, jugador.onTickDeMovimiento() ,{jugador.position(direccion.nuevaPosicion(jugador,1))})
+			jugador.estaEnMovimiento(true)
 	
 	}
 	}
 }
-
-object moverJugador2{
-	
-	var property jugadorEstaEnMovimiento = false
-	
-	method moverJugadorHacia(direccion){
-		
-		if(self.jugadorEstaEnMovimiento()){
-			game.removeTickEvent("Jugador2 corriendo")
-			game.onTick(100,"Jugador2 corriendo",{jugador2.position(direccion.nuevaPosicion(jugador2,1))})
- 
-		}else{
-			game.onTick(100,"Jugador2 corriendo",{jugador2.position(direccion.nuevaPosicion(jugador2,1))})
-			jugadorEstaEnMovimiento = true 
-	
-	}
-	}
-}
-
-
-
-
 
 
 /*              
@@ -120,14 +101,16 @@ const jugador = new Jugador(
 	position = game.at(3,1),
 	direccionHaciaDondeGolpea = derecha,
 	image= "roger2.png",
-	orientacion = derecha)
+	orientacion = derecha,
+	onTickDeMovimiento = "Movimiento jugador")
 	
 const jugador2 = new Jugador(
 	
 	position = game.at(139,1),
 	direccionHaciaDondeGolpea = izquierda,
 	image= "RogerSinFondoYsinCabeza.png",
-	orientacion = izquierda)
+	orientacion = izquierda,
+	onTickDeMovimiento = "Movimiento jugador2")
 	
 const raquetaJugador = new Raqueta(	
     	image = "raquetaBabolat - copia.png"
@@ -160,7 +143,7 @@ object cabezaRoger{
  object pelota{
  	
 	var property jugadorQueGolpea = jugador
-    var property position = game.at(10,50)
+    var property position = game.at(50,50)
     var fuerzaDeSubida = 100
     var velocidad = 100
     var tipoDeGolpe = golpeRemate

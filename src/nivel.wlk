@@ -45,10 +45,10 @@ object config{
 
     method configurarTeclas(){
 
-        keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda) })
-        keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha) })
-        keyboard.s().onPressDo({game.removeTickEvent("Jugador corriendo")
-        	moverJugador.jugadorEstaEnMovimiento(false)
+        keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador) })
+        keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador) })
+        keyboard.s().onPressDo({game.removeTickEvent(jugador.onTickDeMovimiento())
+        	jugador.estaEnMovimiento(false)
         })
         keyboard.w().onPressDo({jugador.saltar()
         	jugador.deshabilitarSalto()
@@ -56,13 +56,13 @@ object config{
         keyboard.space().onPressDo({pelota.golpe(jugador)})
  
   
-        keyboard.left().onPressDo({moverJugador2.moverJugadorHacia(izquierda) })
-        keyboard.right().onPressDo({moverJugador2.moverJugadorHacia(derecha) })
+        keyboard.left().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador2) })
+        keyboard.right().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador2) })
         keyboard.up().onPressDo({jugador2.saltar()
         	jugador2.deshabilitarSalto()
         })
-		keyboard.down().onPressDo({game.removeTickEvent("Jugador2 corriendo")
-        	moverJugador2.jugadorEstaEnMovimiento(false)
+		keyboard.down().onPressDo({game.removeTickEvent(jugador2.onTickDeMovimiento())
+        	jugador2.estaEnMovimiento(false)
         })
         keyboard.m().onPressDo({pelota.golpe(jugador2)})       
         }

@@ -11,7 +11,8 @@ describe "Pelota"{
 	position = game.at(3,1),
 	direccionHaciaDondeGolpea = derecha,
 	image= "roger2.png",
-	orientacion = derecha)
+	orientacion = derecha,
+	onTickDeMovimiento="Movimiento jugador")
 	
 	test "Al golpear pelota, la energia se settea"{
 		pelota.position(game.at(4,2))
@@ -34,7 +35,8 @@ describe "Jugadores"{
 	position = game.at(3,0),
 	direccionHaciaDondeGolpea = derecha,
 	image= "roger2.png",
-	orientacion = derecha)
+	orientacion = derecha,
+	onTickDeMovimiento="Movimiento jugador 3")
 	
 	test "Los jugadores pueden saltar" {
         jugador3.saltar()
