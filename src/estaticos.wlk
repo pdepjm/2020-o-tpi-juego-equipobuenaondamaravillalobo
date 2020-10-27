@@ -22,7 +22,7 @@ const red9= new Red(position=game.at(75,8))
 
 /* 
 object contadorDeSegundos{
-	var property position = game.at(75,70)
+	va rproperty position = game.at(75,70)
 	var property cantidad = cero 
     method comenzarConteo(){
     	

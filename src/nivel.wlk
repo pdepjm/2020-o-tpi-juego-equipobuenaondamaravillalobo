@@ -29,7 +29,7 @@ object partido{
 		game.addVisual(red9)
 		
 		
-// MAIN DE TECLAS Y COLISIONES
+// MAIN DE TECLAS Y COLISIONE
                                                          
 		config.configurarTeclas()
 		//config.configurarColisiones()

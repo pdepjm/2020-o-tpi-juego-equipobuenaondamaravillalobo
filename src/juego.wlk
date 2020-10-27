@@ -41,7 +41,7 @@ class Jugador{
 
 	method deshabilitarSalto(){puedeSaltar = false}
      	 
-//    method golpe(){}
+//    mthod golpe(){}
 //FALTA VER METHOD TOCAR RED DE LOS JUGADORES DEPENDIENDO EL LADO
     /* 
     method tocarRed(){
