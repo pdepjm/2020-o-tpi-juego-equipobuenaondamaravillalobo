@@ -3,6 +3,8 @@ import estaticos.*
 import nivel.*
 import wollok.game.*
 
+
+
 program  tenistasCabezones{
 	game.cellSize(10)
 	game.title("Tenistas cabezones")
@@ -11,11 +13,8 @@ program  tenistasCabezones{
 	game.boardGround("cancha.png")
 
 	partido.iniciar()
-
-	game.showAttributes(jugador)
-	game.showAttributes(pelota)
-	
-
+    
 	game.start()
 }
+
 
