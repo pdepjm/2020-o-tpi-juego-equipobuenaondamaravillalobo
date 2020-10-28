@@ -16,6 +16,7 @@ object partido{
 		game.addVisual(jugador2)
 		game.addVisual(pelota)
 		game.addVisual(cabezaRoger)
+	    game.addVisual(cabezaRafa)
 		game.addVisual(raquetaJugador)
 		game.addVisual(raquetaJugador2)
 		game.addVisual(red1)

@@ -10,7 +10,7 @@ program  tenistasCabezones{
 	game.title("Tenistas cabezones")
 	game.height(80)
 	game.width(150)
-	game.boardGround("cancha.png")
+	game.boardGround("canchaFlama.png")
 
 	partido.iniciar()
     

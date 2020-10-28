@@ -130,9 +130,14 @@ const raquetaJugador2 = new Raqueta(
 object cabezaRoger{
 	method position()= game.at(jugador2.position().x(),jugador2.position().y()+9)
 	
-	method image()= "cabezaRoger.png"
+	method image()= "cabezaRafa.png"
 }
 
+object cabezaRafa{
+	method position()= game.at(jugador.position().x(),jugador.position().y()+9)
+	
+	method image()= "cabezaRoger2.png"
+}
 
 
                            // DECLARACION DE LA PELOTA 
@@ -151,7 +156,7 @@ object cabezaRoger{
 
 
 	
-	    method image() = "pelotaPenn.png"
+	    method image() = "pelotaPenn1.png"
 		method gravedad(){ position = abajo.nuevaPosicion(self,1) }
 //EVALUAR HACER PROPERTY
 		method cambiarVelocidad(nuevaVelocidad){ velocidad = nuevaVelocidad }
@@ -491,7 +496,7 @@ object rastreadorDeContacto{
 	}
 	method rangoDeContactoEnY(primerObjeto,segundoObjeto){
 		
-		return (primerObjeto.position().y() - segundoObjeto.position().y()).abs() <= 5
+		return (primerObjeto.position().y() - segundoObjeto.position().y()).abs() <= 8
 		
 	}
 	
