@@ -43,25 +43,43 @@ object contadorDeSegundos{
 * 
 */
 
-object cero{var property position = game.at(75,70)
+object cero{var property position = game.at(35,70)
 	method image()= "cero.png"}
-object uno{var property position = game.at(80,70)
+object uno{var property position = game.at(35,70)
 	method image()= "uno.png"
 }
-object dos{var property position = game.at(90,70)
+object dos{var property position = game.at(35,70)
 		method image()= "dos.png"
 }
-object tres{var property position = game.at(100,70)
+object tres{var property position = game.at(35,70)
 		method image()= "tres.png"
 }
-object cuatro{var property position = game.at(110,70)
+object cuatro{var property position = game.at(35,70)
 		method image()= "cuatro.png"
 }
-object cinco{var property position = game.at(120,70)
+object cinco{var property position = game.at(35,70)
 		method image()= "cinco.png"
 }
 
 
+
+object ceroBis{var property position = game.at(115,70)
+	method image()= "cero.png"}
+object unoBis{var property position = game.at(115,70)
+	method image()= "uno.png"
+}
+object dosBis{var property position = game.at(115,70)
+		method image()= "dos.png"
+}
+object tresBis{var property position = game.at(115,70)
+		method image()= "tres.png"
+}
+object cuatroBis{var property position = game.at(115,70)
+		method image()= "cuatro.png"
+}
+object cincoBis{var property position = game.at(115,70)
+		method image()= "cinco.png"
+}
 object puntajeJugador1{
 	
 
@@ -78,6 +96,28 @@ object puntajeJugador1{
 			//game.addVisual(cinco)
 		}else if(jugador.puntos()==0){
 		    game.addVisual(cero)
+		}else{
+			
+		}
+	}
+}
+
+object puntajeJugador2{
+	
+
+	method mostrarPuntos(){
+		if(jugador2.puntos()==1){
+			game.addVisual(unoBis)
+		}else if(jugador2.puntos()==2){
+			game.addVisual(dosBis)
+		}else if(jugador2.puntos()==3){
+			game.addVisual(tresBis)
+		}else if(jugador2.puntos()==4){
+			game.addVisual(cuatroBis)
+		}else if(jugador2.puntos()==5){
+			//game.addVisual(cinco)
+		}else if(jugador2.puntos()==0){
+		    game.addVisual(ceroBis)
 		}else{
 			
 		}

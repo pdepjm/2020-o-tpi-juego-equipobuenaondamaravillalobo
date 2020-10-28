@@ -16,7 +16,7 @@ describe "Pelota"{
 	
 	test "Al golpear pelota, la energia se settea"{
 		pelota.position(game.at(4,2))
-		pelota.golpe(jugador,golpeBasico)
+		pelota.golpe(jugador,jugador2,golpeBasico)
 		assert.equals(150,pelota.fuerzaDeSubida())
 	}
 	/* 

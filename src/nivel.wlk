@@ -43,6 +43,7 @@ object partido{
 		game.onTick(50,"Habilitar salto para jugador2",{jugador2.habilitarSalto()})
 		game.onTick(1,"evaluarGolpeEnRed",{pelota.tocarRed()})
    	    game.onTick(10,"Puntaje",{puntajeJugador1.mostrarPuntos()})
+		  game.onTick(10,"Puntaje",{puntajeJugador2.mostrarPuntos()})
 		
 	}
 	
@@ -76,9 +77,9 @@ object config{
         	jugador.deshabilitarSalto()
         })
         
-        keyboard.c().onPressDo({pelota.golpe(jugador,golpeBasico)})
-        keyboard.v().onPressDo({pelota.golpe(jugador,golpeAlto)})
-        keyboard.b().onPressDo({pelota.golpe(jugador,golpeRemate)})
+        keyboard.c().onPressDo({pelota.golpe(jugador,jugador2,golpeBasico)})
+        keyboard.v().onPressDo({pelota.golpe(jugador,jugador2,golpeAlto)})
+        keyboard.b().onPressDo({pelota.golpe(jugador,jugador2,golpeRemate)})
    
 // CONFIGURACION DE TECLAS JUGADOR 2      
    
@@ -91,9 +92,9 @@ object config{
         	jugador2.deshabilitarSalto()})
       
         //keyboard.space().onPressDo({pelota.golpe(jugador2,golpeAlto) pelota.tipoDeGolpe(golpeAlto)})  
-        keyboard.j().onPressDo({pelota.golpe(jugador2,golpeBasico)})
-        keyboard.k().onPressDo({pelota.golpe(jugador2,golpeAlto)})
-        keyboard.l().onPressDo({pelota.golpe(jugador2,golpeRemate)})     
+        keyboard.j().onPressDo({pelota.golpe(jugador2,jugador,golpeBasico)})
+        keyboard.k().onPressDo({pelota.golpe(jugador2,jugador,golpeAlto)})
+        keyboard.l().onPressDo({pelota.golpe(jugador2,jugador,golpeRemate)})     
         
         
         

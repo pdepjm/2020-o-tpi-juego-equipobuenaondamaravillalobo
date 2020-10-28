@@ -140,6 +140,7 @@ object cabezaRoger{
  object pelota{
  	
 	var property jugadorQueGolpea = jugador
+	var property contrincante
     var property position = game.at(35,20)
     var velocidad = 100
     var property tipoDeGolpe 
@@ -169,21 +170,21 @@ object cabezaRoger{
  
 	 
 	 
-    	method golpe(nuevoGolpeador,tipoGolpe){	
+    	method golpe(nuevoGolpeador,nuevoContrincante,tipoGolpe){	
     		
     		self.tipoDeGolpe(tipoGolpe)
     		
     		piqueDePelota.detenerPique()
-            
     		piqueDePelota.reiniciarContadorDePiques()
-    		self.cambiarJugadorQueGolpea(nuevoGolpeador)
+    		self.contrincante(nuevoContrincante)
+    		self.jugadorQueGolpea(nuevoGolpeador)
     		if(rastreadorDeContacto.estanEnZonaDeContacto(self,jugadorQueGolpea)){
     			tipoGolpe.golpearPelota()
     			self.piques(0)
         	}	
     		}
     		
-//VUELVE A LA POSICION INICIAL Y REINICIA LOS TICKS
+ //VUELVE A LA POSICION INICIAL Y REINICIA LOS TICKS
 		method reiniciarPosicion(){
 			  			position = game.at(10,30)
 			  			jugador2.position(game.at(139,0))
@@ -201,7 +202,7 @@ object cabezaRoger{
 			  			
 			  	}        
 	
-            //TOCAR EL PISO PARA PICAR	
+//TOCAR EL PISO PARA PICAR	
 		
 	     method tocarPiso(){ 
 			 	if(position.y()==0){ 
@@ -224,11 +225,12 @@ object cabezaRoger{
 	
 	
 	
-	       //CUANDO LA PELOTA TOCA LA RED
+//LA PELOTA TOCA LA RED VUELVE A POSICION INICIAL SIN MOVIMIENTO
 		method tocarRed(){
-      	          if(position.y() < 12){
+      	          if(position.y() < 11){
       		           if(position.x() >= 73 and position.x() <= 77){
-      	            	self.reiniciarPosicion()  
+      	            	self.reiniciarPosicion() 
+      	            	contrincante.sumarPunto()
      } 
          	    
     } 	
@@ -236,7 +238,7 @@ object cabezaRoger{
   
  }
 
-//CONTROLADOR DE PELOTA EN X E Y SEGUN FUERZA DE SUBIA Y VELOCIDAD
+                      //CONTROLADOR DE PELOTA EN X E Y SEGUN FUERZA DE SUBIA Y VELOCIDAD
 object controladorDePelota{
 	
 	method moverPelota(direccionVertical){
