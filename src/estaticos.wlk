@@ -94,6 +94,7 @@ object puntajeJugador1{
 			game.addVisual(cuatro)
 		}else if(jugador.puntos()==5){
 			game.addVisual(cinco)
+			game.schedule(2000,game.stop())
 		}else if(jugador.puntos()==0){
 		    game.addVisual(cero)
 		}else{
@@ -115,7 +116,8 @@ object puntajeJugador2{
 		}else if(jugador2.puntos()==4){
 			game.addVisual(cuatroBis)
 		}else if(jugador2.puntos()==5){
-			//game.addVisual(cinco)
+			game.addVisual(cinco)
+			game.schedule(2000,game.stop())
 		}else if(jugador2.puntos()==0){
 		    game.addVisual(ceroBis)
 		}else{
@@ -126,7 +128,7 @@ object puntajeJugador2{
 
 
 
-// POSICION DE JUGADOR, SETTEADA POR MAX Y MIN
+
 
 
 
