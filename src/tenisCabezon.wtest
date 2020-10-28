@@ -16,17 +16,19 @@ describe "Pelota"{
 	
 	test "Al golpear pelota, la energia se settea"{
 		pelota.position(game.at(4,2))
-		pelota.golpe(jugador)
+		pelota.golpe(jugador,golpeBasico)
 		assert.equals(150,pelota.fuerzaDeSubida())
 	}
-	
+	/* 
 	test "Al picar la energia se settea"{
 		pelota.position(game.at(4,2))
-		pelota.golpe(jugador)
+		pelota.golpe(jugador,golpeBasico)
 		if(pelota.position().y()==0){
 			assert.equals(60,pelota.fuerzaDeSubida())
 		}
 	}
+	 */
+	
 }
 
 describe "Jugadores"{ 

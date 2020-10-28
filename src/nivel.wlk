@@ -24,9 +24,9 @@ object partido{
 		game.addVisual(red4)
 		game.addVisual(red5)
 		game.addVisual(red6)
-		game.addVisual(red7)
-		game.addVisual(red8)
-		game.addVisual(red9)
+		//game.addVisual(red7)
+		//game.addVisual(red8)
+		//game.addVisual(red9)
 		
 		
 // MAIN DE TECLAS Y COLISIONE
@@ -36,24 +36,33 @@ object partido{
 		
 //REPETICION DE EVENTOS 
 		                                             
-		game.onTick(500,"GravedadPelota", {pelota.gravedad()})
+		game.onTick(400,"GravedadPelota", {pelota.gravedad()})
 		game.onTick(50,"GravedadJugador1", {jugador.gravedad()})
         game.onTick(50,"GravedadJugador2", {jugador2.gravedad()})
 		game.onTick(50,"Habilitar salto para jugador1",{jugador.habilitarSalto()})
 		game.onTick(50,"Habilitar salto para jugador2",{jugador2.habilitarSalto()})
 		game.onTick(1,"evaluarGolpeEnRed",{pelota.tocarRed()})
-		
+   	    game.onTick(10,"Puntaje",{puntajeJugador1.mostrarPuntos()})
 		
 	}
 	
 }
 //game.cleanUp()
 
-
-
+/* 
+object evaluarPiques{
+	if(pelota.piques()==2){
+		pelota.jugadorQueGolpea().sumarPunto()
+        pelota.reiniciarPosicion()
+        game.removeTickEvent(pelota.tipoDeGolpe().nombre())
+	}
+}
+*/
                          // CONFIGURACION DE TECLAS Y COLISIONES
 
 object config{
+	
+
 
     method configurarTeclas(){
     	
@@ -85,41 +94,21 @@ object config{
         keyboard.j().onPressDo({pelota.golpe(jugador2,golpeBasico)})
         keyboard.k().onPressDo({pelota.golpe(jugador2,golpeAlto)})
         keyboard.l().onPressDo({pelota.golpe(jugador2,golpeRemate)})     
+        
+        
+        
+        
+   
+        //puntaje2.mostrarPuntos()
         }
         
-        
-        
-        
-//Cuando la pelota toca la red(vuelve a iniciar el punto y se suma el contador uno dependiendo si
-/* 
-    method configurarColisiones(){
-		game.onCollideDo(red1,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red2,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red3,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red4,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red5,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red6,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red7,{unapelota=>unapelota.reiniciarPosicion()})
-        game.onCollideDo(red8,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red9,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red10,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red11,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red12,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red13,{unapelota=>unapelota.reiniciarPosicion()})
-		game.onCollideDo(red14,{unapelota=>unapelota.reiniciarPosicion()})
-	}
-*/	
-	
 }
+
+	
+
 	
 	
-                  // POLIMORFISMO: EL MENSAJE GOLPE VARÍA CON DISTINTAS TRAYECTORIAS Y VELOCIDADES
-
-                                        // CUANDO SE GOLPEA AL APRETAR, PELOTA REALIZA EL GOLPE.
-                                        // CUANDO COLISIONA CON LA RAQUETA, LA RAQUETA REALIZA EL GOLPE.
-                                        // CUANDO COLISIONA CON EL JUGADOR, EL JUGADOR HACE EL GOLPE.
-
-
+                  
 
 
 
