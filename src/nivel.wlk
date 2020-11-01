@@ -1,6 +1,7 @@
 import juego.*
 import estaticos.*
 import wollok.game.*
+import menu.*
 
 
 // DECLARACION DE JUGADORES DISPONIBLES CON SUS RESPECTIVAS RAQUETAS
@@ -9,14 +10,15 @@ import wollok.game.*
 object partido{
 	
 		method iniciar(){
-			
+		
+		game.clear()	
 // OBJETOS MOSTRADOS POR PANTALLA
                                                  
-		game.addVisual(jugador)
+		game.addVisual(jugador1)
 		game.addVisual(jugador2)
+		game.addVisual(cabeza1)
+		game.addVisual(cabeza2)
 		game.addVisual(pelota)
-		game.addVisual(cabezaRoger)
-	    game.addVisual(cabezaRafa)
 		game.addVisual(raquetaJugador)
 		game.addVisual(raquetaJugador2)
 		game.addVisual(red1)
@@ -35,10 +37,10 @@ object partido{
 
 		                                             
 		game.onTick(400,"GravedadPelota", {pelota.gravedad()})
-		game.onTick(50,"GravedadJugador1", {jugador.gravedad()})
+		game.onTick(50,"GravedadJugador1", {jugador1.gravedad()})
         game.onTick(50,"GravedadJugador2", {jugador2.gravedad()})
         
-		game.onTick(50,"Habilitar salto para jugador1",{jugador.habilitarSalto()})
+		game.onTick(50,"Habilitar salto para jugador1",{jugador1.habilitarSalto()})
 		game.onTick(50,"Habilitar salto para jugador2",{jugador2.habilitarSalto()})
 		
 		game.onTick(1,"evaluarGolpeEnRed",{pelota.tocarRed()})
@@ -47,7 +49,7 @@ object partido{
    	    game.onTick(10,"Puntaje Jugador1 por pantalla",{puntajeJugador1.mostrarPuntos()})
 		game.onTick(10,"Puntaje Jugador2 por pantalla",{puntajeJugador2.mostrarPuntos()})
 		
-//	game.onTick(10,"Limites de jugador1",{jugador.direccionHaciaDondeGolpea().limitarPosicion(jugador)})
+//		game.onTick(10,"Limites de jugador1",{jugador.direccionHaciaDondeGolpea().limitarPosicion(jugador)})
 //		game.onTick(10,"Limites de jugador2",{jugador2.direccionHaciaDondeGolpea().limitarPosicion(jugador2)})
 
         game.onTick(1,"Evaluar Limites pelota",{pelota.limitarPosicion()})
@@ -74,18 +76,18 @@ object config{
     method configurarTeclas(){
     	
 //CONFIGURACION DE TECLAS DE JUGADOR 1
-        keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador)})
-        keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador)})
-        keyboard.s().onPressDo({game.removeTickEvent(jugador.onTickDeMovimiento())
-        	jugador.estaEnMovimiento(false)
+        keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador1)})
+        keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador1)})
+        keyboard.s().onPressDo({game.removeTickEvent(jugador1.onTickDeMovimiento())
+        	jugador1.estaEnMovimiento(false)
         })
-        keyboard.w().onPressDo({jugador.saltar()  
-        	jugador.deshabilitarSalto()
+        keyboard.w().onPressDo({jugador1.saltar()  
+        	jugador1.deshabilitarSalto()
         })
         
-        keyboard.c().onPressDo({pelota.golpe(jugador,jugador2,golpeBasico)})
-        keyboard.v().onPressDo({pelota.golpe(jugador,jugador2,golpeAlto)})
-        keyboard.b().onPressDo({pelota.golpe(jugador,jugador2,golpeRemate)})
+        keyboard.c().onPressDo({pelota.golpe(jugador1,jugador2,golpeBasico)})
+        keyboard.v().onPressDo({pelota.golpe(jugador1,jugador2,golpeAlto)})
+        keyboard.b().onPressDo({pelota.golpe(jugador1,jugador2,golpeRemate)})
    
 // CONFIGURACION DE TECLAS JUGADOR 2      
    
@@ -98,9 +100,9 @@ object config{
         	jugador2.deshabilitarSalto()})
       
         //keyboard.space().onPressDo({pelota.golpe(jugador2,golpeAlto) pelota.tipoDeGolpe(golpeAlto)}) reservo el space() para el jugador estrella  
-        keyboard.j().onPressDo({pelota.golpe(jugador2,jugador,golpeBasico)})
-        keyboard.k().onPressDo({pelota.golpe(jugador2,jugador,golpeAlto)})
-        keyboard.l().onPressDo({pelota.golpe(jugador2,jugador,golpeRemate)})     
+        keyboard.j().onPressDo({pelota.golpe(jugador2,jugador1,golpeBasico)})
+        keyboard.k().onPressDo({pelota.golpe(jugador2,jugador1,golpeAlto)})
+        keyboard.l().onPressDo({pelota.golpe(jugador2,jugador1,golpeRemate)})     
         					
         
         

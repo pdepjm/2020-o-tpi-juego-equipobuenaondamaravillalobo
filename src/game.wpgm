@@ -2,6 +2,7 @@ import juego.*
 import estaticos.*
 import nivel.*
 import wollok.game.*
+import menu.*
 
 
 
@@ -11,9 +12,10 @@ program  tenistasCabezones{
 	game.height(80)
 	game.width(150)
 	game.boardGround("canchaFlama.png")
-
-	partido.iniciar()
-    
+	
+	menuInicio.aparecerMenu()
+	game.onTick(10,"Detectar cambio de menu",{detectorDeMenu.detectarCambioDeMenu()})
+	
 	game.start()
 }
 

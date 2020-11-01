@@ -1,6 +1,7 @@
 import estaticos.*
 import nivel.*
 import wollok.game.*
+import menu.*
 
 
 
@@ -8,18 +9,16 @@ import wollok.game.*
                              // CLASE DE JUGADORES
 
 class Jugador{
-	var direccionHaciaDondeGolpea
+	var property direccionHaciaDondeGolpea
 	var property position
-	var image 
+	var property image 
 	var property orientacion
 	var puedeSaltar= true
 	var onTickDeMovimiento
 	var property estaEnMovimiento = false
 	var property puntos = 0
 	
-	
-	
-
+	method onTickDeMovimiento(tickEvent){onTickDeMovimiento = tickEvent}
 	method onTickDeMovimiento() = onTickDeMovimiento
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
@@ -29,25 +28,33 @@ class Jugador{
 	method deshabilitarSalto(){puedeSaltar = false}
 	method sumarPunto(){puntos+=1}
 	
-	
-	
-	
 
 	method saltar(){
 		if(self.puedeSaltar()){
 		position = arriba.nuevaPosicion(self,2)
 		15.times({i => game.schedule(20,{position = arriba.nuevaPosicion(self,1)})})
 		}
-	}
-	
-    
-  
+	} 
 }
+
+const jugador1 = new Jugador(
+		position = game.at(3,0),
+		image = "RogerSinFondoYsinCabeza.png",
+		direccionHaciaDondeGolpea = derecha,
+		orientacion = derecha,
+		onTickDeMovimiento = "Movimiento jugador1"
+		)
 	
-	
+const jugador2 = new Jugador(
+		position = game.at(139,0),
+		image = "RogerSinFondoYsinCabeza2.png",
+		direccionHaciaDondeGolpea = izquierda,
+		orientacion = izquierda,
+		onTickDeMovimiento = "Movimiento jugador2"
+		)	
 
      	 
-//    mthod golpe(){}
+//    method golpe(){}
 //FALTA VER METHOD TOCAR RED DE LOS JUGADORES DEPENDIENDO EL LADO
     /* 
     method tocarRed(){
@@ -101,27 +108,10 @@ class Raqueta{
 // method golpe(){}
         	
    }
-const jugador2 = new Jugador(
-	
-	position = game.at(139,0),
-	direccionHaciaDondeGolpea = izquierda,
-	image= "RogerSinFondoYsinCabeza.png",
-	orientacion = izquierda,
-	onTickDeMovimiento = "Movimiento jugador2")
-	
-	
-const jugador = new Jugador(
-	position = game.at(3,0),
-	direccionHaciaDondeGolpea = derecha,
-	image= "RogerSinFondoYsinCabeza.png",
-	orientacion = derecha,
-	onTickDeMovimiento = "Movimiento jugador")
-	
-
 	
 const raquetaJugador = new Raqueta(	
     	image = "raquetaJugadorSinFondo.png"
-    	,duenio = jugador    	
+    	,duenio = jugador1    	
 )
 
 const raquetaJugador2 = new Raqueta(
@@ -129,28 +119,34 @@ const raquetaJugador2 = new Raqueta(
     	,duenio = jugador2	
 )
 	
-
-
                               // CABEZAS DE JUGADORES
+                              
+                              
 
-object cabezaRoger{
-	method position()= game.at(jugador2.position().x(),jugador2.position().y()+9)
+class Cabeza{
+	var cuerpo
+	var property image
 	
-	method image()= "cabezaRafa.png"
+	method position()=game.at(cuerpo.position().x(),cuerpo.position().y()+9)
 }
 
-object cabezaRafa{
-	method position()= game.at(jugador.position().x(),jugador.position().y()+9)
+const cabeza1 = new Cabeza(
+	image = null,
+	cuerpo = jugador1
+)
+const cabeza2 = new Cabeza(
+	image = null,
+	cuerpo = jugador2
+)
 	
-	method image()= "cabezaRoger2.png"
-}
+
 
 
                            // DECLARACION DE LA PELOTA 
 	
  object pelota{
  	
-	var property jugadorQueGolpea = jugador
+	var property jugadorQueGolpea = jugador1
 	var property contrincante
     var property position = game.at(35,20)
     var velocidad = 100
@@ -164,7 +160,9 @@ object cabezaRafa{
 	
 	    method image() = "pelotaPenn1.png"
 		method gravedad(){ position = abajo.nuevaPosicion(self,1) }
+		
 //EVALUAR HACER PROPERTY
+
 		method cambiarVelocidad(nuevaVelocidad){ velocidad = nuevaVelocidad }
 		method velocidad()= velocidad
 		method cambiarFuerzaDeSubida(nuevaFuerza){ fuerzaDeSubida = nuevaFuerza}
@@ -220,7 +218,7 @@ object cabezaRafa{
 		method reiniciarPosicion(){
 			  			position = game.at(10,30)
 			  			jugador2.position(game.at(139,0))
-			  			jugador.position(game.at(3,0))
+			  			jugador1.position(game.at(3,0))
 			  			game.removeTickEvent(tipoDeGolpe.nombre()) //No lo remueve
 			  			
 			  	}        
@@ -493,7 +491,7 @@ const golpeAlto = new GolpeAlto(nombre= "GolpeAlto")
 object izquierda{
 		method nuevaPosicion(objetoMovil,distancia) = game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())		
 		
-		method posicionRaqueta() = game.at(jugador.position().x() - 5,jugador.position().y())
+		method posicionRaqueta() = game.at(jugador1.position().x() - 5,jugador1.position().y())
 	 
 	 /*method limitarPosicion(jugador1){	
 			if(jugador1.position().x()<76){
@@ -508,7 +506,7 @@ object izquierda{
 object derecha{
 		method nuevaPosicion(objetoMovil,distancia) = game.at(objetoMovil.position().x() + distancia, objetoMovil.position().y())
 		
-		method posicionRaqueta() = game.at(jugador.position().x() + 5,jugador.position().y())
+		method posicionRaqueta() = game.at(jugador1.position().x() + 5,jugador1.position().y())
 	
 	    method limitarPosicion(jugador1){
 			if(jugador1.position().x()<=0){

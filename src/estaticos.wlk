@@ -84,18 +84,18 @@ object puntajeJugador1{
 	
 
 	method mostrarPuntos(){
-		if(jugador.puntos()==1){
+		if(jugador1.puntos()==1){
 			game.addVisual(uno)
-		}else if(jugador.puntos()==2){
+		}else if(jugador1.puntos()==2){
 			game.addVisual(dos)
-		}else if(jugador.puntos()==3){
+		}else if(jugador1.puntos()==3){
 			game.addVisual(tres)
-		}else if(jugador.puntos()==4){
+		}else if(jugador1.puntos()==4){
 			game.addVisual(cuatro)
-		}else if(jugador.puntos()==5){
+		}else if(jugador1.puntos()==5){
 			game.addVisual(cinco)
 			game.schedule(2000,game.stop())
-		}else if(jugador.puntos()==0){
+		}else if(jugador1.puntos()==0){
 		    game.addVisual(cero)
 		}else{
 			
