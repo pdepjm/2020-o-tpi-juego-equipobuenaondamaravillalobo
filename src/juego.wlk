@@ -127,7 +127,12 @@ class Cabeza{
 	var cuerpo
 	var property image
 	
-	method position()=game.at(cuerpo.position().x(),cuerpo.position().y()+9)
+	//El if es porque quedaba mal posicionada la imagen
+	method position()=
+	if(cuerpo == jugador2)
+	return game.at(cuerpo.position().x()+5,cuerpo.position().y()+9)
+	else
+	return game.at(cuerpo.position().x(),cuerpo.position().y()+9)
 }
 
 const cabeza1 = new Cabeza(

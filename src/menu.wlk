@@ -65,13 +65,12 @@ object detectorDeMenu{
 		menuSeleccion1.sacarMenu()
 	 	menuSeleccion2.aparecerMenu()
 	 	})
-	 /*
+	 	
 	  keyboard.num(3).onPressDo({
-		cabeza1.image("cabezaDjoko.png")
+		cabeza1.image("cabezaDjoko1.png")
 		menuSeleccion1.sacarMenu()
 	 	menuSeleccion2.aparecerMenu()
-		})
-	  */	
+		})	
 	 }
 	 if(menuSeleccion2.visual()){
 	 	
@@ -88,14 +87,13 @@ object detectorDeMenu{
 		game.removeTickEvent("Detectar cambio de menu")
 		menuSeleccion2.sacarMenu() 
 	 	})
-	 /*
+	 	
 	  keyboard.num(6).onPressDo({
-		cabeza2.image("cabezaDjoko.png")
+		cabeza2.image("cabezaDjoko2.png")
 		partido.iniciar()
 		game.removeTickEvent("Detectar cambio de menu") 
 		menuSeleccion2.sacarMenu()
-		})
-	  */	
+		})	
 	}	
 	}
 }
