@@ -22,78 +22,51 @@ const red9= new Red(position=game.at(75,8))
 
 
 
+object contadorDePuntos{
 
+        method inicializarPuntos(){
+        	game.addVisual(jugador1.puntos())
+        	game.addVisual(jugador2.puntos())
+        }
+       
+        method sumarPunto(jugador){ 
+		game.removeVisual(jugador.puntos())
+		jugador.puntos(jugador.puntos().siguiente()) 
+		game.addVisual(jugador.puntos())
+	}
+}
 
-/* 
-object contadorDeSegundos{
-	va rproperty position = game.at(75,70)
-	var property cantidad = cero 
-    method comenzarConteo(){
-    	
-    	game.onTick(1000,"ConteoInicial",{self.variarSegundos})
-    	
-        game.onTick(10000,"Conteo",{self.variarSegundos()})
-    }
-    
-    method variarSegundos(){
-    
-    	game.addVisual(cantidad)
-    }
+class Numero{
+	const position
+	const image
+	const siguiente
+	
+	   method position()= position
+	   method image()= image
+	   method siguiente()= siguiente
 }
-* 
-*/
 
-object cero{var property position = game.at(35,70)
-	method image()= "cero.png"
-	method siguiente()= uno
-	method anterior() = cero
+class NumeroFinal inherits Numero{
+	override method siguiente(){game.clear() return null }
+        // game.addVisual() FALTARIA HACER QUE MUESTRE POR PANTALLA EL JUGADOR QUE GANÓ.... 
 }
-object uno{var property position = game.at(35,70)
-	method image()= "uno.png"
-	method siguiente() = dos
-	method anterior()= uno
-}
-object dos{var property position = game.at(35,70)
-		method image()= "dos.png"
-		method siguiente()= tres
-		method anterior()= dos
-}
-object tres{var property position = game.at(35,70)
-		method image()= "tres.png"
-		method siguiente()= cuatro
-		method anterior()= tres
-}
-object cuatro{var property position = game.at(35,70)
-		method image()= "cuatro.png"
-		method siguiente()= cinco
-		method anterior()= cuatro
-}
-object cinco{var property position = game.at(35,70)
-		method image()= "cinco.png"
-		method siguiente(){game.stop()} 
-}
+
+const cero = new Numero(image="cero.png",siguiente=uno,position = game.at(35,70))
+const uno = new Numero(image="uno.png",siguiente=dos,position = game.at(35,70))
+const dos = new Numero(image="dos.png",siguiente=tres,position = game.at(35,70))
+const tres = new Numero(image= "tres.png",siguiente=cuatro,position = game.at(35,70))
+const cuatro = new Numero(image="cuatro.png",siguiente=cinco,position = game.at(35,70))
+
+const ceroBis = new Numero(image="cero.png",siguiente=unoBis,position = game.at(115,70))
+const unoBis = new Numero(image="uno.png",siguiente=dosBis,position = game.at(115,70))
+const dosBis = new Numero(image="dos.png",siguiente=tresBis,position = game.at(115,70))
+const tresBis = new Numero(image= "tres.png",siguiente=cuatroBis,position = game.at(115,70))
+const cuatroBis = new Numero(image="cuatro.png",siguiente=cincoBis,position = game.at(115,70))
+
+const cinco = new NumeroFinal(image="cinco.png",siguiente=null,position = game.at(35,70))
+const cincoBis = new NumeroFinal(image="cinco.png",siguiente=null,position = game.at(115,70))
 
 /* 
-
-object ceroBis{var property position = game.at(115,70)
-	method image()= "cero.png"}
-object unoBis{var property position = game.at(115,70)
-	method image()= "uno.png"
-}
-object dosBis{var property position = game.at(115,70)
-		method image()= "dos.png"
-}
-object tresBis{var property position = game.at(115,70)
-		method image()= "tres.png"
-}
-object cuatroBis{var property position = game.at(115,70)
-		method image()= "cuatro.png"
-}
-object cincoBis{var property position = game.at(115,70)
-		method image()= "cinco.png"
-}
-* 
-*//* 
 object puntajeJugador1{
 	
 

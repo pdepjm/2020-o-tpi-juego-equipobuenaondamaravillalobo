@@ -16,7 +16,7 @@ class Jugador{
 	var puedeSaltar= true
 	var onTickDeMovimiento
 	var property estaEnMovimiento = false
-	var property puntos = cero
+	var property puntos 
 	
 	method onTickDeMovimiento(tickEvent){onTickDeMovimiento = tickEvent}
 	method onTickDeMovimiento() = onTickDeMovimiento
@@ -26,12 +26,7 @@ class Jugador{
 	method puedeSaltar() = puedeSaltar
     method habilitarSalto(){if(self.position().y()==0) puedeSaltar = true}
 	method deshabilitarSalto(){puedeSaltar = false}
-	method sumarPunto(){ 
-		game.removeVisual(puntos)
-		puntos = puntos.siguiente()
-		game.addVisual(puntos)
-
-	}
+	
 	
 
 	method saltar(){
@@ -40,14 +35,19 @@ class Jugador{
 		15.times({i => game.schedule(20,{position = arriba.nuevaPosicion(self,1)})})
 		}
 	} 
-}
 
+
+    method piqueEnCanchaPropia(){
+    	
+    }
+}
 const jugador1 = new Jugador(
 		position = game.at(3,0),
 		image = "RogerSinFondoYsinCabeza.png",
 		direccionHaciaDondeGolpea = derecha,
 		orientacion = derecha,
-		onTickDeMovimiento = "Movimiento jugador1"
+		onTickDeMovimiento = "Movimiento jugador1",
+		puntos=cero
 		)
 	
 const jugador2 = new Jugador(
@@ -55,7 +55,8 @@ const jugador2 = new Jugador(
 		image = "RogerSinFondoYsinCabeza2.png",
 		direccionHaciaDondeGolpea = izquierda,
 		orientacion = izquierda,
-		onTickDeMovimiento = "Movimiento jugador2"
+		onTickDeMovimiento = "Movimiento jugador2",
+		puntos = ceroBis 
 		)	
 
      	 
@@ -218,12 +219,19 @@ object contadorDePuntos{
   
  method limitarPosicion(){
  	if(position.x()<-1 or position.x()>150){
- 	//	if(piqueDePelota.contadorDePiques()!=0){
- 		jugador1.sumarPunto()
+ 	    if(piqueDePelota.contadorDePiques()!=0){
+ 	    	contadorDePuntos.sumarPunto(jugadorQueGolpea)
  		self.reiniciarPosicion()
  		piqueDePelota.reiniciarContadorDePiques()
  		game.removeTickEvent("Pelota picando")
- 		}}
+ 		}else{
+ 			contadorDePuntos.sumarPunto(contrincante)
+ 		    self.reiniciarPosicion()
+ 		    piqueDePelota.reiniciarContadorDePiques()
+ 		    game.removeTickEvent("Pelota picando")
+ 		}
+    }
+}
  	/* 
  		}else{
  	    jugador1.sumarPunto()
@@ -241,13 +249,28 @@ object contadorDePuntos{
 			  			position = game.at(10,30)
 			  			jugador2.position(game.at(139,0))
 			  			jugador1.position(game.at(3,0))
-			  	//		game.removeTickEvent(tipoDeGolpe.nombre()) //No lo remueve
-			  			
 			  	}        
 	
 	
 //TOCAR EL PISO PARA PICAR	
-		
+		 
+		 method tocarPiso(){ 
+			 	if(position.y()==0){
+			 		if(self.noPasoMitadDeCancha()){
+			 			contadorDePuntos.sumarPunto(contrincante)
+			 			self.reiniciarPosicion()
+			 			game.removeTickEvent(tipoDeGolpe.nombre())
+			 		}else{
+			  			piqueDePelota.sumarUnPique()
+			  			piqueDePelota.accionar()
+					    game.removeTickEvent(tipoDeGolpe.nombre())
+			 	}
+			}
+		}	
+			
+		  
+  		
+		/* 
 		 method tocarPiso(){ 
 			 	if(position.y()==0){ 
 			  			piqueDePelota.sumarUnPique()
@@ -255,7 +278,7 @@ object contadorDePuntos{
 					    game.removeTickEvent(tipoDeGolpe.nombre())
 			 	}
 			}
-
+*/
 //PASAR MITAD DE CANCHA
 
 		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 70 and self.direccionLateral() == derecha
@@ -268,7 +291,7 @@ object contadorDePuntos{
       		           if(position.x() >= 73 and position.x() <= 77){
       		           	
  						self.reiniciarPosicion()
-      		           	jugador1.sumarPunto()
+ 						contadorDePuntos.sumarPunto(contrincante)
  						game.removeTickEvent(tipoDeGolpe.nombre())
       }       	    
     } 	
@@ -277,14 +300,11 @@ object contadorDePuntos{
 
 	method doblePique(){
 		if(piqueDePelota.contadorDePiques() >= 2){
-      		    jugador1.sumarPunto()
+      		    contadorDePuntos.sumarPunto(jugadorQueGolpea)
  				game.removeTickEvent("Pelota picando")
  				piqueDePelota.reiniciarContadorDePiques()
-				self.reiniciarPosicion()
- 				
-			
+				self.reiniciarPosicion()	
 		}
-		
 	}
 }
 
@@ -321,9 +341,6 @@ object piqueDePelota{
 			if(pelota.position().y()==0){
 				contadorDePiques +=1
 			}
-			//self.evaluarPunto()
-			//pelota.sumarPique()
-			
 		}
 	}
 // Este metodo funciona para evaluar cuando pica por segunda vez, ya que se usaria en el metodo dirigirPique() solo cuando esta bajando

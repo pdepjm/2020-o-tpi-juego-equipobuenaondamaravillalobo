@@ -14,12 +14,12 @@ object partido{
 		game.clear()	
 // OBJETOS MOSTRADOS POR PANTALLA
                                                  
-		game.addVisual(jugador1.puntos())
+		
 		game.addVisual(jugador1)
 		game.addVisual(jugador2)
 		game.addVisual(cabeza1)
 		game.addVisual(cabeza2)
-		game.addVisualCharacter(pelota)
+		game.addVisual(pelota)
 		game.addVisual(raquetaJugador)
 		game.addVisual(raquetaJugador2)
 		game.addVisual(red1)
@@ -29,6 +29,7 @@ object partido{
 		game.addVisual(red5)
 		game.addVisual(red6)
 		
+		contadorDePuntos.inicializarPuntos()
 		
 // MAIN DE TECLAS Y COLISIONE
                                                          
@@ -46,16 +47,14 @@ object partido{
 		
 		game.onTick(10,"evaluarGolpeEnRed",{pelota.tocarRed()})
 		game.onTick(10,"evaluarDoblePique",{pelota.doblePique()})
-		
-		//Este onTick hay que cambiarlo, pero solo me funcionó de esta manera
-//   	    game.onTick(10,"Puntaje Jugador1 por pantalla",{puntajeJugador1.mostrarPuntos()})
-//		game.onTick(10,"Puntaje Jugador2 por pantalla",{puntajeJugador2.mostrarPuntos()})
-		
-//		game.onTick(10,"Limites de jugador1",{jugador.direccionHaciaDondeGolpea().limitarPosicion(jugador)})
-//		game.onTick(10,"Limites de jugador2",{jugador2.direccionHaciaDondeGolpea().limitarPosicion(jugador2)})
-
         game.onTick(1000,"Evaluar Limites pelota",{pelota.limitarPosicion()})
+        
+        
+        
      //   game.onTick(1000,"Consultar si pica la pelota",{pelota.tocarPiso()})
+     //		game.onTick(10,"Limites de jugador1",{jugador.direccionHaciaDondeGolpea().limitarPosicion(jugador)})
+//		game.onTick(10,"Limites de jugador2",{jugador2.direccionHaciaDondeGolpea().limitarPosicion(jugador2)})
+     
 	}
 	
 }

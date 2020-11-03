@@ -4,7 +4,7 @@ import juego.*
 import wollok.game.*
 
 
-
+/* 
 describe "Pelota"{
 	
 	const jugador = new Jugador(
@@ -27,7 +27,7 @@ describe "Pelota"{
 			assert.equals(60,pelota.fuerzaDeSubida())
 		}
 	}
-	 */
+	 
 	
 }
 
@@ -66,7 +66,7 @@ describe "Jugadores"{
 
 
 
-
+*/
 /*  
 test "Al golpear la energia se settea" {
     
