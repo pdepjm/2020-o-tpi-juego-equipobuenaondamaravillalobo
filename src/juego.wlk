@@ -169,7 +169,7 @@ object contadorDePuntos{
  	
 	var property jugadorQueGolpea = jugador1
 	var property contrincante
-    var property position = game.at(35,20)
+    var property position = game.at(10,30)
     var velocidad = 100
     var property tipoDeGolpe 
     var property fuerzaDeSubida = 100
@@ -201,16 +201,19 @@ object contadorDePuntos{
 	 
 	 
     	method golpe(nuevoGolpeador,nuevoContrincante,tipoGolpe){	
+
     		
-    		self.tipoDeGolpe(tipoGolpe)
+    		if(rastreadorDeContacto.estanEnZonaDeContacto(self,nuevoGolpeador)){
+    			
+    			reproductorDeSonidos.sonidoDeJugador().play()
+    			
+    			piqueDePelota.detenerPique()
+    			piqueDePelota.reiniciarContadorDePiques()
+ 
+    			self.jugadorQueGolpea(nuevoGolpeador)
+    			self.contrincante(nuevoContrincante)
+    			self.tipoDeGolpe(tipoGolpe)
     		
-    		piqueDePelota.detenerPique()
-    		piqueDePelota.reiniciarContadorDePiques()
-    		
-    		self.contrincante(nuevoContrincante)
-    		self.jugadorQueGolpea(nuevoGolpeador)
-    		
-    		if(rastreadorDeContacto.estanEnZonaDeContacto(self,jugadorQueGolpea)){
     			tipoGolpe.golpearPelota()
     			self.piques(0)
         	}	
@@ -218,7 +221,7 @@ object contadorDePuntos{
 //LIMITES 1<POSICION<150
   
  method limitarPosicion(){
- 	if(position.x()<-1 or position.x()>150){
+ 	if(position.x()<-1 or position.x()>141){
  	    if(piqueDePelota.contadorDePiques()!=0){
  	    	contadorDePuntos.sumarPunto(jugadorQueGolpea)
  		self.reiniciarPosicion()
@@ -228,7 +231,7 @@ object contadorDePuntos{
  			contadorDePuntos.sumarPunto(contrincante)
  		    self.reiniciarPosicion()
  		    piqueDePelota.reiniciarContadorDePiques()
- 		    game.removeTickEvent("Pelota picando")
+ 		    game.removeTickEvent(tipoDeGolpe.nombre())
  		}
     }
 }
@@ -383,8 +386,8 @@ object golpeBasico{
 	    method nombre()= nombre
 	    
 	    method golpearPelota(){
-    		pelota.cambiarFuerzaDeSubida(150)
-        	game.onTick(100, nombre, {self.moverPelota()})
+    		pelota.cambiarFuerzaDeSubida(100)
+        	game.onTick(80, nombre, {self.moverPelota()})
         	}
 	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
 	
@@ -436,7 +439,7 @@ object golpeAlto{
 	 		
 		    pelota.cambiarFuerzaDeSubida(500)
 		    pelota.cambiarVelocidad(40)
-        	game.onTick(80,nombre, {self.moverPelota()})
+        	game.onTick(70,nombre, {self.moverPelota()})
         	}
 
 	method bajarPelota () {

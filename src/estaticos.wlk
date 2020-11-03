@@ -66,53 +66,16 @@ const cuatroBis = new Numero(image="cuatro.png",siguiente=cincoBis,position = ga
 const cinco = new NumeroFinal(image="cinco.png",siguiente=null,position = game.at(35,70))
 const cincoBis = new NumeroFinal(image="cinco.png",siguiente=null,position = game.at(115,70))
 
-/* 
-object puntajeJugador1{
-	
 
-	method mostrarPuntos(){
-		if(jugador1.puntos()==cero){
-			game.addVisual(cero)
-		}else if(jugador1.puntos()==uno){
-			game.addVisual(uno)
-		}else if(jugador1.puntos()==dos){
-			game.addVisual(dos)
-		}else if(jugador1.puntos()==tres){
-			game.addVisual(tres)
-		}else if(jugador1.puntos()==cuatro){
-			game.addVisual(cuatro)
-		}else{
-			game.addVisual(cinco)
-			game.schedule(2000,game.stop())
-		}
-	}
-}*/
+object reproductorDeSonidos{
+	var musicaAmbiente = game.sound("musicaAmbiente.mp3")
+	var sonidoDeGolpe = game.sound("sonidoDeGolpe.mp3")
+	var sonidoDeJugador = game.sound("jugadorGolpeando.mp3")
 
-/* 
-object puntajeJugador2{
-	
-
-	method mostrarPuntos(){
-		if(jugador2.puntos()==1){
-			game.addVisual(unoBis)
-		}else if(jugador2.puntos()==2){
-			game.addVisual(dosBis)
-		}else if(jugador2.puntos()==3){
-			game.addVisual(tresBis)
-		}else if(jugador2.puntos()==4){
-			game.addVisual(cuatroBis)
-		}else if(jugador2.puntos()==5){
-			game.addVisual(cinco)
-			game.schedule(2000,game.stop())
-		}else if(jugador2.puntos()==0){
-		    game.addVisual(ceroBis)
-		}else{
-			
-		}
-	}
+	method musicaAmbiente() = musicaAmbiente
+	method sonidoDeGolpe() = sonidoDeGolpe
+	method sondidoDeJugador() = sonidoDeJugador
 }
-
-*/
 
 
 

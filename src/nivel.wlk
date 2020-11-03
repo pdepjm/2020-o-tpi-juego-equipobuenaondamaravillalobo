@@ -37,6 +37,9 @@ object partido{
 		//config.configurarColisiones()
 		
 
+		reproductorDeSonidos.musicaAmbiente().play()
+		
+		
 		                                             
 		game.onTick(400,"GravedadPelota", {pelota.gravedad()})
 		game.onTick(50,"GravedadJugador1", {jugador1.gravedad()})
