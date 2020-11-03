@@ -16,7 +16,7 @@ class Jugador{
 	var puedeSaltar= true
 	var onTickDeMovimiento
 	var property estaEnMovimiento = false
-	var property puntos = 0
+	var property puntos = cero
 	
 	method onTickDeMovimiento(tickEvent){onTickDeMovimiento = tickEvent}
 	method onTickDeMovimiento() = onTickDeMovimiento
@@ -26,7 +26,12 @@ class Jugador{
 	method puedeSaltar() = puedeSaltar
     method habilitarSalto(){if(self.position().y()==0) puedeSaltar = true}
 	method deshabilitarSalto(){puedeSaltar = false}
-	method sumarPunto(){puntos+=1}
+	method sumarPunto(){ 
+		game.removeVisual(puntos)
+		puntos = puntos.siguiente()
+		game.addVisual(puntos)
+
+	}
 	
 
 	method saltar(){
@@ -143,8 +148,18 @@ const cabeza2 = new Cabeza(
 	image = null,
 	cuerpo = jugador2
 )
-	
 
+/* 
+object contadorDePuntos{
+	
+	method contarPunto(){
+		
+		jugador1.puntos()
+		
+	}
+	
+}
+*/
 
 
                            // DECLARACION DE LA PELOTA 
@@ -200,22 +215,24 @@ const cabeza2 = new Cabeza(
         	}	
     	}
 //LIMITES 1<POSICION<150
- 
+  
  method limitarPosicion(){
  	if(position.x()<-1 or position.x()>150){
- 		if(piqueDePelota.contadorDePiques()!=0){
+ 	//	if(piqueDePelota.contadorDePiques()!=0){
+ 		jugador1.sumarPunto()
  		self.reiniciarPosicion()
- 		jugadorQueGolpea.sumarPunto()
+ 		piqueDePelota.reiniciarContadorDePiques()
  		game.removeTickEvent("Pelota picando")
- 		
+ 		}}
+ 	/* 
  		}else{
+ 	    jugador1.sumarPunto()
  		self.reiniciarPosicion()	
- 	    contrincante.sumarPunto()
  		game.removeTickEvent("Pelota picando")
  			
  		}
  	}
- }
+ }*/
 
     		
  //VUELVE A LA POSICION INICIAL Y REINICIA LOS TICKS
@@ -224,7 +241,7 @@ const cabeza2 = new Cabeza(
 			  			position = game.at(10,30)
 			  			jugador2.position(game.at(139,0))
 			  			jugador1.position(game.at(3,0))
-			  			game.removeTickEvent(tipoDeGolpe.nombre()) //No lo remueve
+			  	//		game.removeTickEvent(tipoDeGolpe.nombre()) //No lo remueve
 			  			
 			  	}        
 	
@@ -233,36 +250,43 @@ const cabeza2 = new Cabeza(
 		
 		 method tocarPiso(){ 
 			 	if(position.y()==0){ 
-			  		if(piques==0){
 			  			piqueDePelota.sumarUnPique()
 			  			piqueDePelota.accionar()
 					    game.removeTickEvent(tipoDeGolpe.nombre())
-			  		}
 			 	}
 			}
 
 //PASAR MITAD DE CANCHA
 
 		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 70 and self.direccionLateral() == derecha
-	
-	
-	
-	
-	
-	
+
+
 //LA PELOTA TOCA LA RED Y VUELVE A POSICION INICIAL SIN MOVIMIENTO
 
 		method tocarRed(){
       	          if(position.y() < 11){
       		           if(position.x() >= 73 and position.x() <= 77){
-      	            	self.reiniciarPosicion()
-      	            	contrincante.sumarPunto()
+      		           	
+ 						self.reiniciarPosicion()
+      		           	jugador1.sumarPunto()
+ 						game.removeTickEvent(tipoDeGolpe.nombre())
       }       	    
     } 	
   }
+
+
+	method doblePique(){
+		if(piqueDePelota.contadorDePiques() >= 2){
+      		    jugador1.sumarPunto()
+ 				game.removeTickEvent("Pelota picando")
+ 				piqueDePelota.reiniciarContadorDePiques()
+				self.reiniciarPosicion()
+ 				
+			
+		}
+		
+	}
 }
-
-
 
                       //CONTROLADOR DE PELOTA EN X E Y SEGUN FUERZA DE SUBIDA Y VELOCIDAD
                       
@@ -294,25 +318,27 @@ object piqueDePelota{
 			controladorDePelota.moverPelota(arriba)
 			}else{
 			controladorDePelota.moverPelota(abajo)
-			self.evaluarPunto()
+			if(pelota.position().y()==0){
+				contadorDePiques +=1
+			}
+			//self.evaluarPunto()
 			//pelota.sumarPique()
 			
 		}
 	}
 // Este metodo funciona para evaluar cuando pica por segunda vez, ya que se usaria en el metodo dirigirPique() solo cuando esta bajando
 
-                                                                      
+ /*                                                                      
     method evaluarPunto(){
     	if(pelota.position().y()==0){
     			    game.removeTickEvent("Pelota picando")
-			    game.removeTickEvent(pelota.tipoDeGolpe().nombre())
 				pelota.jugadorQueGolpea().sumarPunto()
 				pelota.reiniciarPosicion()
 				pelota.piques(0)
 			   
 			}
     }
-    
+    */
     
 	method accionar(){ 	
 			self.reiniciarPotenciaDePique()	  
@@ -335,7 +361,7 @@ object piqueDePelota{
 // GOLPE BASICO
                                          
 object golpeBasico{
-	const nombre = "GolpeBasico"
+	const nombre = "golpeBasico"
 	   
 	    method nombre()= nombre
 	    
@@ -361,7 +387,7 @@ object golpeBasico{
 //GOLPE REMATE
 
 object golpeRemate{
-	const nombre = "GolpeRemate"
+	const nombre = "golpeRemate"
 	method nombre()= nombre
 	method golpearPelota(){
 			pelota.cambiarVelocidad(200)
@@ -370,23 +396,27 @@ object golpeRemate{
   
 	
 	method moverPelota(){
-    		if(pelota.noPasoMitadDeCancha()){
-    			   moverPelotaVerticalmente.moverPelota(arriba) 			
-			}else{
+ 
 				pelota.cambiarVelocidad(100)
     			moverPelotaVerticalmente.moverPelota(abajo)
     			pelota.tocarPiso()		
 			}
     }
-}
+
 
 
 //GOLPE ALTO
 
 object golpeAlto{
-	const nombre = "GolpeAlto"
+	const nombre = "golpeAlto"
 	method nombre()= nombre
 	 method golpearPelota(){
+	 	/* 
+		game.removeVisual(jugador1.puntos())
+		jugador1.puntos(jugador1.puntos().siguiente())
+		game.addVisual(jugador1.puntos())
+		*/
+	 		
 		    pelota.cambiarFuerzaDeSubida(500)
 		    pelota.cambiarVelocidad(40)
         	game.onTick(80,nombre, {self.moverPelota()})

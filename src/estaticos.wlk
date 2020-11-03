@@ -44,24 +44,36 @@ object contadorDeSegundos{
 */
 
 object cero{var property position = game.at(35,70)
-	method image()= "cero.png"}
+	method image()= "cero.png"
+	method siguiente()= uno
+	method anterior() = cero
+}
 object uno{var property position = game.at(35,70)
 	method image()= "uno.png"
+	method siguiente() = dos
+	method anterior()= uno
 }
 object dos{var property position = game.at(35,70)
 		method image()= "dos.png"
+		method siguiente()= tres
+		method anterior()= dos
 }
 object tres{var property position = game.at(35,70)
 		method image()= "tres.png"
+		method siguiente()= cuatro
+		method anterior()= tres
 }
 object cuatro{var property position = game.at(35,70)
 		method image()= "cuatro.png"
+		method siguiente()= cinco
+		method anterior()= cuatro
 }
 object cinco{var property position = game.at(35,70)
 		method image()= "cinco.png"
+		method siguiente(){game.stop()} 
 }
 
-
+/* 
 
 object ceroBis{var property position = game.at(115,70)
 	method image()= "cero.png"}
@@ -80,29 +92,30 @@ object cuatroBis{var property position = game.at(115,70)
 object cincoBis{var property position = game.at(115,70)
 		method image()= "cinco.png"
 }
+* 
+*//* 
 object puntajeJugador1{
 	
 
 	method mostrarPuntos(){
-		if(jugador1.puntos()==1){
+		if(jugador1.puntos()==cero){
+			game.addVisual(cero)
+		}else if(jugador1.puntos()==uno){
 			game.addVisual(uno)
-		}else if(jugador1.puntos()==2){
+		}else if(jugador1.puntos()==dos){
 			game.addVisual(dos)
-		}else if(jugador1.puntos()==3){
+		}else if(jugador1.puntos()==tres){
 			game.addVisual(tres)
-		}else if(jugador1.puntos()==4){
+		}else if(jugador1.puntos()==cuatro){
 			game.addVisual(cuatro)
-		}else if(jugador1.puntos()==5){
+		}else{
 			game.addVisual(cinco)
 			game.schedule(2000,game.stop())
-		}else if(jugador1.puntos()==0){
-		    game.addVisual(cero)
-		}else{
-			
 		}
 	}
-}
+}*/
 
+/* 
 object puntajeJugador2{
 	
 
@@ -126,7 +139,7 @@ object puntajeJugador2{
 	}
 }
 
-
+*/
 
 
 
