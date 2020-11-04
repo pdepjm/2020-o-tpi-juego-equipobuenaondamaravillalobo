@@ -52,12 +52,12 @@ class NumeroFinal inherits Numero{
 		if(jugador1.puntos()==5){
 			game.addVisual(jugador1Gano)
 			game.addVisualCharacterIn(cabeza1, game.at(750,200))
-			game.schedule(200,{game.stop()})
+			game.schedule(800,{game.stop()})
 		}
 		else{
 			game.addVisual(jugador2Gano)
 			game.addVisualCharacterIn(cabeza2, game.at(750,200))
-			game.schedule(200,{game.stop()})
+			game.schedule(800,{game.stop()})
 		}
 		return null
 	}
