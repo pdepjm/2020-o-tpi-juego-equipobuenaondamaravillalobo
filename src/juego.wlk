@@ -171,7 +171,7 @@ object contadorDePuntos{
 	var property contrincante
     var property position = game.at(10,30)
     var velocidad = 100
-    var property tipoDeGolpe 
+    var property tipoDeGolpe = golpeRemate
     var property fuerzaDeSubida = 100
     var property piques = 0
     
@@ -205,7 +205,7 @@ object contadorDePuntos{
     		
     		if(rastreadorDeContacto.estanEnZonaDeContacto(self,nuevoGolpeador)){
     			
-    			reproductorDeSonidos.sonidoDeJugador().play()
+    			//reproductorDeSonidos.sonidoDeJugador().play()
     			
     			piqueDePelota.detenerPique()
     			piqueDePelota.reiniciarContadorDePiques()
@@ -284,7 +284,7 @@ object contadorDePuntos{
 */
 //PASAR MITAD DE CANCHA
 
-		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 70 and self.direccionLateral() == derecha
+		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 73 and self.direccionLateral() == derecha
 
 
 //LA PELOTA TOCA LA RED Y VUELVE A POSICION INICIAL SIN MOVIMIENTO
@@ -465,79 +465,7 @@ object golpeAlto{
 object moverPelotaVerticalmente{
 	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
 }  
-/* 
-class Golpe{
-	var nombre = "GolpeBasico"
-	   
-	    method nombre()= nombre
-	    
-	    method golpearPelota(){
-    		pelota.cambiarFuerzaDeSubida(150)
-        	game.onTick(100, nombre, {self.moverPelota()})
-        	}
-	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
-	
-	method moverPelota(){
-    		if(pelota.noPasoMitadDeCancha()){
-    			pelota.tipoDeGolpe().moverPelota(arriba) 
-    			
-    					
-			}else{
-    			pelota.tipoDeGolpe().moverPelota(abajo)
-    			pelota.tocarPiso()		
-			}
-    }
-}
-
-class GolpeRemate inherits Golpe{
-
-	
-	override method golpearPelota(){
-			pelota.cambiarVelocidad(200)
-        	game.onTick(70,"GolpeRemate", {self.moverPelota()})
-        	}
-    }
-
-
-
-class GolpeAlto inherits Golpe{ 
-	
-	override method golpearPelota(){
-		    pelota.cambiarFuerzaDeSubida(500)
-		    pelota.cambiarVelocidad(40)
-        	game.onTick(80,nombre, {self.moverPelota()})
-        	}
-
-	method bajarPelota(){
-			pelota.position(abajo.nuevaPosicion( pelota ,3))
-			pelota.position(pelota.direccionLateral().nuevaPosicion( pelota , pelota.velocidad()/20)) 
-		}
-				
-	override method moverPelota(){
-    		if(pelota.fuerzaDeSubida() > 0){
-    		   pelota.perderFuerzaDeSubida(30)
-    		   pelota.tipoDeGolpe().moverPelota(arriba) 
-    		 	
-    					
-			}else{
-    		   pelota.tipoDeGolpe().bajarPelota()
-    		   pelota.tocarPiso()		
-    		
-			}
-	 }	
-}
-
-
-const golpeBasico = new Golpe()
-const golpeRemate= new GolpeRemate(nombre="GolpeRemate")
-const golpeAlto = new GolpeAlto(nombre= "GolpeAlto")
-*/
-
-
-                                            
-
-
-
+                                
 
                           // OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 
 

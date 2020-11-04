@@ -4,98 +4,76 @@ import juego.*
 import wollok.game.*
 
 
-/* 
+
 describe "Pelota"{
 	
-	const jugador = new Jugador(
-	position = game.at(3,1),
-	direccionHaciaDondeGolpea = derecha,
-	image= "roger2.png",
-	orientacion = derecha,
-	onTickDeMovimiento="Movimiento jugador")
 	
-	test "Al golpear pelota, la energia se settea"{
-		pelota.position(game.at(4,2))
-		pelota.golpe(jugador,jugador2,golpeBasico)
-		assert.equals(150,pelota.fuerzaDeSubida())
+	test "Jugador cerca de pelota pega un golpe alto y lo settea en tipo de golpe en pelota"{
+		pelota.position(jugador1.position())
+		pelota.golpe(jugador1,jugador2,golpeAlto)
+		assert.equals(golpeAlto,pelota.tipoDeGolpe())
 	}
-	/* 
+	
 	test "Al picar la energia se settea"{
 		pelota.position(game.at(4,2))
-		pelota.golpe(jugador,golpeBasico)
+		pelota.golpe(jugador1,jugador2,golpeBasico)
 		if(pelota.position().y()==0){
 			assert.equals(60,pelota.fuerzaDeSubida())
 		}
 	}
-	 
+	
+	test "Cuando la pelota toca el piso suma un pique"{
+		pelota.position(game.at(4,2))
+		pelota.golpe(jugador1,jugador2,golpeBasico)
+		if(pelota.position().y()==0){
+			assert.equals(1,piqueDePelota.contadorDePiques())
+		}
+	}
+	
+	test "Cuando se ejecuta golpe basico la energia de pelota se settea"{
+		pelota.position(game.at(4,2))
+		pelota.golpe(jugador1,jugador2,golpeBasico)
+		assert.equals(100,pelota.fuerzaDeSubida())
+	}
+	
+
 	
 }
 
 describe "Jugadores"{ 
 	
-	const jugador3 = new Jugador(
-	position = game.at(3,0),
-	direccionHaciaDondeGolpea = derecha,
-	image= "roger2.png",
-	orientacion = derecha,
-	onTickDeMovimiento="Movimiento jugador 3")
 	
 	test "Los jugadores pueden saltar" {
-        jugador3.saltar()
-        assert.that(jugador3.position().y() > 0)
+        jugador1.saltar()
+        assert.that(jugador1.position().y() > 0)
     }
 
     test "Los jugadores no pueden saltar muchasveces seguidas" {
         // Se parte de la base de que el jugador esta un poco elevado del piso
         // Como si ya hubiera presionado la tecla de salto
-        jugador3.saltar()
-        jugador3.deshabilitarSalto()
-        assert.notThat(jugador3.puedeSaltar())
+        jugador1.saltar()
+        jugador1.deshabilitarSalto()
+        assert.notThat(jugador1.puedeSaltar())
         
         }
 
 
 
 	test "Los jugadores pueden correr" { 
-		jugador3.position(jugador3.position().left(1))
-		assert.equals(2,jugador3.position().x())
+		jugador1.position(jugador1.position().left(1))
+		assert.equals(2,jugador1.position().x())
+	}
+	
+	test "Si la pelota toca la red se suma un punto para el contrincante"{
+		pelota.position(jugador1.position())
+		pelota.golpe(jugador1,jugador2,golpeRemate)
+		if(pelota.position().x()>73){
+			assert.equals(unoBis,pelota.contrincante().puntos())
+		}
+	//NO SUMA EL PUNTO, HAY QUE HACER ALGO
 	}
 	
 }
-// Testear: Como se mueve la pelota, hacia arriba o abajo
 
 
 
-*/
-/*  
-test "Al golpear la energia se settea" {
-    
-    assert.equals(140, pepita.energia())
-}
-
-test "" {
-    pepita.vola(1)
-    assert.equals(91, pepita.energia())
-}
-
-test "" {
-    pepita.vola(100)
-    assert.that(pepita.estaCansada())
-}
-
-test "" {
-    pepita.irA(game.at(1, 0))
-    assert.equals(91, pepita.energia())
-}
-
-test "" {
-    const nuevaPosicion = game.at(1, 1)
-    pepita.irA(nuevaPosicion)
-    assert.equals(nuevaPosicion, pepita.position())
-}
-
-test "" {
-    pepita.irA(nido.position())
-    assert.equals("pepita-grande.png", pepita.image())
-}
-*/

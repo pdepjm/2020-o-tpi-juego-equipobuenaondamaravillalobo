@@ -69,12 +69,12 @@ const cincoBis = new NumeroFinal(image="cinco.png",siguiente=null,position = gam
 
 object reproductorDeSonidos{
 	var musicaAmbiente = game.sound("musicaAmbiente.mp3")
-	var sonidoDeGolpe = game.sound("sonidoDeGolpe.mp3")
-	var sonidoDeJugador = game.sound("jugadorGolpeando.mp3")
+	//var sonidoDeGolpe = game.sound("sonidoDeGolpe.mp3")
+	//var sonidoDeJugador = game.sound("jugadorGolpeando.mp3")
 
 	method musicaAmbiente() = musicaAmbiente
-	method sonidoDeGolpe() = sonidoDeGolpe
-	method sondidoDeJugador() = sonidoDeJugador
+	//method sonidoDeGolpe() = sonidoDeGolpe
+	//method sondidoDeJugador() = sonidoDeJugador
 }
 
 
