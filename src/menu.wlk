@@ -38,14 +38,19 @@ const jugador2Gano = new Menu(
 )
 
 const menuInicio = new Menu(
-	position = game.at(30, 0),
 	image = "menuInicial.png"
 )
 const menuSeleccion1 = new Menu(
 	image = "menuSeleccion1.png"
 )
-const menuSeleccion2 = new Menu(
-	image = "menuSeleccion2.png"
+const menuSeleccion2SinRafa = new Menu(
+	image = "menuSeleccion2SinRafa.png"
+)
+const menuSeleccion2SinRoger = new Menu(
+	image = "menuSeleccion2SinRoger.png"
+)
+const menuSeleccion2SinDjoko = new Menu(
+	image = "menuSeleccion2SinDjoko.png"
 )
  
  class CabezaDeJugador{
@@ -71,7 +76,7 @@ const menuSeleccion2 = new Menu(
  )
  
  object listaDeJugadores{
- 	var jugadoresDisponibles = #{rafa,roger,djoko}
+ 	const jugadoresDisponibles = #{rafa,roger,djoko}
  	
  	method jugadoresDisponibles() = jugadoresDisponibles
  	method ocuparJugador(jugador){
@@ -84,49 +89,64 @@ const menuSeleccion2 = new Menu(
  
  
  object detectorDeMenu{
-	
-	method detectarCambioDeMenu(){
-		
-		if(menuInicio.visual()){
-	keyboard.space().onPressDo({
-	 	menuInicio.sacarMenu()
-	 	menuSeleccion1.aparecerMenu()
-	 })
-	 }
-	if(menuSeleccion1.visual()){
-		
-	 	keyboard.num(1).onPressDo({self.elegirJugador1(1)})
-	 	keyboard.num(2).onPressDo({self.elegirJugador1(2)})
-	 	keyboard.num(3).onPressDo({self.elegirJugador1(3)})
+
+    method detectarCambioDeMenu(){
+
+        if(menuInicio.visual()){
+   		 keyboard.space().onPressDo({
+         menuInicio.sacarMenu()
+         menuSeleccion1.aparecerMenu()
+     })
+     }
+    if(menuSeleccion1.visual()){
+
+         keyboard.num(1).onPressDo({self.elegirJugador1(1)})
+         keyboard.num(2).onPressDo({self.elegirJugador1(2)})
+         keyboard.num(3).onPressDo({self.elegirJugador1(3)})
 
  }
- 	if(menuSeleccion2.visual()){
-	 	
-	 	keyboard.num(4).onPressDo({self.elegirJugador2(1)})
-	 	keyboard.num(5).onPressDo({self.elegirJugador2(2)})
-	 	keyboard.num(6).onPressDo({self.elegirJugador2(3)})
+     if(menuSeleccion2SinRafa.visual() || 
+         menuSeleccion2SinRoger.visual() ||
+         menuSeleccion2SinDjoko.visual()
+     ){
 
-	 	
- }}
+         keyboard.num(4).onPressDo({self.elegirJugador2(1)})
+         keyboard.num(5).onPressDo({self.elegirJugador2(2)})
+         keyboard.num(6).onPressDo({self.elegirJugador2(3)})
+ 	}
+ }
  
  method elegirJugador1(idCabezaBuscada){
- 		var jugadorElegido 
- 		
- 		jugadorElegido = listaDeJugadores.jugadoresDisponibles().find({unaCabeza => unaCabeza.idCabeza() == idCabezaBuscada})
- 		cabeza1.image(jugadorElegido.imageIzquierda())
-	 	menuSeleccion1.sacarMenu()
-	 	menuSeleccion2.aparecerMenu()
-	 	listaDeJugadores.remover(jugadorElegido)
+         var jugadorElegido 
+
+         jugadorElegido = listaDeJugadores.jugadoresDisponibles().find({unaCabeza => unaCabeza.idCabeza() == idCabezaBuscada})
+         cabeza1.image(jugadorElegido.imageIzquierda())
+         menuSeleccion1.sacarMenu()
+         self.aparecerMenuSegunEleccion(idCabezaBuscada)
+         listaDeJugadores.remover(jugadorElegido)
  }
   method elegirJugador2(idCabezaBuscada){
- 		var jugadorElegido
- 		
- 		jugadorElegido = listaDeJugadores.jugadoresDisponibles().find({unaCabeza => unaCabeza.idCabeza() == idCabezaBuscada})
- 		cabeza2.image(jugadorElegido.imageDerecha())
-	 	game.removeTickEvent("Detectar cambio de menu")
-	    partido.iniciar()
-	 	// menuSeleccion2.sacarMenu()
+         var jugadorElegido
+
+         jugadorElegido = listaDeJugadores.jugadoresDisponibles().find({unaCabeza => unaCabeza.idCabeza() == idCabezaBuscada})
+         cabeza2.image(jugadorElegido.imageDerecha())
+         game.removeTickEvent("Detectar cambio de menu")
+         game.clear()
+         partido.iniciar()
  }
+ 
+ method aparecerMenuSegunEleccion(id){
+     if(id == 1){ 
+         menuSeleccion2SinRafa.aparecerMenu()
+         }else{
+             if(id == 2){ 
+         menuSeleccion2SinRoger.aparecerMenu()}
+         else{
+             menuSeleccion2SinDjoko.aparecerMenu()
+         }
+         }
+ }
+ 
  }
 
 
