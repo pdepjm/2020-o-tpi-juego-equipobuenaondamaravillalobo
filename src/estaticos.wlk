@@ -2,6 +2,7 @@
 import juego.*
 import nivel.*
 import wollok.game.*
+import menu.*
 
 
 class Red{
@@ -47,7 +48,19 @@ class Numero{
 }
 
 class NumeroFinal inherits Numero{
-	override method siguiente(){game.clear() return null }
+	override method siguiente(){game.clear()
+		if(jugador1.puntos()==5){
+			game.addVisual(jugador1Gano)
+			game.addVisualCharacterIn(cabeza1, game.at(750,200))
+			game.schedule(200,{game.stop()})
+		}
+		else{
+			game.addVisual(jugador2Gano)
+			game.addVisualCharacterIn(cabeza2, game.at(750,200))
+			game.schedule(200,{game.stop()})
+		}
+		return null
+	}
         // game.addVisual() FALTARIA HACER QUE MUESTRE POR PANTALLA EL JUGADOR QUE GANÓ.... 
 }
 

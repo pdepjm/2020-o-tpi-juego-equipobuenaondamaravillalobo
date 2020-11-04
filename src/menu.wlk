@@ -25,13 +25,9 @@ class Menu{
 	
 	method visual() = visual
 	
-	method configurarJugador1(){
-		jugador1.image()
-	}
 }
 
 const menuInicio = new Menu(
-	position = game.at(30, 0),
 	image = "menuInicial.png"
 )
 const menuSeleccion1 = new Menu(
@@ -40,7 +36,14 @@ const menuSeleccion1 = new Menu(
 const menuSeleccion2 = new Menu(
 	image = "menuSeleccion2.png"
 )
-// TODO: Agregar una tercera imagen para un jugador
+
+const jugador1Gano = new Menu(
+	image = "jugador1Gano.png"
+)
+
+const jugador2Gano = new Menu(
+	image = "jugador2Gano.png"
+)
  
 object detectorDeMenu{
 	
