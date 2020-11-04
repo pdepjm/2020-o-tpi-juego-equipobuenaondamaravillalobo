@@ -55,7 +55,7 @@ object detectorDeMenu{
 	if(menuSeleccion1.visual()){
 		
 	 	keyboard.num(1).onPressDo({
-	 	cabeza1.image("cabezaRafa.png")
+	 	cabeza1.image("cabezaRafa1.png")
 	 	menuSeleccion1.sacarMenu()
 	 	menuSeleccion2.aparecerMenu()
 	 	})
@@ -75,7 +75,7 @@ object detectorDeMenu{
 	 if(menuSeleccion2.visual()){
 	 	
 	 	keyboard.num(4).onPressDo({
-	 	cabeza2.image("cabezaRafa.png")
+	 	cabeza2.image("cabezaRafa2.png")
 	    partido.iniciar()
 	 	game.removeTickEvent("Detectar cambio de menu")
 	 	menuSeleccion2.sacarMenu()

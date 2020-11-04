@@ -104,7 +104,7 @@ class Raqueta{
    if(duenio.position().x()<75){  
    	return game.at(duenio.position().x()+4,duenio.position().y()+6)
    	}else{
-   		return game.at(duenio.position().x()-2,duenio.position().y()+2)
+   		return game.at(duenio.position().x()-3,duenio.position().y()+6)
    	}
 }
   
@@ -121,7 +121,7 @@ const raquetaJugador = new Raqueta(
 )
 
 const raquetaJugador2 = new Raqueta(
-    	image =  "raquetaNadal2.png" 
+    	image =  "raquetaNadalBabolat.png" 
     	,duenio = jugador2	
 )
 	
@@ -136,9 +136,9 @@ class Cabeza{
 	//El if es porque quedaba mal posicionada la imagen
 	method position()=
 	if(cuerpo == jugador2)
-	return game.at(cuerpo.position().x()+5,cuerpo.position().y()+9)
+	return game.at(cuerpo.position().x()+1,cuerpo.position().y()+6)
 	else
-	return game.at(cuerpo.position().x(),cuerpo.position().y()+9)
+	return game.at(cuerpo.position().x()-3,cuerpo.position().y()+6)
 }
 
 const cabeza1 = new Cabeza(
@@ -149,18 +149,6 @@ const cabeza2 = new Cabeza(
 	image = null,
 	cuerpo = jugador2
 )
-
-/* 
-object contadorDePuntos{
-	
-	method contarPunto(){
-		
-		jugador1.puntos()
-		
-	}
-	
-}
-*/
 
 
                            // DECLARACION DE LA PELOTA 
@@ -235,15 +223,6 @@ object contadorDePuntos{
  		}
     }
 }
- 	/* 
- 		}else{
- 	    jugador1.sumarPunto()
- 		self.reiniciarPosicion()	
- 		game.removeTickEvent("Pelota picando")
- 			
- 		}
- 	}
- }*/
 
     		
  //VUELVE A LA POSICION INICIAL Y REINICIA LOS TICKS
@@ -271,17 +250,7 @@ object contadorDePuntos{
 			}
 		}	
 			
-		  
-  		
-		/* 
-		 method tocarPiso(){ 
-			 	if(position.y()==0){ 
-			  			piqueDePelota.sumarUnPique()
-			  			piqueDePelota.accionar()
-					    game.removeTickEvent(tipoDeGolpe.nombre())
-			 	}
-			}
-*/
+
 //PASAR MITAD DE CANCHA
 
 		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 73 and self.direccionLateral() == derecha
@@ -348,22 +317,11 @@ object piqueDePelota{
 	}
 // Este metodo funciona para evaluar cuando pica por segunda vez, ya que se usaria en el metodo dirigirPique() solo cuando esta bajando
 
- /*                                                                      
-    method evaluarPunto(){
-    	if(pelota.position().y()==0){
-    			    game.removeTickEvent("Pelota picando")
-				pelota.jugadorQueGolpea().sumarPunto()
-				pelota.reiniciarPosicion()
-				pelota.piques(0)
-			   
-			}
-    }
-    */
-    
+
 	method accionar(){ 	
 			self.reiniciarPotenciaDePique()	  
 			pelota.cambiarFuerzaDeSubida(75)
-			game.onTick(150,"Pelota picando",{self.dirigirPique() /*self.evaluarPunto()*/})
+			game.onTick(150,"Pelota picando",{self.dirigirPique()})
 }	
 
 	method detenerPique(){
@@ -431,12 +389,7 @@ object golpeAlto{
 	const nombre = "golpeAlto"
 	method nombre()= nombre
 	 method golpearPelota(){
-	 	/* 
-		game.removeVisual(jugador1.puntos())
-		jugador1.puntos(jugador1.puntos().siguiente())
-		game.addVisual(jugador1.puntos())
-		*/
-	 		
+
 		    pelota.cambiarFuerzaDeSubida(500)
 		    pelota.cambiarVelocidad(40)
         	game.onTick(70,nombre, {self.moverPelota()})
@@ -476,13 +429,6 @@ object izquierda{
 		
 		method posicionRaqueta() = game.at(jugador1.position().x() - 5,jugador1.position().y())
 	 
-	 /*method limitarPosicion(jugador1){	
-			if(jugador1.position().x()<76){
-				jugador1.position(game.at(77,jugador1.position().y()))
-				}else if(jugador1.position().x()>145){
-					jugador1.position(game.at(144,jugador1.position().y()))
-        }				
-	}*/	
 }
 
 	
