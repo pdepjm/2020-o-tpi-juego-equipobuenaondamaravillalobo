@@ -47,7 +47,6 @@ const menuSeleccion1 = new Menu(
 const menuSeleccion2 = new Menu(
 	image = "menuSeleccion2.png"
 )
-// TODO: Agregar una tercera imagen para un jugador
  
  class CabezaDeJugador{
  	var imageDerecha

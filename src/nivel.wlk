@@ -34,6 +34,7 @@ object partido{
 // MAIN DE TECLAS Y COLISIONE
                                                          
 		config.configurarTeclas()
+		golpeNulo.golpearPelota()
 		//config.configurarColisiones()
 		
 
@@ -48,8 +49,8 @@ object partido{
 		game.onTick(50,"Habilitar salto para jugador1",{jugador1.habilitarSalto()})
 		game.onTick(50,"Habilitar salto para jugador2",{jugador2.habilitarSalto()})
 		
-		game.onTick(10,"evaluarGolpeEnRed",{pelota.tocarRed()})
-		game.onTick(10,"evaluarDoblePique",{pelota.doblePique()})
+		game.onTick(10,"Evaluar golpeEnRed",{pelota.tocarRed()})
+		game.onTick(10,"Evaluar doblePique",{pelota.doblePique()})
         game.onTick(1000,"Evaluar Limites pelota",{pelota.limitarPosicion()})
         
         
@@ -109,11 +110,7 @@ object config{
         keyboard.k().onPressDo({pelota.golpe(jugador2,jugador1,golpeAlto)})
         keyboard.l().onPressDo({pelota.golpe(jugador2,jugador1,golpeRemate)})     
         					
-        
-        
-        
-   
-        //puntaje2.mostrarPuntos()
+       
         }
         
 }
