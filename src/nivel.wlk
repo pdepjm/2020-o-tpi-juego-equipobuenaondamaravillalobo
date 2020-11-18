@@ -48,8 +48,8 @@ object partido{
 		game.onTick(1,"Evaluar doblePique",{pelota.doblePique()})
         game.onTick(1000,"Evaluar Limites pelota",{pelota.limitarPosicion()})
         
-        game.onTick(1,"Limitar posicion de jugadores izquierdo",{jugador1.limitarPosicionIzquierda()})
-        game.onTick(1,"Limitar posicion de jugadores derecho",{jugador2.limitarPosicionDerecha()})
+      //  game.onTick(500,"limitarPosicion",{jugador1.limitarPosicion()})
+     //   game.onTick(500,"Limitar posicion de jugadores derecho",{jugador2.limitarPosicionDerecha()})
         
         
         
@@ -84,7 +84,7 @@ object config{
         //CONFIGURACION DE TECLAS DE JUGADOR 1
         keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador1)})
         keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador1)})
-        keyboard.s().onPressDo({game.removeTickEvent(jugador1.onTickDeMovimiento())
+        keyboard.s().onPressDo({game.removeTickEvent(jugador1.onTickName())
         	jugador1.estaEnMovimiento(false)
         })
         keyboard.w().onPressDo({jugador1.saltar()  
@@ -99,8 +99,9 @@ object config{
    
         keyboard.left().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador2)})
         keyboard.right().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador2)})
-        keyboard.down().onPressDo({game.removeTickEvent(jugador2.onTickDeMovimiento())
-        	jugador2.estaEnMovimiento(false)})
+        keyboard.down().onPressDo({game.removeTickEvent(jugador2.onTickName())
+        	jugador2.estaEnMovimiento(false)
+        })
         	
         keyboard.up().onPressDo({jugador2.saltar()
         	jugador2.deshabilitarSalto()})

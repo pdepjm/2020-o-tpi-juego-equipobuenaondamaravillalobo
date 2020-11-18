@@ -4,8 +4,8 @@ import wollok.game.*
 import menu.*
 
 
-const mitadDeCanchaDerecha = 73
-const mitadDeCanchaIzquierda = 80
+const mitadDeCanchaDerecha = 76
+const mitadDeCanchaIzquierda = 73
 
                              // CLASE DE JUGADORES
 
@@ -15,14 +15,14 @@ class Jugador{
 	var property image 
 	var property orientacion
 	var puedeSaltar= true
-	var onTickDeName
+	var property onTickName
 	var property estaEnMovimiento = false
 	var property puntos
 	const contador 
 	const posicionInicial
 	
-	method onTickDeMovimiento(tickEvent){onTickDeName = tickEvent}
-	method onTickDeMovimiento() = onTickDeName
+	//method onTickName(tickEvent){onTickName = tickEvent}
+	//method onTickName() = onTickName
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
 	method contador() = contador
@@ -40,48 +40,43 @@ class Jugador{
 		15.times({i => game.schedule(20,{position = arriba.nuevaPosicion(self,1)})})
 		}
 	    } 
-
-
+	    
+ 
         method excedeLimiteIzquierdo()= position.x() <= izquierda.limiteDeCancha()
 	    
 	    method excedeLimiteDerecho()= position.x() >= derecha.limiteDeCancha()
 	    
-	    method excedeLimiteDeRed()= position.x()>=70 and position.x()<=78
+	    method excedeLimiteDeRed()= red.rangoDeRed(position.x(), position.y())
 	
-	    method limitarPosicionIzquierda(){
-			if(self.excedeLimiteIzquierdo()){
-				position = game.at(izquierda.limiteDeCancha(),position.y())
-				}else if(self.excedeLimiteDeRed()){
-				position = game.at(70,position.y())
+		method excedeAlgunLimite() = self.excedeLimiteIzquierdo() || self.excedeLimiteDeRed() || self.excedeLimiteDerecho()
+		
+	    method limitarPosicion(){
+			if(self.excedeAlgunLimite()){
+				
+				game.removeTickEvent("limitarPosicion")
+				game.removeTickEvent(self.onTickName())
+				self.estaEnMovimiento(false)	
           }
-	    } 
-	   
-	    method limitarPosicionDerecha(){
-	    	if(self.excedeLimiteDerecho()){
-	    		position = game.at(derecha.limiteDeCancha(),position.y())
-	    	}else if(self.excedeLimiteDeRed()){
-	    		position = game.at(78,position.y())
-	    	}
 	    }
-}
 
+}
 const jugador1 = new Jugador(
 		position = game.at(3,0),
 		image = "RogerSinFondoYsinCabeza.png",
 		direccionHaciaDondeGolpea = derecha,
 		orientacion = derecha,
-		onTickDeName= "Movimiento jugador1",
+		onTickName= "Movimiento jugador1",
 		puntos= 0,
 		contador = contadorJ1,
 		posicionInicial = game.at(3,0)
 		)
 	
 const jugador2 = new Jugador(
-		position = game.at(139,0),
+		position = game.at(138,0),
 		image = "RogerSinFondoYsinCabeza2.png",
 		direccionHaciaDondeGolpea = izquierda,
 		orientacion = izquierda,
-		onTickDeName = "Movimiento jugador2",
+		onTickName = "Movimiento jugador2",
 		puntos = 0,
 		contador= contadorJ2,
 		posicionInicial = game.at(139,0)
@@ -94,14 +89,19 @@ object moverJugador{
 	method moverJugadorHacia(direccion,jugador){
 		
 		if(jugador.estaEnMovimiento()){
-			game.removeTickEvent(jugador.onTickDeMovimiento())
-			game.onTick(100, jugador.onTickDeMovimiento() ,{jugador.position(direccion.nuevaPosicion(jugador,1))})
+			game.removeTickEvent(jugador.onTickName())
+
+			game.onTick(100, jugador.onTickName() ,{jugador.position(direccion.nuevaPosicion(jugador,1))})
 		}else{
-			game.onTick(100, jugador.onTickDeMovimiento() ,{jugador.position(direccion.nuevaPosicion(jugador,1))})
+			game.onTick(100, jugador.onTickName() ,{jugador.position(direccion.nuevaPosicion(jugador,1))})
 			jugador.estaEnMovimiento(true)		
 	    }
+	    game.onTick(100,"limitarPosicion",{jugador.limitarPosicion()})
+	    
 	}
-}
+
+	}
+
 
 
 /*              
@@ -118,7 +118,7 @@ class Raqueta{
 	var image
 	const duenio
    method position(){ 
-   if(duenio.position().x()<75){  
+   if(duenio.position().x()<72){  
    	return game.at(duenio.position().x()+4,duenio.position().y()+6)
    	}else{
    		return game.at(duenio.position().x()-3,duenio.position().y()+6)
@@ -347,9 +347,10 @@ object piqueDePelota{
 	method sumarUnPique(){contadorDePiques += 1}
 	method perderPotenciaDePique(){potenciaDePique -= 10}
 	method reiniciarPotenciaDePique(){potenciaDePique = 60}
+	method tienePotencia() = potenciaDePique > 0
 
 	method dirigirPique(){	
-		if(potenciaDePique > 0){
+		if(self.tienePotencia()){
 			self.perderPotenciaDePique()
 			controladorDePelota.moverPelota(arriba)
 			}else{
@@ -497,7 +498,7 @@ object derecha{
 		
 		method posicionRaqueta() = game.at(jugador1.position().x() + 5,jugador1.position().y())
 		
-	 	method limiteDeCancha() = 138
+	 	method limiteDeCancha() = 139
 }
 
 object abajo{

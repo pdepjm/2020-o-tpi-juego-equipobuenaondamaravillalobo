@@ -20,7 +20,7 @@ object red{
 	method aparecerRed(){
       	redes.forEach({red => game.addVisual(red)})
       }
-	method rangoDeRed(posicionEnX,posicionEnY) = posicionEnX >= 70 and posicionEnX <= 80 and posicionEnY < 10
+	method rangoDeRed(posicionEnX,posicionEnY) = posicionEnX >= 70 and posicionEnX <= 73 and posicionEnY < 10
       
 }
 
