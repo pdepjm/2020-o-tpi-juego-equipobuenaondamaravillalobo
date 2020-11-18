@@ -20,6 +20,8 @@ object red{
 	method aparecerRed(){
       	redes.forEach({red => game.addVisual(red)})
       }
+      
+      
 }
 
 class PedazoDeRed{
@@ -82,10 +84,11 @@ const contadorJ2 = new Contador(position = game.at(115,70), numero = 0,image="0.
 
 object reproductorDeSonidos{
 	var musicaAmbiente = game.sound("musicaAmbiente.mp3")
-	//var sonidoDeGolpe = game.sound("sonidoDeGolpe.mp3")
+	//var sonidoDeGolpe = game.sound("GritoPegada.mp3")
 	//var sonidoDeJugador = game.sound("jugadorGolpeando.mp3")
 
 	method musicaAmbiente() = musicaAmbiente
+	//method sonidoDeGolpe()= sonidoDeGolpe
 	//method sonidoDeGolpe() = sonidoDeGolpe
 	//method sondidoDeJugador() = sonidoDeJugador
 }

@@ -30,7 +30,7 @@ object partido{
                                                          
 		config.configurarTeclas()
 		golpeNulo.golpearPelota()
-		//config.configurarColisiones()
+	
 		
 
 		reproductorDeSonidos.musicaAmbiente().play()
@@ -47,6 +47,9 @@ object partido{
 		game.onTick(1,"Evaluar golpeEnRed",{pelota.tocarRed()})
 		game.onTick(1,"Evaluar doblePique",{pelota.doblePique()})
         game.onTick(1000,"Evaluar Limites pelota",{pelota.limitarPosicion()})
+        game.onTick(1,"Limitar posicion de jugadores izquierdo",{jugador1.limitarPosicionIzquierda()})
+        game.onTick(1,"Limitar posicion de jugadores derecho",{jugador2.limitarPosicionDerecha()})
+        
         
         
         
@@ -76,7 +79,7 @@ object config{
 
     method configurarTeclas(){
     	
-//CONFIGURACION DE TECLAS DE JUGADOR 1
+        //CONFIGURACION DE TECLAS DE JUGADOR 1
         keyboard.a().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador1)})
         keyboard.d().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador1)})
         keyboard.s().onPressDo({game.removeTickEvent(jugador1.onTickDeMovimiento())
@@ -90,7 +93,7 @@ object config{
         keyboard.v().onPressDo({pelota.golpe(jugador1,jugador2,golpeAlto)})
         keyboard.b().onPressDo({pelota.golpe(jugador1,jugador2,golpeRemate)})
    
-// CONFIGURACION DE TECLAS JUGADOR 2      
+        // CONFIGURACION DE TECLAS JUGADOR 2      
    
         keyboard.left().onPressDo({moverJugador.moverJugadorHacia(izquierda,jugador2)})
         keyboard.right().onPressDo({moverJugador.moverJugadorHacia(derecha,jugador2)})
