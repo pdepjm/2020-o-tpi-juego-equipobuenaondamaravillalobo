@@ -16,12 +16,14 @@ class Jugador{
 	var puedeSaltar= true
 	var onTickDeMovimiento
 	var property estaEnMovimiento = false
-	var property puntos 
+	var property puntos
+	const contador 
 	
 	method onTickDeMovimiento(tickEvent){onTickDeMovimiento = tickEvent}
 	method onTickDeMovimiento() = onTickDeMovimiento
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
+	method contador() = contador
 	method gravedad(){position = abajo.nuevaPosicion(self,1)}
 	method puedeSaltar() = puedeSaltar
     method habilitarSalto(){if(self.position().y()==0) puedeSaltar = true}
@@ -47,7 +49,8 @@ const jugador1 = new Jugador(
 		direccionHaciaDondeGolpea = derecha,
 		orientacion = derecha,
 		onTickDeMovimiento = "Movimiento jugador1",
-		puntos=cero
+		puntos= 0,
+		contador = contadorJ1
 		)
 	
 const jugador2 = new Jugador(
@@ -56,7 +59,8 @@ const jugador2 = new Jugador(
 		direccionHaciaDondeGolpea = izquierda,
 		orientacion = izquierda,
 		onTickDeMovimiento = "Movimiento jugador2",
-		puntos = ceroBis 
+		puntos = 0,
+		contador= contadorJ2
 		)	
 
      	 

@@ -68,7 +68,7 @@ describe "Jugadores"{
 		pelota.position(jugador1.position())
 		pelota.golpe(jugador1,jugador2,golpeRemate)
 		if(pelota.position().x()>73){
-			assert.equals(unoBis,pelota.contrincante().puntos())
+			assert.equals(1,pelota.contrincante().puntos())
 		}
 	//NO SUMA EL PUNTO, HAY QUE HACER ALGO
 	}

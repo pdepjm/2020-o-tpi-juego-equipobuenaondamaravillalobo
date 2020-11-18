@@ -13,8 +13,8 @@ program  tenistasCabezones{
 	game.width(150)
 	game.boardGround("canchaFlama.png")
 	
+	losMenues.configurarTeclasMenu()
 	menuInicio.aparecerMenu()
-	game.onTick(10,"Detectar cambio de menu",{detectorDeMenu.detectarCambioDeMenu()})
 	
 	game.start()
 }

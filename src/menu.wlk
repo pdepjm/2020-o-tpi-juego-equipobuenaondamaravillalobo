@@ -88,34 +88,42 @@ const menuSeleccion2SinDjoko = new Menu(
  }
  
  
- object detectorDeMenu{
+ object losMenues{
 
-    method detectarCambioDeMenu(){
+    method configurarTeclasMenu(){
 
-        if(menuInicio.visual()){
-   		 keyboard.space().onPressDo({
+      
+   	keyboard.space().onPressDo({
          menuInicio.sacarMenu()
          menuSeleccion1.aparecerMenu()
+         keyboard.space().onPressDo({})
      })
-     }
-    if(menuSeleccion1.visual()){
-
-         keyboard.num(1).onPressDo({self.elegirJugador1(1)})
-         keyboard.num(2).onPressDo({self.elegirJugador1(2)})
-         keyboard.num(3).onPressDo({self.elegirJugador1(3)})
-
+    keyboard.num(1).onPressDo({
+     	 self.elegirJugador1(1)
+     	 keyboard.num(1).onPressDo({})
+         })
+ 	keyboard.num(2).onPressDo({
+     	keyboard.num(2).onPressDo({})
+     	self.elegirJugador1(2)
+         })
+ 	keyboard.num(3).onPressDo({
+     	keyboard.num(3).onPressDo({})
+     	self.elegirJugador1(3)
+         })
+	 keyboard.num(4).onPressDo({
+	 	keyboard.num(4).onPressDo({})
+	 	self.elegirJugador2(1)
+	 })
+     keyboard.num(5).onPressDo({
+     	keyboard.num(5).onPressDo({})
+     	self.elegirJugador2(2)
+     })
+     keyboard.num(6).onPressDo({
+     	keyboard.num(6).onPressDo({})
+     	self.elegirJugador2(3)
+     })
  }
-     if(menuSeleccion2SinRafa.visual() || 
-         menuSeleccion2SinRoger.visual() ||
-         menuSeleccion2SinDjoko.visual()
-     ){
-
-         keyboard.num(4).onPressDo({self.elegirJugador2(1)})
-         keyboard.num(5).onPressDo({self.elegirJugador2(2)})
-         keyboard.num(6).onPressDo({self.elegirJugador2(3)})
- 	}
- }
- 
+    
  method elegirJugador1(idCabezaBuscada){
          var jugadorElegido 
 
@@ -130,7 +138,6 @@ const menuSeleccion2SinDjoko = new Menu(
 
          jugadorElegido = listaDeJugadores.jugadoresDisponibles().find({unaCabeza => unaCabeza.idCabeza() == idCabezaBuscada})
          cabeza2.image(jugadorElegido.imageDerecha())
-         game.removeTickEvent("Detectar cambio de menu")
          game.clear()
          partido.iniciar()
  }

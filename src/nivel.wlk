@@ -22,12 +22,7 @@ object partido{
 		game.addVisual(pelota)
 		game.addVisual(raquetaJugador)
 		game.addVisual(raquetaJugador2)
-		game.addVisual(red1)
-		game.addVisual(red2)
-		game.addVisual(red3)
-		game.addVisual(red4)
-		game.addVisual(red5)
-		game.addVisual(red6)
+		red.aparecerRed()
 		
 		contadorDePuntos.inicializarPuntos()
 		
@@ -49,8 +44,8 @@ object partido{
 		game.onTick(50,"Habilitar salto para jugador1",{jugador1.habilitarSalto()})
 		game.onTick(50,"Habilitar salto para jugador2",{jugador2.habilitarSalto()})
 		
-		game.onTick(10,"Evaluar golpeEnRed",{pelota.tocarRed()})
-		game.onTick(10,"Evaluar doblePique",{pelota.doblePique()})
+		game.onTick(1,"Evaluar golpeEnRed",{pelota.tocarRed()})
+		game.onTick(1,"Evaluar doblePique",{pelota.doblePique()})
         game.onTick(1000,"Evaluar Limites pelota",{pelota.limitarPosicion()})
         
         

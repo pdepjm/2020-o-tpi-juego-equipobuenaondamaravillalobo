@@ -4,80 +4,80 @@ import nivel.*
 import wollok.game.*
 import menu.*
 
+object red{
+	const redes=[
+	  	new PedazoDeRed(position=game.at(75,0)),
+		new PedazoDeRed(position=game.at(75,1)),
+ 		new PedazoDeRed(position=game.at(75,2)),
+		new PedazoDeRed(position=game.at(75,3)),
+		new PedazoDeRed(position=game.at(75,4)),
+ 		new PedazoDeRed(position=game.at(75,5)),
+ 		new PedazoDeRed(position=game.at(75,6)),
+		new PedazoDeRed(position=game.at(75,7)),
+		new PedazoDeRed(position=game.at(75,8))
+	  ] 
+	  
+	method aparecerRed(){
+      	redes.forEach({red => game.addVisual(red)})
+      }
+}
 
-class Red{
-	  const property position 
-      method image() = "red.png"  
+class PedazoDeRed{
+	  const position
+	  
+	  method position()= position
+	  method image() = "red.png"  
 }
 
 
-const red1= new Red(position=game.at(75,0))
-const red2= new Red(position=game.at(75,1))
-const red3= new Red(position=game.at(75,2))
-const red4= new Red(position=game.at(75,3))
-const red5= new Red(position=game.at(75,4))
-const red6= new Red(position=game.at(75,5))
-const red7= new Red(position=game.at(75,6))
-const red8= new Red(position=game.at(75,7))
-const red9= new Red(position=game.at(75,8))
+
 
 
 
 object contadorDePuntos{
 
         method inicializarPuntos(){
-        	game.addVisual(jugador1.puntos())
-        	game.addVisual(jugador2.puntos())
+        	game.addVisual(contadorJ1)
+        	game.addVisual(contadorJ2)
         }
        
         method sumarPunto(jugador){ 
-		game.removeVisual(jugador.puntos())
-		jugador.puntos(jugador.puntos().siguiente()) 
-		game.addVisual(jugador.puntos())
+		jugador.puntos(jugador.puntos() + 1)
+		jugador.contador().numeroSiguiente() 
 	}
 }
 
-class Numero{
+class Contador{
 	const position
-	const image
-	const siguiente
+	var image 
+	var numero
 	
 	   method position()= position
-	   method image()= image
-	   method siguiente()= siguiente
-}
-
-class NumeroFinal inherits Numero{
-	override method siguiente(){game.clear()
-		if(jugador1.puntos()==5){
+	   method image()= numero.toString() + ".png"
+	   method numeroSiguiente(){
+	   	numero += 1
+	   	self.verificacionNumeroFinal()
+	   }
+	   method verificacionNumeroFinal(){
+	   	if(numero == 6){
+	   		game.clear()
+		if(jugador1.puntos()==6){
 			game.addVisual(jugador1Gano)
 			game.addVisualCharacterIn(cabeza1, game.at(750,200))
-			game.schedule(800,{game.stop()})
+			game.schedule(1800,{game.stop()})
 		}
 		else{
 			game.addVisual(jugador2Gano)
 			game.addVisualCharacterIn(cabeza2, game.at(750,200))
-			game.schedule(800,{game.stop()})
-		}
-		return null
-	}
-        // game.addVisual() FALTARIA HACER QUE MUESTRE POR PANTALLA EL JUGADOR QUE GANÓ.... 
+			game.schedule(1800,{game.stop()})
+			}
+	   	}
+	   }
+	   
 }
 
-const cero = new Numero(image="cero.png",siguiente=uno,position = game.at(35,70))
-const uno = new Numero(image="uno.png",siguiente=dos,position = game.at(35,70))
-const dos = new Numero(image="dos.png",siguiente=tres,position = game.at(35,70))
-const tres = new Numero(image= "tres.png",siguiente=cuatro,position = game.at(35,70))
-const cuatro = new Numero(image="cuatro.png",siguiente=cinco,position = game.at(35,70))
-
-const ceroBis = new Numero(image="cero.png",siguiente=unoBis,position = game.at(115,70))
-const unoBis = new Numero(image="uno.png",siguiente=dosBis,position = game.at(115,70))
-const dosBis = new Numero(image="dos.png",siguiente=tresBis,position = game.at(115,70))
-const tresBis = new Numero(image= "tres.png",siguiente=cuatroBis,position = game.at(115,70))
-const cuatroBis = new Numero(image="cuatro.png",siguiente=cincoBis,position = game.at(115,70))
-
-const cinco = new NumeroFinal(image="cinco.png",siguiente=null,position = game.at(35,70))
-const cincoBis = new NumeroFinal(image="cinco.png",siguiente=null,position = game.at(115,70))
+const contadorJ1 = new Contador(position = game.at(35,70), numero = 0,image="0.png" )
+const contadorJ2 = new Contador(position = game.at(115,70), numero = 0,image="0.png")
 
 
 object reproductorDeSonidos{
