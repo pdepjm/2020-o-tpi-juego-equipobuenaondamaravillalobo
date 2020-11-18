@@ -4,8 +4,9 @@ import wollok.game.*
 import menu.*
 
 
+const mitadDeCanchaDerecha = 73
+const mitadDeCanchaIzquierda = 80
 
-	
                              // CLASE DE JUGADORES
 
 class Jugador{
@@ -14,14 +15,14 @@ class Jugador{
 	var property image 
 	var property orientacion
 	var puedeSaltar= true
-	var onTickDeMovimiento
+	var onTickDeName
 	var property estaEnMovimiento = false
 	var property puntos
 	const contador 
 	const posicionInicial
 	
-	method onTickDeMovimiento(tickEvent){onTickDeMovimiento = tickEvent}
-	method onTickDeMovimiento() = onTickDeMovimiento
+	method onTickDeMovimiento(tickEvent){onTickDeName = tickEvent}
+	method onTickDeMovimiento() = onTickDeName
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
 	method contador() = contador
@@ -41,15 +42,15 @@ class Jugador{
 	    } 
 
 
-        method excedeLimiteIzquierdo()= position.x()<=0
+        method excedeLimiteIzquierdo()= position.x() <= izquierda.limiteDeCancha()
+	    
+	    method excedeLimiteDerecho()= position.x() >= derecha.limiteDeCancha()
 	    
 	    method excedeLimiteDeRed()= position.x()>=70 and position.x()<=78
-	    
-	    method excedeLimiteDerecho()= position.x() >= 140
 	
 	    method limitarPosicionIzquierda(){
-			if(self.excedeLimiteIzquierdo() ){
-				position = game.at(0,position.y())
+			if(self.excedeLimiteIzquierdo()){
+				position = game.at(izquierda.limiteDeCancha(),position.y())
 				}else if(self.excedeLimiteDeRed()){
 				position = game.at(70,position.y())
           }
@@ -57,7 +58,7 @@ class Jugador{
 	   
 	    method limitarPosicionDerecha(){
 	    	if(self.excedeLimiteDerecho()){
-	    		position = game.at(139,position.y())
+	    		position = game.at(derecha.limiteDeCancha(),position.y())
 	    	}else if(self.excedeLimiteDeRed()){
 	    		position = game.at(78,position.y())
 	    	}
@@ -69,7 +70,7 @@ const jugador1 = new Jugador(
 		image = "RogerSinFondoYsinCabeza.png",
 		direccionHaciaDondeGolpea = derecha,
 		orientacion = derecha,
-		onTickDeMovimiento = "Movimiento jugador1",
+		onTickDeName= "Movimiento jugador1",
 		puntos= 0,
 		contador = contadorJ1,
 		posicionInicial = game.at(3,0)
@@ -80,24 +81,13 @@ const jugador2 = new Jugador(
 		image = "RogerSinFondoYsinCabeza2.png",
 		direccionHaciaDondeGolpea = izquierda,
 		orientacion = izquierda,
-		onTickDeMovimiento = "Movimiento jugador2",
+		onTickDeName = "Movimiento jugador2",
 		puntos = 0,
 		contador= contadorJ2,
 		posicionInicial = game.at(139,0)
 		)	
 
-     	 
-//    method golpe(){}
-//FALTA VER METHOD TOCAR RED DE LOS JUGADORES DEPENDIENDO EL LADO
-    /* 
-    method tocarRed(){
-      		           if(position.x() >= 73 and position.x() <= 77){
-      		           	game.removeTickEvent(jugador.onTickDeMovimiento())
-      		           	game.removeTickEvent(jugador2.onTickDeMovimiento())
-      	            	direccionHaciaDondeGolpea.nuevaPosicion(self,-3)    
-     } 
-         	    
-    }*/ 	
+     		
    
 object moverJugador{
 	
@@ -200,7 +190,7 @@ const cabeza2 = new Cabeza(
 		
 		
 //EVALUAR HACER PROPERTY
-
+		method tieneFuerzaDeSubida() = fuerzaDeSubida > 0 
 		method cambiarVelocidad(nuevaVelocidad){ velocidad = nuevaVelocidad }
 		method velocidad()= velocidad
 		method cambiarFuerzaDeSubida(nuevaFuerza){ fuerzaDeSubida = nuevaFuerza}
@@ -239,7 +229,7 @@ const cabeza2 = new Cabeza(
     	
 //LIMITES 1<POSICION<150
        
-       method posicionLimite()= position.x()<-1 or position.x()>138
+       method posicionLimite() = position.x() < izquierda.limiteDeCancha() or position.x() > derecha.limiteDeCancha()
        
        method limitarPosicion(){
  	     if(self.posicionLimite()){
@@ -260,6 +250,7 @@ const cabeza2 = new Cabeza(
  		}
     }
 }
+
 
     		
  //VUELVE A LA POSICION INICIAL Y REINICIA LOS TICKS
@@ -296,25 +287,20 @@ const cabeza2 = new Cabeza(
 
 //PASAR MITAD DE CANCHA
 
-		method noPasoMitadDeCancha() = position.x() > 80 and self.direccionLateral() == izquierda or position.x() < 73 and self.direccionLateral() == derecha
+		method noPasoMitadDeCancha() = position.x() > mitadDeCanchaIzquierda and self.direccionLateral() == izquierda or position.x() < mitadDeCanchaDerecha and self.direccionLateral() == derecha
 
 
 //LA PELOTA TOCA LA RED Y VUELVE A POSICION INICIAL SIN MOVIMIENTO
 
 		method tocarRed(){
-			
-      	          if(position.y() < 10){
-      		           if(position.x() >= 70 and position.x() <= 80){
-      		           	
+				  if(red.rangoDeRed(position.x(),position.y())){
  						game.removeTickEvent(tipoDeGolpe.nombre())
  						contadorDePuntos.sumarPunto(contrincante)
  						self.reiniciarPosicion()
  						jugador1.reiniciarPosicion()
  		                jugador2.reiniciarPosicion()
       }       	    
-    } 	
-  }
-
+    } 
 
 	method doblePique(){
 		if(piqueDePelota.contadorDePiques() >= 2){
@@ -327,6 +313,8 @@ const cabeza2 = new Cabeza(
 		}
 	}
 }
+
+
 
                       //CONTROLADOR DE PELOTA EN X E Y SEGUN FUERZA DE SUBIDA Y VELOCIDAD
                       
@@ -463,7 +451,7 @@ object golpeAlto{
 		
 					
 	 method moverPelota(){
-    		if(pelota.fuerzaDeSubida() > 0){
+    		if(pelota.tieneFuerzaDeSubida()){
     		   pelota.perderFuerzaDeSubida(30)
     		   controladorDePelota.moverPelota(arriba) 
     		 	
@@ -472,7 +460,8 @@ object golpeAlto{
     		   pelota.tocarPiso()		
     		
 			}
-	 }	
+	 }
+	 	
 }            
 //GOLPE SAQUE
 object golpeNulo{
@@ -498,7 +487,8 @@ object izquierda{
 		method nuevaPosicion(objetoMovil,distancia) = game.at(objetoMovil.position().x() - distancia, objetoMovil.position().y())		
 		
 		method posicionRaqueta() = game.at(jugador1.position().x() - 5,jugador1.position().y())
-	 
+	 	
+	 	method limiteDeCancha() = -1
 }
 
 	
@@ -506,7 +496,8 @@ object derecha{
 		method nuevaPosicion(objetoMovil,distancia) = game.at(objetoMovil.position().x() + distancia, objetoMovil.position().y())
 		
 		method posicionRaqueta() = game.at(jugador1.position().x() + 5,jugador1.position().y())
-	 
+		
+	 	method limiteDeCancha() = 138
 }
 
 object abajo{
@@ -525,18 +516,19 @@ object arriba{
 
 
                      // OBJETOS PARA RELACIONAR DISTANCIA DE PELOTA CON JUGADORES
-
+const rangoDeContactoEnY = 13
+const rangoDeContactoEnX = 5
 object rastreadorDeContacto{
 	
 	method rangoDeContactoEnX(primerObjeto,segundoObjeto){
 		
-		return (primerObjeto.position().x() - segundoObjeto.position().x()).abs() <= 5
+		return (primerObjeto.position().x() - segundoObjeto.position().x()).abs() <= rangoDeContactoEnX
 		
 		
 	}
 	method rangoDeContactoEnY(primerObjeto,segundoObjeto){
 		
-		return (primerObjeto.position().y() - segundoObjeto.position().y()).abs() <= 13
+		return (primerObjeto.position().y() - segundoObjeto.position().y()).abs() <= rangoDeContactoEnY
 		
 	}
 	

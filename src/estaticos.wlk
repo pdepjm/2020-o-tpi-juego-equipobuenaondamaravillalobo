@@ -16,11 +16,11 @@ object red{
 		new PedazoDeRed(position=game.at(75,7)),
 		new PedazoDeRed(position=game.at(75,8))
 	  ] 
-	  
+	
 	method aparecerRed(){
       	redes.forEach({red => game.addVisual(red)})
       }
-      
+	method rangoDeRed(posicionEnX,posicionEnY) = posicionEnX >= 70 and posicionEnX <= 80 and posicionEnY < 10
       
 }
 

@@ -43,36 +43,30 @@ const menuInicio = new Menu(
 const menuSeleccion1 = new Menu(
 	image = "menuSeleccion1.png"
 )
-const menuSeleccion2SinRafa = new Menu(
-	image = "menuSeleccion2SinRafa.png"
-)
-const menuSeleccion2SinRoger = new Menu(
-	image = "menuSeleccion2SinRoger.png"
-)
-const menuSeleccion2SinDjoko = new Menu(
-	image = "menuSeleccion2SinDjoko.png"
-)
  
- class CabezaDeJugador{
+ class VisualesDelJugador{
  	var imageDerecha
  	var imageIzquierda
- 	var idCabeza
+ 	var menuSinVos
+ 	
  	method imageDerecha() = imageDerecha
  	method imageIzquierda() = imageIzquierda
- 	method idCabeza() = idCabeza
+ 	method menuSinVos() = menuSinVos
+
  }
  
- const rafa = new CabezaDeJugador(imageDerecha = "cabezaRafa2.png",
+ const rafa = new VisualesDelJugador(imageDerecha = "cabezaRafa2.png",
  	imageIzquierda = "cabezaRafa1.png",
- 	idCabeza = 1
+ 	menuSinVos ="menuSeleccion2SinRafa.png"
  )
- const roger = new CabezaDeJugador(imageDerecha = "cabezaRoger3.png", 
+ const roger = new VisualesDelJugador(imageDerecha = "cabezaRoger3.png", 
  	imageIzquierda= "cabezaRoger2.png",
- 	idCabeza = 2
+ 	menuSinVos ="menuSeleccion2SinRoger.png"
  )
- const djoko = new CabezaDeJugador(imageDerecha = "cabezaDjoko2.png",
+ 
+ const djoko = new VisualesDelJugador(imageDerecha = "cabezaDjoko2.png",
  	imageIzquierda = "cabezaDjoko.png",
- 	idCabeza = 3
+ 	menuSinVos ="menuSeleccion2SinDjoko.png"
  )
  
  object listaDeJugadores{
@@ -99,67 +93,61 @@ const menuSeleccion2SinDjoko = new Menu(
          keyboard.space().onPressDo({})
      })
     keyboard.num(1).onPressDo({
-     	 self.elegirJugador1(1)
+     	 self.elegirJugador1(rafa)
      	 keyboard.num(1).onPressDo({})
          })
  	keyboard.num(2).onPressDo({
      	keyboard.num(2).onPressDo({})
-     	self.elegirJugador1(2)
+     	self.elegirJugador1(roger)
          })
  	keyboard.num(3).onPressDo({
      	keyboard.num(3).onPressDo({})
-     	self.elegirJugador1(3)
+     	self.elegirJugador1(djoko)
          })
 	 keyboard.num(4).onPressDo({
 	 	keyboard.num(4).onPressDo({})
-	 	self.elegirJugador2(1)
+	 	self.elegirJugador2(rafa)
 	 })
      keyboard.num(5).onPressDo({
      	keyboard.num(5).onPressDo({})
-     	self.elegirJugador2(2)
+     	self.elegirJugador2(roger)
      })
      keyboard.num(6).onPressDo({
      	keyboard.num(6).onPressDo({})
-     	self.elegirJugador2(3)
+     	self.elegirJugador2(djoko)
      })
  }
     
- method elegirJugador1(idCabezaBuscada){
-         var jugadorElegido 
+ method elegirJugador1(jugador){
 
-         jugadorElegido = listaDeJugadores.jugadoresDisponibles().find({unaCabeza => unaCabeza.idCabeza() == idCabezaBuscada})
-         cabeza1.image(jugadorElegido.imageIzquierda())
+         if(listaDeJugadores.jugadoresDisponibles().contains(jugador)){
+         cabeza1.image(jugador.imageIzquierda())
          menuSeleccion1.sacarMenu()
-         self.aparecerMenuSegunEleccion(idCabezaBuscada)
-         listaDeJugadores.remover(jugadorElegido)
- }
-  method elegirJugador2(idCabezaBuscada){
-         var jugadorElegido
+         segundoMenu.aparecer(jugador)
+         listaDeJugadores.remover(jugador)
+ }}
+  method elegirJugador2(jugador){
 
-         jugadorElegido = listaDeJugadores.jugadoresDisponibles().find({unaCabeza => unaCabeza.idCabeza() == idCabezaBuscada})
-         cabeza2.image(jugadorElegido.imageDerecha())
+         if(listaDeJugadores.jugadoresDisponibles().contains(jugador)){
+         cabeza2.image(jugador.imageDerecha())
          game.clear()
          partido.iniciar()
- }
- 
- method aparecerMenuSegunEleccion(id){
-     if(id == 1){ 
-         menuSeleccion2SinRafa.aparecerMenu()
-         }else{
-             if(id == 2){ 
-         menuSeleccion2SinRoger.aparecerMenu()}
-         else{
-             menuSeleccion2SinDjoko.aparecerMenu()
-         }
-         }
- }
- 
- }
+ }}
 
 
+}
 
+object segundoMenu{
+	method crearMenu(jugador) = new Menu(image = jugador.menuSinVos())
+	
+	method aparecer(jugador){
+		self.crearMenu(jugador).aparecerMenu()
+		
 
-
+		
+	}
+	
+}
 
 
 

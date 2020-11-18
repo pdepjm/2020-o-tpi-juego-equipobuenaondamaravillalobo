@@ -47,8 +47,10 @@ object partido{
 		game.onTick(1,"Evaluar golpeEnRed",{pelota.tocarRed()})
 		game.onTick(1,"Evaluar doblePique",{pelota.doblePique()})
         game.onTick(1000,"Evaluar Limites pelota",{pelota.limitarPosicion()})
+        
         game.onTick(1,"Limitar posicion de jugadores izquierdo",{jugador1.limitarPosicionIzquierda()})
         game.onTick(1,"Limitar posicion de jugadores derecho",{jugador2.limitarPosicionDerecha()})
+        
         
         
         
