@@ -360,7 +360,7 @@ object golpeBasico{
     		pelota.cambiarFuerzaDeSubida(100)
     		
     		pelota.cambiarVelocidad(100)
-        	game.onTick(80, nombre, {self.moverPelota()})
+        	game.onTick(70, nombre, {self.moverPelota()})
         	}
 	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
 	

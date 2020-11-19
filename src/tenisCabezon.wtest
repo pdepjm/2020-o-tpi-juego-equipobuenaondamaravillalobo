@@ -9,12 +9,14 @@ describe "Pelota"{
 	
 	
 	test "Jugador cerca de pelota pega un golpe alto y lo settea en tipo de golpe en pelota"{
+		game.onTick(70, "golpeNulo" , {golpeNulo.moverPelota()})
 		pelota.position(jugador1.position())
 		pelota.golpe(jugador1,jugador2,golpeAlto)
 		assert.equals(golpeAlto,pelota.tipoDeGolpe())
 	}
 	
 	test "Al picar la energia se settea"{
+		game.onTick(70, "golpeNulo" , {golpeNulo.moverPelota()})
 		pelota.position(game.at(4,2))
 		pelota.golpe(jugador1,jugador2,golpeBasico)
 		if(pelota.position().y()==0){
@@ -23,6 +25,7 @@ describe "Pelota"{
 	}
 	
 	test "Cuando la pelota toca el piso suma un pique"{
+		game.onTick(70, "golpeNulo" , {golpeNulo.moverPelota()})
 		pelota.position(game.at(4,2))
 		pelota.golpe(jugador1,jugador2,golpeBasico)
 		if(pelota.position().y()==0){
@@ -31,6 +34,7 @@ describe "Pelota"{
 	}
 	
 	test "Cuando se ejecuta golpe basico la energia de pelota se settea"{
+		game.onTick(70, "golpeNulo" , {golpeNulo.moverPelota()})
 		pelota.position(game.at(4,2))
 		pelota.golpe(jugador1,jugador2,golpeBasico)
 		assert.equals(100,pelota.fuerzaDeSubida())
@@ -65,6 +69,7 @@ describe "Jugadores"{
 	}
 	
 	test "Si la pelota toca la red se suma un punto para el contrincante"{
+		game.onTick(70, "golpeNulo" , {golpeNulo.moverPelota()})
 		pelota.position(jugador1.position())
 		pelota.golpe(jugador1,jugador2,golpeRemate)
 		if(pelota.position().x()>73){
