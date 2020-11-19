@@ -21,8 +21,7 @@ class Jugador{
 	const contador 
 	const posicionInicial
 	
-	//method onTickName(tickEvent){onTickName = tickEvent}
-	//method onTickName() = onTickName
+	
 	method direccionHaciaDondeGolpea() = direccionHaciaDondeGolpea
 	method image() = image
 	method contador() = contador
@@ -103,14 +102,6 @@ object moverJugador{
 	}
 
 
-
-/*              
-                                         
- class JugadorEstrella inherits Jugador{ 
- super()                                 
- override method golpe(){                
- */
-
                            // CLASE DE RAQUETAS
 
 class Raqueta{
@@ -124,11 +115,8 @@ class Raqueta{
    		return game.at(duenio.position().x()-3,duenio.position().y()+6)
    	}
 }
-  
-    	
+   	
    method image()=  image
-    	 
-// method golpe(){}
         	
    }
 	
@@ -150,7 +138,7 @@ class Cabeza{
 	var cuerpo
 	var property image
 	
-	//El if es porque quedaba mal posicionada la imagen
+
 	method position()=
 	if(cuerpo == jugador2)
 	return game.at(cuerpo.position().x()+1,cuerpo.position().y()+6)
@@ -180,16 +168,13 @@ const cabeza2 = new Cabeza(
     var property fuerzaDeSubida = 100
     
     
-    
-
-
 	
 	    method image() = "pelotaPenn1.png"
 		method gravedad(){ position = abajo.nuevaPosicion(self,1) }
 		
 		
 		
-//EVALUAR HACER PROPERTY
+
 		method tieneFuerzaDeSubida() = fuerzaDeSubida > 0 
 		method cambiarVelocidad(nuevaVelocidad){ velocidad = nuevaVelocidad }
 		method velocidad()= velocidad
@@ -197,24 +182,20 @@ const cabeza2 = new Cabeza(
 		method fuerzaDeSubida()= fuerzaDeSubida
 		method perderFuerzaDeSubida(fuerzaPerdida){fuerzaDeSubida -= fuerzaPerdida}
 		method cambiarJugadorQueGolpea(jugadorNuevo){jugadorQueGolpea = jugadorNuevo}
-		//method sumarPique(){piques+=1}
+	
 		
 // DIRECCION DEL JUGADOR QUE GOLPEA ES LA DIRECCION LATERAL
 
 		method direccionLateral() = jugadorQueGolpea.direccionHaciaDondeGolpea()
 			 
 // MOVIMIENTO DE PELOTA
- 
-	 
 	 
     	method golpe(nuevoGolpeador,nuevoContrincante,tipoGolpe){	
     		
 
     		
     		if(rastreadorDeContacto.estanEnZonaDeContacto(self,nuevoGolpeador)){
-    			
-    			//reproductorDeSonidos.sonidoDeGolpe().play()
-    			
+    	
     			piqueDePelota.detenerPique()
     			piqueDePelota.reiniciarContadorDePiques()
  				game.removeTickEvent(self.tipoDeGolpe().nombre())
@@ -263,7 +244,7 @@ const cabeza2 = new Cabeza(
 			  	}        
 	
 	
-//TOCAR EL PISO PARA PICAR	
+//TOCAR EL PISO 
 		 
 		 method tocarPiso(){ 
 			 	if(position.y()==0){
@@ -325,17 +306,6 @@ object controladorDePelota{
 			pelota.position(pelota.direccionLateral().nuevaPosicion(pelota, pelota.velocidad()/20)) 
 		}
 }
-/*
-object controladorDePelota1{
-	
-	method moverPelota(direccionVertical){
-			pelota.position(direccionVertical.nuevaPosicion(pelota, pelota.fuerzaDeSubida()/75)) 
-			pelota.position(pelota.direccionLateral().nuevaPosicion(pelota, pelota.velocidad()/40)) 
-		}
-}
- */
-
-
 
                                //PIQUE DE LA PELOTA
 
@@ -474,11 +444,7 @@ object golpeNulo{
 	
 	
 }
-/* 
-object moverPelotaVerticalmente{
-	method moverPelota(direccionVertical){controladorDePelota.moverPelota(direccionVertical)}
-}  
-                */                
+              
 
                           // OBJETOS RELACIONADOS A LOS MOVIMIENTOS DE POSICIONES EN EJES 
 

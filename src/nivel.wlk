@@ -47,32 +47,11 @@ object partido{
 		game.onTick(1,"Evaluar golpeEnRed",{pelota.tocarRed()})
 		game.onTick(1,"Evaluar doblePique",{pelota.doblePique()})
         game.onTick(1000,"Evaluar Limites pelota",{pelota.limitarPosicion()})
-        
-      //  game.onTick(500,"limitarPosicion",{jugador1.limitarPosicion()})
-     //   game.onTick(500,"Limitar posicion de jugadores derecho",{jugador2.limitarPosicionDerecha()})
-        
-        
-        
-        
-        
-     //   game.onTick(1000,"Consultar si pica la pelota",{pelota.tocarPiso()})
-     //		game.onTick(10,"Limites de jugador1",{jugador.direccionHaciaDondeGolpea().limitarPosicion(jugador)})
-//		game.onTick(10,"Limites de jugador2",{jugador2.direccionHaciaDondeGolpea().limitarPosicion(jugador2)})
      
 	}
 	
 }
-//game.cleanUp()
 
-/* 
-object evaluarPiques{
-	if(pelota.piques()==2){
-		pelota.jugadorQueGolpea().sumarPunto()
-        pelota.reiniciarPosicion()
-        game.removeTickEvent(pelota.tipoDeGolpe().nombre())
-	}
-}
-*/
                          // CONFIGURACION DE TECLAS Y COLISIONES
 
 object config{
@@ -106,7 +85,7 @@ object config{
         keyboard.up().onPressDo({jugador2.saltar()
         	jugador2.deshabilitarSalto()})
       
-        //keyboard.space().onPressDo({pelota.golpe(jugador2,golpeAlto) pelota.tipoDeGolpe(golpeAlto)}) reservo el space() para el jugador estrella  
+      
         keyboard.j().onPressDo({pelota.golpe(jugador2,jugador1,golpeBasico)})
         keyboard.k().onPressDo({pelota.golpe(jugador2,jugador1,golpeAlto)})
         keyboard.l().onPressDo({pelota.golpe(jugador2,jugador1,golpeRemate)})     

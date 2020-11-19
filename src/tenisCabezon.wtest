@@ -70,7 +70,6 @@ describe "Jugadores"{
 		if(pelota.position().x()>73){
 			assert.equals(1,pelota.contrincante().puntos())
 		}
-	//NO SUMA EL PUNTO, HAY QUE HACER ALGO
 	}
 	
 }
