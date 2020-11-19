@@ -1,5 +1,6 @@
 import estaticos.*
 import nivel.*
+import menu.*
 import juego.*
 import wollok.game.*
 
@@ -77,6 +78,37 @@ describe "Jugadores"{
 		}
 	}
 	
+}
+describe "Puntacion" {
+
+    test "Sumo puntos a jugador"{
+
+        2.times({n => contadorDePuntos.sumarPunto(jugador1)})
+
+        assert.equals(2,jugador1.puntos())
+
+    }
+
+    test "al ganar 6 puntos se muestra al ganador"{
+
+        6.times({n => contadorDePuntos.sumarPunto(jugador1)})
+
+        assert.that(game.hasVisual(cabeza1))
+
+    }
+
+}
+
+describe "Menu"{
+
+    test "Al seleccionar a rafa como jugador1 se remueve de la lista como jugador disponible"{
+
+        losMenues.elegirJugador1(rafa)
+
+        assert.notThat(listaDeJugadores.jugadoresDisponibles().contains(rafa))
+
+    }
+
 }
 
 
